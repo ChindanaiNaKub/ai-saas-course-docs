@@ -136,7 +136,9 @@
       button, textarea, input { display: none; }
       a::after { content: " (" attr(href) ")"; font-size: .82em; color: #555; }
     }
-  </style>
+  
+.lesson-nav{max-width:1040px;margin:34px auto 0;padding:0 24px;display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:stretch}.lesson-nav a,.lesson-nav span{border:1px solid var(--line,#ded9c8);border-radius:8px;background:rgba(255,255,255,.84);padding:14px 16px;text-decoration:none;color:var(--ink,#17211d);box-shadow:var(--shadow,0 18px 50px rgba(35,45,38,.10));min-height:64px;display:flex;flex-direction:column;justify-content:center}.lesson-nav .nav-index{align-items:center;text-align:center;color:var(--blue,#285f8f);font-weight:750}.lesson-nav .nav-next{text-align:right;align-items:flex-end}.lesson-nav span{color:var(--muted,#5f6f66);box-shadow:none;background:rgba(255,255,255,.45)}.lesson-nav small{display:block;color:var(--muted,#5f6f66);font-size:.78rem;font-weight:750;letter-spacing:.06em;text-transform:uppercase}.lesson-nav strong{display:block;line-height:1.25;margin-top:4px}@media(max-width:720px){.lesson-nav{grid-template-columns:1fr;padding:0 16px}.lesson-nav .nav-next{text-align:left;align-items:flex-start}.lesson-nav .nav-index{align-items:flex-start;text-align:left}}@media print{.lesson-nav{display:none}}
+</style>
 </head>
 <body>
   <header>
@@ -297,8 +299,8 @@
       </ul>
     </section>
   </main>
-
-  <footer>
+<nav class="lesson-nav" aria-label="Lesson navigation"><a class="nav-prev" href="0003-sell-the-outcome-before-the-software.html"><small>Previous</small><strong>0003 · ขายผลลัพธ์ก่อนสร้างซอฟต์แวร์</strong></a><a class="nav-index" href="../index.html"><small>Index</small><strong>Course index</strong></a><a class="nav-next" href="0005-run-a-7-day-distribution-sprint.html"><small>Next</small><strong>0005 · ทำ sprint หา lead 7 วัน ก่อนสร้างต่อ</strong></a></nav>
+<footer>
     <p>Reference sheet: <a href="../reference/0004-willingness-to-pay-cheatsheet.html">Willingness-to-Pay Cheat Sheet</a></p>
   </footer>
 
