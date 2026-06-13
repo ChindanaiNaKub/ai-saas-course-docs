@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lesson 0012: Build Trust Before Asking for Data</title>
+  <style>
+    :root {
+      --ink: #17211d;
+      --muted: #5f6f66;
+      --paper: #fffdf8;
+      --soft: #f4f1e7;
+      --line: #ded9c8;
+      --green: #246b4a;
+      --green-soft: #e8f3ec;
+      --red: #9b3b2f;
+      --gold: #a86518;
+      --blue: #285f8f;
+      --shadow: 0 18px 50px rgba(35, 45, 38, .10);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.65; color: var(--ink); background: linear-gradient(180deg, #eef5ec 0, var(--paper) 350px); }
+    header, main, footer { max-width: 1040px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+    header { padding-top: 56px; padding-bottom: 26px; }
+    .eyebrow { color: var(--green); font-weight: 750; text-transform: uppercase; letter-spacing: .08em; font-size: .78rem; }
+    h1, h2, h3 { line-height: 1.15; margin: 0; letter-spacing: 0; }
+    h1 { max-width: 900px; font-size: clamp(2.1rem, 5vw, 4.6rem); margin-top: 8px; }
+    h2 { font-size: clamp(1.45rem, 2.4vw, 2rem); margin-top: 46px; padding-top: 26px; border-top: 1px solid var(--line); }
+    h3 { font-size: 1.08rem; margin-top: 20px; }
+    p { margin: 12px 0; }
+    a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    .lede { max-width: 840px; font-size: 1.18rem; color: var(--muted); margin-top: 18px; }
+    .hero-grid, .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 22px; }
+    .panel, .exercise, .quiz { background: rgba(255,255,255,.88); border: 1px solid var(--line); border-radius: 8px; box-shadow: var(--shadow); padding: 18px; }
+    .tag { display: inline-flex; align-items: center; min-height: 28px; padding: 3px 9px; border-radius: 999px; background: var(--soft); color: var(--muted); font-weight: 650; font-size: .88rem; }
+    .rule { margin: 28px 0; padding: 24px; background: var(--green-soft); border-left: 5px solid var(--green); border-radius: 8px; font-size: 1.16rem; font-weight: 760; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 8px 0; }
+    table { width: 100%; border-collapse: collapse; margin-top: 16px; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: white; }
+    th, td { text-align: left; vertical-align: top; padding: 13px; border-bottom: 1px solid var(--line); }
+    th { background: var(--soft); }
+    tr:last-child td { border-bottom: 0; }
+    textarea, input { width: 100%; border: 1px solid var(--line); border-radius: 8px; padding: 12px; font: inherit; color: var(--ink); background: white; margin-top: 6px; margin-bottom: 12px; }
+    textarea { min-height: 78px; resize: vertical; }
+    button { appearance: none; border: 0; border-radius: 8px; padding: 11px 14px; background: var(--green); color: white; font: inherit; font-weight: 750; cursor: pointer; margin-top: 8px; margin-right: 8px; }
+    button.secondary { background: #f0ede2; color: var(--ink); border: 1px solid var(--line); }
+    .feedback { margin-top: 12px; padding: 12px 14px; border-radius: 8px; background: var(--soft); border: 1px solid var(--line); color: var(--muted); }
+    .good { color: var(--green); font-weight: 750; }
+    .warn { color: var(--gold); font-weight: 750; }
+    .bad { color: var(--red); font-weight: 750; }
+    .refs { font-size: .96rem; color: var(--muted); }
+    footer { padding-top: 34px; padding-bottom: 56px; color: var(--muted); }
+    @media (max-width: 760px) { header, main, footer { padding-left: 16px; padding-right: 16px; } header { padding-top: 36px; } .hero-grid, .grid { grid-template-columns: 1fr; } table { font-size: .94rem; } }
+    @media print { body { background: white; } header, main, footer { max-width: none; padding: 16mm; } .panel, .exercise, .quiz { box-shadow: none; } button, textarea, input { display: none; } a::after { content: " (" attr(href) ")"; font-size: .82em; color: #555; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">Lesson 0012 · Trust and data handling</div>
+    <h1>สร้าง trust ก่อนขอข้อมูลลูกค้า</h1>
+    <p class="lede">บทเรียนนี้สอนทักษะเดียว: ออกแบบ data handling สำหรับ AI pilot/SaaS ให้ลูกค้ากล้าให้ข้อมูล โดยไม่เก็บเกิน ใช้เกิน หรือเสี่ยงเกินจำเป็น.</p>
+    <div class="hero-grid">
+      <div class="panel">
+        <span class="tag">กับดัก</span>
+        <p>ขอ export แชท/ไฟล์ลูกค้าทั้งหมดโดยไม่บอกว่าจะใช้ยังไง เก็บที่ไหน ส่งให้ AI provider ไหน และลบเมื่อไหร่.</p>
+      </div>
+      <div class="panel">
+        <span class="tag">เป้าหมาย</span>
+        <p>ขอข้อมูลน้อยที่สุด อธิบาย purpose, redaction, storage, retention, provider, และ human review ได้ชัดใน 60 วินาที.</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <h2>1. Trust คือ distribution advantage</h2>
+      <p>ถ้าคุณขาย AI SaaS ที่แตะข้อมูลจริง เช่น แชท LINE, ข้อมูลลูกค้า, appointment, campaign data, invoice, หรือไฟล์ภายในบริษัท ลูกค้าจะถามเรื่อง trust ไม่ช้าก็เร็ว. โดยเฉพาะตลาดไทยที่ relationship และความไว้ใจสำคัญมาก การตอบเรื่องข้อมูลได้ชัดอาจเป็นข้อได้เปรียบเหนือ "AI tool" ทั่วไป.</p>
+      <p>บทนี้ไม่ใช่คำปรึกษากฎหมายแทนทนาย แต่เป็น founder checklist. ถ้าคุณทำงานกับข้อมูลส่วนบุคคลจำนวนมาก, ข้อมูลอ่อนไหว, health/financial data, หรือขาย enterprise จริงจัง ควรปรึกษาผู้เชี่ยวชาญด้านกฎหมาย/ความปลอดภัย.</p>
+      <div class="rule">ลูกค้าไม่ได้กลัว AI อย่างเดียว เขากลัวคุณไม่รู้ว่าข้อมูลของเขาจะไปไหนและถูกใช้ยังไง.</div>
+    </section>
+
+    <section>
+      <h2>2. หลัก 5 ข้อก่อนขอข้อมูล</h2>
+      <ol>
+        <li><strong>Purpose limitation:</strong> ขอเพื่อทำ outcome ไหนเท่านั้น</li>
+        <li><strong>Data minimization:</strong> ขอเฉพาะข้อมูลที่จำเป็นจริง</li>
+        <li><strong>Redaction first:</strong> ให้ลูกค้าลบ/ปิดข้อมูลส่วนตัวหรือ sensitive ก่อนส่งได้</li>
+        <li><strong>Retention window:</strong> บอกว่าจะลบเมื่อไหร่</li>
+        <li><strong>Provider transparency:</strong> บอกว่าใช้ AI/provider อะไร และข้อมูลถูกส่งออกไปไหม</li>
+      </ol>
+      <p class="refs">หลัก data minimization จาก EDPS คือเก็บเฉพาะข้อมูลที่เกี่ยวข้องและจำเป็นกับ purpose นั้น และเก็บเท่าที่จำเป็น. GDPR Article 5 ก็พูดถึง principles เช่น purpose limitation, data minimization, storage limitation, integrity และ confidentiality. สำหรับไทย PDPA มีแนวคิดเรื่องหน้าที่ของ controller/processor และสิทธิของเจ้าของข้อมูลตาม overview ของ DLA Piper.</p>
+    </section>
+
+    <section>
+      <h2>3. AI-specific trust risks</h2>
+      <table>
+        <thead>
+          <tr><th>Risk</th><th>ตัวอย่างใน SaaS</th><th>Guardrail แรก</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Prompt injection</td>
+            <td>แชทลูกค้ามีคำสั่งแฝงให้ model เปิดเผย prompt หรือข้าม policy</td>
+            <td class="good">จำกัดสิทธิ์ model, ไม่ให้ model มี tool access เกินจำเป็น, validate output</td>
+          </tr>
+          <tr>
+            <td>Sensitive information disclosure</td>
+            <td>report เผลอแสดงเบอร์โทร/email/ที่อยู่ลูกค้าปลายทาง</td>
+            <td class="good">redact input, filter output, role-based access</td>
+          </tr>
+          <tr>
+            <td>Insecure output handling</td>
+            <td>เอา output จาก AI ไปสร้าง SQL/HTML/action โดยไม่ validate</td>
+            <td class="good">sanitize, review, allowlist actions</td>
+          </tr>
+          <tr>
+            <td>Overreliance</td>
+            <td>ลูกค้าใช้ AI recommendation ตัดสินใจเรื่องสำคัญโดยไม่ตรวจ</td>
+            <td class="good">human review, confidence label, explain source evidence</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="refs">OWASP Top 10 for LLM Applications ระบุ risk เช่น prompt injection, insecure output handling, และ sensitive information disclosure ซึ่งสำคัญมากเมื่อ product แตะข้อมูลจริง.</p>
+    </section>
+
+    <section>
+      <h2>4. คำตอบเรื่อง "เอาข้อมูลไป train ไหม?"</h2>
+      <p>คุณต้องตอบตาม provider และ contract ที่คุณใช้จริง. ตัวอย่างเช่น OpenAI ระบุว่าโดย default business products รวมถึง API Platform ไม่ได้นำ inputs/outputs ไป train models เว้นแต่ลูกค้า opt in แชร์ข้อมูล. แต่ถ้าคุณใช้ provider อื่น, self-hosted model, logging layer, analytics, หรือ human reviewer คุณต้องอธิบายแยกเอง.</p>
+      <div class="rule">อย่าตอบว่า "ไม่ต้องห่วง ปลอดภัย" แบบกว้างๆ ให้ตอบเป็นระบบ: ใช้ provider ไหน, เก็บ log อะไร, ใครเข้าถึง, ลบเมื่อไหร่, และใช้ข้อมูลเพื่อ train หรือไม่.</div>
+    </section>
+
+    <section>
+      <h2>5. Trust statement สำหรับ pilot</h2>
+      <p>ประโยคเริ่มต้นที่ใช้ได้:</p>
+      <div class="panel">
+        <p>สำหรับ pilot นี้ ผมขอเฉพาะข้อมูลที่จำเป็นกับการทำ [outcome] เท่านั้น คุณสามารถลบชื่อ เบอร์ email และข้อมูลส่วนตัวออกก่อนได้ ผมจะใช้ข้อมูลเพื่อทำ pilot นี้เท่านั้น ไม่เอาไปใช้ train model ของผม และจะลบไฟล์ภายใน [X วัน] หลังส่งงาน/จบ review. ถ้าต้องส่งข้อมูลไป AI provider ผมจะแจ้ง provider และ policy ที่เกี่ยวข้องให้ชัดก่อนเริ่ม.</p>
+      </div>
+    </section>
+
+    <section class="exercise">
+      <h2>6. แบบฝึกหัด: Data trust plan</h2>
+      <p>กรอกแผนจัดการข้อมูล แล้วกดประเมิน. ตัวประเมินนี้เป็น JavaScript ในไฟล์ ไม่เรียก AI และไม่ส่งข้อมูลออกไปไหน.</p>
+
+      <label for="data"><strong>1. ข้อมูลที่ต้องขอ</strong></label>
+      <textarea id="data" placeholder="เช่น แชท LINE 100 รายการ โดยลบชื่อ เบอร์ และที่อยู่ลูกค้าออกก่อน"></textarea>
+
+      <label for="purpose"><strong>2. Purpose / outcome</strong></label>
+      <textarea id="purpose" placeholder="เช่น ใช้เพื่อทำ lost-order report และ action list สำหรับ pilot นี้เท่านั้น"></textarea>
+
+      <label for="minimize"><strong>3. วิธีลดข้อมูลหรือ redact</strong></label>
+      <textarea id="minimize" placeholder="เช่น ขอแค่ 100 แชทล่าสุด ลบ PII เช่น ชื่อ เบอร์ email ที่อยู่ และ payment info"></textarea>
+
+      <label for="storage"><strong>4. Storage / access / retention</strong></label>
+      <textarea id="storage" placeholder="เช่น เก็บใน folder ที่จำกัดสิทธิ์เฉพาะผม ลบภายใน 7 วันหลังส่ง report"></textarea>
+
+      <label for="provider"><strong>5. AI provider / training statement</strong></label>
+      <textarea id="provider" placeholder="เช่น ใช้ OpenAI API โดย business/API data ไม่ถูกใช้ train by default ตาม policy ของ provider; ไม่ใช้ข้อมูลลูกค้า train model ของเรา"></textarea>
+
+      <label for="review"><strong>6. Output review / safety</strong></label>
+      <textarea id="review" placeholder="เช่น ตรวจ report ก่อนส่ง, ไม่แสดง PII, ใส่ source snippets และให้มนุษย์ตัดสินใจก่อน action สำคัญ"></textarea>
+
+      <button onclick="scoreTrust()">ประเมิน trust plan</button>
+      <button class="secondary" onclick="loadExample()">ใส่ตัวอย่าง</button>
+      <div id="trustFeedback" class="feedback">รอแผนของคุณอยู่.</div>
+    </section>
+
+    <section class="exercise">
+      <h2>7. Risk level quick check</h2>
+      <p>ประเมินความเสี่ยงข้อมูลแบบเร็ว เพื่อรู้ว่าควรปรึกษาผู้เชี่ยวชาญหรือเพิ่ม guardrail.</p>
+      <label for="personal"><strong>มีข้อมูลส่วนบุคคลกี่ระดับ? 0 ไม่มี, 1 มีทั่วไป, 2 มี sensitive/high-risk</strong></label>
+      <input id="personal" type="number" min="0" max="2" value="1">
+      <label for="volume"><strong>ปริมาณข้อมูลต่อ customer ต่อเดือน: จำนวน records โดยประมาณ</strong></label>
+      <input id="volume" type="number" min="0" value="100">
+      <label for="automation"><strong>AI output ทำ action อัตโนมัติไหม? 0 ไม่, 1 แนะนำเท่านั้น, 2 action อัตโนมัติ</strong></label>
+      <input id="automation" type="number" min="0" max="2" value="1">
+      <button onclick="riskCheck()">ตรวจ risk</button>
+      <div id="riskFeedback" class="feedback">ใส่ตัวเลขแล้วกดตรวจ.</div>
+    </section>
+
+    <section class="quiz">
+      <h2>8. Mini Quiz</h2>
+      <p><strong>สถานการณ์:</strong> ลูกค้าจะส่ง export แชท 10,000 รายการที่มีชื่อ เบอร์ และที่อยู่ลูกค้าปลายทาง เพื่อทำ pilot แรก คุณควรทำอะไร?</p>
+      <button onclick="quiz('a')">A. รับทั้งหมดไว้ก่อน ข้อมูลเยอะยิ่งดี</button>
+      <button onclick="quiz('b')">B. ขอ sample ที่เล็กลงและ redact PII ก่อน พร้อมบอก purpose, storage, retention, provider</button>
+      <button onclick="quiz('c')">C. บอกว่า AI ปลอดภัย ไม่ต้องกังวล</button>
+      <div id="quizFeedback" class="feedback">เลือกคำตอบหนึ่งข้อ.</div>
+    </section>
+
+    <section>
+      <h2>9. Homework ก่อนบทเรียน 13</h2>
+      <p>เขียน trust statement สำหรับ pilot ของคุณ 5 บรรทัด:</p>
+      <ol>
+        <li>ข้อมูลที่ขอ:</li>
+        <li>ใช้เพื่อ outcome อะไร:</li>
+        <li>ข้อมูลอะไรควรลบ/redact ก่อนส่ง:</li>
+        <li>เก็บที่ไหนและลบเมื่อไหร่:</li>
+        <li>ใช้ provider ไหน และข้อมูลถูกใช้ train หรือไม่:</li>
+      </ol>
+      <p>ส่งมาให้ผมดูได้ ผมจะช่วยทำให้ชัดพอสำหรับคุยกับลูกค้าโดยไม่ overpromise.</p>
+    </section>
+
+    <section>
+      <h2>References</h2>
+      <ul class="refs">
+        <li><a href="https://www.edps.europa.eu/data-protection/data-protection/glossary/d_en">EDPS: Data minimization</a></li>
+        <li><a href="https://gdpr-info.eu/art-5-gdpr/">GDPR Article 5: Principles relating to processing of personal data</a></li>
+        <li><a href="https://www.dlapiperdataprotection.com/index.html?c=TH&t=law">DLA Piper: Thailand PDPA overview</a></li>
+        <li><a href="https://help.openai.com/en/articles/5722486-how-your-data-is-used-to-improve-model-performance">OpenAI: How your data is used to improve model performance</a></li>
+        <li><a href="https://openai.com/enterprise-privacy/">OpenAI: Enterprise privacy</a></li>
+        <li><a href="https://owasp.org/www-project-top-10-for-large-language-model-applications/">OWASP: Top 10 for LLM Applications</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>Reference sheet: <a href="../reference/0012-ai-trust-data-handling-cheatsheet.html">AI Trust and Data Handling Cheat Sheet</a></p>
+  </footer>
+
+  <script>
+    function hasAny(text, terms) {
+      return terms.some(function(term) { return term.test(text); });
+    }
+
+    function wordCount(text) {
+      return text.trim().split(/\s+/).filter(Boolean).length;
+    }
+
+    function scoreTrust() {
+      const data = document.getElementById('data').value.trim();
+      const purpose = document.getElementById('purpose').value.trim();
+      const minimize = document.getElementById('minimize').value.trim();
+      const storage = document.getElementById('storage').value.trim();
+      const provider = document.getElementById('provider').value.trim();
+      const review = document.getElementById('review').value.trim();
+      let score = 0;
+      const notes = [];
+
+      if (wordCount(data) >= 6 && hasAny(data.toLowerCase(), [/แชท|ไฟล์|ข้อมูล|sample|export|record|รายการ|ลบ|redact/])) {
+        score++;
+        notes.push('<span class="good">Data:</span> ระบุข้อมูลที่จะขอชัด.');
+      } else {
+        notes.push('<span class="warn">Data:</span> ระบุชนิดและปริมาณข้อมูลให้ชัด.');
+      }
+
+      if (wordCount(purpose) >= 7 && hasAny(purpose.toLowerCase(), [/เพื่อ|ใช้|pilot|report|รายงาน|outcome|เท่านั้น|action/])) {
+        score += 2;
+        notes.push('<span class="good">Purpose:</span> มี purpose limitation.');
+      } else {
+        notes.push('<span class="bad">Purpose:</span> ต้องบอกว่าใช้ข้อมูลเพื่อ outcome อะไรเท่านั้น.');
+      }
+
+      if (wordCount(minimize) >= 8 && hasAny(minimize.toLowerCase(), [/ลบ|redact|pii|ชื่อ|เบอร์|email|ที่อยู่|sample|เฉพาะ|เท่าที่จำเป็น/])) {
+        score += 2;
+        notes.push('<span class="good">Minimization:</span> มี redaction/data minimization.');
+      } else {
+        notes.push('<span class="bad">Minimization:</span> เพิ่มวิธีลดข้อมูลหรือปิด PII ก่อนส่ง.');
+      }
+
+      if (wordCount(storage) >= 8 && hasAny(storage.toLowerCase(), [/เก็บ|ลบ|วัน|สิทธิ์|access|folder|retention|delete|เฉพาะ/])) {
+        score += 2;
+        notes.push('<span class="good">Storage/retention:</span> บอกที่เก็บ สิทธิ์ และวันลบ.');
+      } else {
+        notes.push('<span class="warn">Storage/retention:</span> ต้องตอบว่าเก็บที่ไหน ใครเข้าถึง และลบเมื่อไหร่.');
+      }
+
+      if (wordCount(provider) >= 7 && hasAny(provider.toLowerCase(), [/openai|api|provider|train|training|model|ไม่ถูกใช้|policy|ข้อมูล/])) {
+        score += 2;
+        notes.push('<span class="good">Provider/training:</span> ตอบเรื่อง provider และ training ได้.');
+      } else {
+        notes.push('<span class="warn">Provider/training:</span> ต้องระบุ provider และ data-use/training statement ตาม policy จริง.');
+      }
+
+      if (wordCount(review) >= 6 && hasAny(review.toLowerCase(), [/ตรวจ|review|pii|source|confidence|human|validate|filter|ตัดสินใจ/])) {
+        score++;
+        notes.push('<span class="good">Output review:</span> มี guardrail สำหรับ output.');
+      } else {
+        notes.push('<span class="warn">Output review:</span> เพิ่ม human review, output filtering, หรือ source evidence.');
+      }
+
+      let verdict = '';
+      if (score >= 9) verdict = '<p><strong class="good">Trust plan ใช้คุย pilot ได้:</strong> ยังไม่ใช่ legal review แต่ชัดพอสำหรับ early customer conversation.</p>';
+      else if (score >= 6) verdict = '<p><strong class="warn">ใกล้พร้อม:</strong> เติมส่วนที่ยังอ่อนก่อนขอข้อมูลจริง.</p>';
+      else verdict = '<p><strong class="bad">ยังเสี่ยง:</strong> อย่าเพิ่งขอข้อมูลจริงจนกว่าจะตอบ purpose, minimization, retention, provider ได้.</p>';
+
+      document.getElementById('trustFeedback').innerHTML = verdict + '<p>Trust score: <strong>' + score + '/10</strong></p><ul><li>' + notes.join('</li><li>') + '</li></ul>';
+    }
+
+    function loadExample() {
+      document.getElementById('data').value = 'แชท LINE 100 รายการ โดยให้ร้านลบชื่อ เบอร์ email และที่อยู่ลูกค้าออกก่อนส่ง';
+      document.getElementById('purpose').value = 'ใช้เพื่อทำ lost-order report และ action list สำหรับ pilot นี้เท่านั้น';
+      document.getElementById('minimize').value = 'ขอแค่ sample 100 แชทล่าสุด ลบ PII เช่น ชื่อ เบอร์ email ที่อยู่ และ payment info ก่อนส่ง';
+      document.getElementById('storage').value = 'เก็บใน folder ที่จำกัดสิทธิ์เฉพาะผม และลบภายใน 7 วันหลังส่ง report และจบ review call';
+      document.getElementById('provider').value = 'ใช้ OpenAI API โดย business/API data ไม่ถูกใช้ train by default ตาม policy ของ provider และไม่ใช้ข้อมูลลูกค้า train model ของเรา';
+      document.getElementById('review').value = 'ตรวจ report ก่อนส่ง ไม่แสดง PII ใส่ source snippets เฉพาะที่ redact แล้ว และให้มนุษย์ตัดสินใจก่อน action สำคัญ';
+      scoreTrust();
+    }
+
+    function riskCheck() {
+      const personal = Number(document.getElementById('personal').value || 0);
+      const volume = Number(document.getElementById('volume').value || 0);
+      const automation = Number(document.getElementById('automation').value || 0);
+      let score = personal * 3 + automation * 3;
+      if (volume > 1000) score += 2;
+      else if (volume > 100) score += 1;
+      let verdict = '';
+
+      if (score >= 8) verdict = '<p><strong class="bad">High risk:</strong> ลดข้อมูล, เพิ่ม review, ทำ access/retention ชัด และควรปรึกษาผู้เชี่ยวชาญก่อน pilot จริง.</p>';
+      else if (score >= 4) verdict = '<p><strong class="warn">Medium risk:</strong> ทำ redaction, retention, provider disclosure และ human review ให้ครบ.</p>';
+      else verdict = '<p><strong class="good">Lower risk:</strong> ยังต้องมี purpose/minimization/retention แต่ pilot เริ่มง่ายกว่า.</p>';
+
+      document.getElementById('riskFeedback').innerHTML = verdict + '<p>Risk score: <strong>' + score + '</strong>. คะแนนนี้เป็น heuristic เพื่อเรียนรู้ ไม่ใช่ legal/security assessment.</p>';
+    }
+
+    function quiz(answer) {
+      const el = document.getElementById('quizFeedback');
+      if (answer === 'b') {
+        el.innerHTML = '<span class="good">ถูก.</span> Pilot แรกควรใช้ข้อมูลน้อยที่สุดและ redact PII ก่อน พร้อมอธิบาย purpose/storage/retention/provider.';
+      } else if (answer === 'a') {
+        el.innerHTML = '<span class="bad">เสี่ยงเกิน.</span> ข้อมูลเยอะไม่ได้แปลว่าดี ถ้าเกิน purpose และเพิ่ม privacy/security risk.';
+      } else {
+        el.innerHTML = '<span class="bad">กว้างเกิน.</span> Trust ต้องตอบเป็นระบบ ไม่ใช่บอกว่าปลอดภัยเฉยๆ.';
+      }
+    }
+  </script>
+</body>
+</html>

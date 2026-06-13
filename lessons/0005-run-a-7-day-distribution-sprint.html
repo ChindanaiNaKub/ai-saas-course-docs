@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lesson 0005: Run a 7-Day Distribution Sprint</title>
+  <style>
+    :root {
+      --ink: #17211d;
+      --muted: #5f6f66;
+      --paper: #fffdf8;
+      --soft: #f4f1e7;
+      --line: #ded9c8;
+      --green: #246b4a;
+      --green-soft: #e8f3ec;
+      --red: #9b3b2f;
+      --gold: #a86518;
+      --blue: #285f8f;
+      --shadow: 0 18px 50px rgba(35, 45, 38, .10);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+      color: var(--ink);
+      background: linear-gradient(180deg, #eef5ec 0, var(--paper) 350px);
+    }
+    header, main, footer { max-width: 1040px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+    header { padding-top: 56px; padding-bottom: 26px; }
+    .eyebrow {
+      color: var(--green);
+      font-weight: 750;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: .78rem;
+    }
+    h1, h2, h3 { line-height: 1.15; margin: 0; letter-spacing: 0; }
+    h1 { max-width: 900px; font-size: clamp(2.1rem, 5vw, 4.6rem); margin-top: 8px; }
+    h2 { font-size: clamp(1.45rem, 2.4vw, 2rem); margin-top: 46px; padding-top: 26px; border-top: 1px solid var(--line); }
+    h3 { font-size: 1.08rem; margin-top: 20px; }
+    p { margin: 12px 0; }
+    a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    .lede { max-width: 840px; font-size: 1.18rem; color: var(--muted); margin-top: 18px; }
+    .hero-grid, .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 22px; }
+    .panel, .exercise, .quiz {
+      background: rgba(255,255,255,.88);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--muted);
+      font-weight: 650;
+      font-size: .88rem;
+    }
+    .rule {
+      margin: 28px 0;
+      padding: 24px;
+      background: var(--green-soft);
+      border-left: 5px solid var(--green);
+      border-radius: 8px;
+      font-size: 1.16rem;
+      font-weight: 760;
+    }
+    ul, ol { padding-left: 22px; }
+    li { margin: 8px 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: white;
+    }
+    th, td { text-align: left; vertical-align: top; padding: 13px; border-bottom: 1px solid var(--line); }
+    th { background: var(--soft); }
+    tr:last-child td { border-bottom: 0; }
+    textarea, input, select {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      font: inherit;
+      color: var(--ink);
+      background: white;
+      margin-top: 6px;
+      margin-bottom: 12px;
+    }
+    textarea { min-height: 80px; resize: vertical; }
+    button {
+      appearance: none;
+      border: 0;
+      border-radius: 8px;
+      padding: 11px 14px;
+      background: var(--green);
+      color: white;
+      font: inherit;
+      font-weight: 750;
+      cursor: pointer;
+      margin-top: 8px;
+      margin-right: 8px;
+    }
+    button.secondary { background: #f0ede2; color: var(--ink); border: 1px solid var(--line); }
+    .feedback {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      background: var(--soft);
+      border: 1px solid var(--line);
+      color: var(--muted);
+    }
+    .good { color: var(--green); font-weight: 750; }
+    .warn { color: var(--gold); font-weight: 750; }
+    .bad { color: var(--red); font-weight: 750; }
+    .refs { font-size: .96rem; color: var(--muted); }
+    footer { padding-top: 34px; padding-bottom: 56px; color: var(--muted); }
+    @media (max-width: 760px) {
+      header, main, footer { padding-left: 16px; padding-right: 16px; }
+      header { padding-top: 36px; }
+      .hero-grid, .grid { grid-template-columns: 1fr; }
+      table { font-size: .94rem; }
+    }
+    @media print {
+      body { background: white; }
+      header, main, footer { max-width: none; padding: 16mm; }
+      .panel, .exercise, .quiz { box-shadow: none; }
+      button, textarea, input, select { display: none; }
+      a::after { content: " (" attr(href) ")"; font-size: .82em; color: #555; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">Lesson 0005 · Distribution sprint</div>
+    <h1>ทำ sprint หา lead 7 วัน ก่อนสร้างต่อ</h1>
+    <p class="lede">บทเรียนนี้สอนทักษะเดียว: เลือก distribution channel แรก แล้วพิสูจน์ใน 7 วันว่าคุณหาลูกค้ากลุ่มนี้ซ้ำได้จริงหรือไม่.</p>
+    <div class="hero-grid">
+      <div class="panel">
+        <span class="tag">กับดัก</span>
+        <p>มี offer แล้วคิดว่า "เดี๋ยวทำ product ให้ดี คนจะมาเอง". นี่คือ build-first ในชุดใหม่.</p>
+      </div>
+      <div class="panel">
+        <span class="tag">เป้าหมายใหม่</span>
+        <p>สร้าง lead list, ส่ง message, book calls, ขอ paid pilot, แล้ววัดว่า channel นี้มี signal พอให้ไปต่อไหม.</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <h2>1. Distribution เป็น skill ไม่ใช่โชค</h2>
+      <p>ไอเดีย SaaS จำนวนมากไม่ได้ตายเพราะสร้างไม่ได้ แต่ตายเพราะ founder ไม่รู้ว่าจะพาลูกค้าคนที่ 1, 2, 3, 10 เข้ามายังไง. บทเรียนก่อนๆ ทำให้คุณมี segment, interview signal, manual pilot, และ paid offer. ตอนนี้ต้องทดสอบว่า <strong>หาลูกค้าซ้ำได้ไหม</strong>.</p>
+      <p><a href="https://brianbalfour.com/essays/product-channel-fit-for-growth">Brian Balfour</a> อธิบายว่า product-channel fit สำคัญมาก เพราะ product ที่โตผ่าน cold outbound, SEO, community, หรือ partner ต้องถูกออกแบบต่างกัน. YC ก็ย้ำว่า early founders ต้องทำสิ่งที่ยัง scale ไม่ได้ เช่น recruit users เองและคุยกับ users เอง (<a href="https://www.ycombinator.com/library/96-do-things-that-don-t-scale">Do Things That Don't Scale</a>).</p>
+      <div class="rule">ถ้าคุณยังหา lead 50 รายของ segment นี้ไม่ได้ อย่าเพิ่งถามว่าจะ scale ยังไง. ให้พิสูจน์ก่อนว่า reach ได้จริง.</div>
+    </section>
+
+    <section>
+      <h2>2. เลือก channel แรกจาก access ไม่ใช่ความเท่</h2>
+      <table>
+        <thead>
+          <tr><th>Channel</th><th>ใช้เมื่อ</th><th>เหมาะกับไทย/Global ยังไง</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Warm intro</td>
+            <td>คุณมีคนรู้จักในวงการหรือขอ referral ได้</td>
+            <td>ดีมากในไทย เพราะ trust และ relationship ช่วยเปิดประตู</td>
+          </tr>
+          <tr>
+            <td>Cold DM/email</td>
+            <td>หา list รายชื่อได้ชัด เช่น Google Maps, LinkedIn, directories</td>
+            <td>ดีทั้งไทยและ global ถ้า segment แคบและ message เฉพาะ</td>
+          </tr>
+          <tr>
+            <td>Community</td>
+            <td>ลูกค้าอยู่ใน Facebook group, LINE group, Reddit, forum, events</td>
+            <td>ไทยใช้ community ได้ดี แต่ต้องให้ value ก่อน ไม่ spam</td>
+          </tr>
+          <tr>
+            <td>Content/search</td>
+            <td>ลูกค้าค้นหาวิธีแก้ปัญหาด้วย keyword ชัด</td>
+            <td>global มักแรงกว่า ถ้า search intent เป็นภาษาอังกฤษ</td>
+          </tr>
+          <tr>
+            <td>Partner</td>
+            <td>มี agency, consultant, vendor ที่ขายให้ลูกค้ากลุ่มนี้อยู่แล้ว</td>
+            <td>ดีมากสำหรับ B2B ไทย เพราะ partner มี trust อยู่แล้ว</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>3. 7-day distribution sprint</h2>
+      <ol>
+        <li><strong>Day 1:</strong> เลือก segment เดียวและ channel เดียว เช่น "ร้านอาหาร LINE OA ผ่าน cold DM Facebook page"</li>
+        <li><strong>Day 2:</strong> สร้าง lead list 50 ราย พร้อมชื่อธุรกิจ, contact, เหตุผลว่าทำไม fit</li>
+        <li><strong>Day 3:</strong> เขียน outreach 2 version: pain-first และ outcome-first</li>
+        <li><strong>Day 4:</strong> ส่ง 25 messages แบบ manual และจดผล</li>
+        <li><strong>Day 5:</strong> ส่งอีก 25 messages และปรับ wording จาก replies</li>
+        <li><strong>Day 6:</strong> follow-up คนที่ตอบ/เปิดบทสนทนา ขอ call 15 นาที หรือ paid pilot</li>
+        <li><strong>Day 7:</strong> สรุป numbers และ objections แล้วตัดสินใจ continue, adjust, หรือ switch channel</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>4. Message ที่ไม่เหมือน spam</h2>
+      <p>สูตรง่าย:</p>
+      <div class="rule">Context + Pain guess + Specific outcome + Small ask</div>
+      <table>
+        <thead>
+          <tr><th>ส่วน</th><th>ตัวอย่าง</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Context</td>
+            <td>สวัสดีครับ ผมเห็นว่าร้านคุณรับออเดอร์ผ่าน LINE และมีหลายเมนูโปรโมชัน</td>
+          </tr>
+          <tr>
+            <td>Pain guess</td>
+            <td>เลยสงสัยว่าช่วงพีคมีเคสลูกค้าหลุดเพราะตอบไม่ทันบ้างไหมครับ</td>
+          </tr>
+          <tr>
+            <td>Specific outcome</td>
+            <td>ผมกำลังทำ pilot วิเคราะห์แชท 100 รายการ แล้วส่ง lost order report ภายใน 24 ชม.</td>
+          </tr>
+          <tr>
+            <td>Small ask</td>
+            <td>ถ้าเรื่องนี้ใกล้เคียง ผมขอถาม workflow 15 นาทีได้ไหมครับ</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="exercise">
+      <h2>5. แบบฝึกหัด: ออกแบบ distribution sprint</h2>
+      <p>กรอกแผน แล้วกดประเมิน. ตัวประเมินนี้เป็น JavaScript ในไฟล์ ไม่เรียก AI และไม่ส่งข้อมูลออกไปไหน.</p>
+
+      <label for="segment"><strong>1. Segment เดียวที่จะทดสอบ</strong></label>
+      <textarea id="segment" placeholder="เช่น ร้านอาหาร 1-3 สาขาในกรุงเทพที่รับออเดอร์ผ่าน LINE OA"></textarea>
+
+      <label for="channel"><strong>2. Channel แรก</strong></label>
+      <select id="channel">
+        <option value="">เลือก channel</option>
+        <option>Warm intro</option>
+        <option>Cold DM/email</option>
+        <option>Community</option>
+        <option>Content/search</option>
+        <option>Partner</option>
+      </select>
+
+      <label for="leadSource"><strong>3. จะหา lead 50 รายจากไหน</strong></label>
+      <textarea id="leadSource" placeholder="เช่น Google Maps + Facebook pages ของร้านอาหาร + เพื่อนที่ทำ POS ขอ intro"></textarea>
+
+      <label for="offer"><strong>4. Paid pilot offer หนึ่งประโยค</strong></label>
+      <textarea id="offer" placeholder="เช่น ผมช่วยร้านคุณวิเคราะห์แชท 100 รายการเพื่อหา lost order ภายใน 24 ชม. ราคา pilot 1,500 บาท"></textarea>
+
+      <label for="message"><strong>5. Outreach message draft</strong></label>
+      <textarea id="message" placeholder="เขียน message ที่จะส่งจริง 3-5 บรรทัด"></textarea>
+
+      <button onclick="scoreSprint()">ประเมิน sprint</button>
+      <button class="secondary" onclick="loadExample()">ใส่ตัวอย่าง</button>
+      <div id="sprintFeedback" class="feedback">รอคำตอบของคุณอยู่.</div>
+    </section>
+
+    <section class="exercise">
+      <h2>6. Sprint result calculator</h2>
+      <p>หลังส่งจริง ใส่ตัวเลขเพื่ออ่าน signal แบบเร็ว.</p>
+      <label for="leads"><strong>จำนวน lead ที่ติดต่อ</strong></label>
+      <input id="leads" type="number" min="0" value="50">
+      <label for="replies"><strong>จำนวน reply</strong></label>
+      <input id="replies" type="number" min="0" value="0">
+      <label for="calls"><strong>จำนวน call ที่นัดได้</strong></label>
+      <input id="calls" type="number" min="0" value="0">
+      <label for="pilots"><strong>จำนวน paid/serious pilot</strong></label>
+      <input id="pilots" type="number" min="0" value="0">
+      <button onclick="scoreResults()">อ่านผล sprint</button>
+      <div id="resultFeedback" class="feedback">ใส่ตัวเลขหลังทำ outreach.</div>
+    </section>
+
+    <section class="quiz">
+      <h2>7. Mini Quiz</h2>
+      <p><strong>สถานการณ์:</strong> คุณส่ง DM 50 ร้าน ได้ reply 0. ควรสรุปว่าอะไร?</p>
+      <button onclick="quiz('a')">A. Product idea แย่แน่นอน เลิกทันที</button>
+      <button onclick="quiz('b')">B. ยังสรุป product ไม่ได้ ต้องดู list quality, message, channel, และ segment ก่อน</button>
+      <button onclick="quiz('c')">C. รีบ build product ให้เสร็จก่อน คนจะได้เชื่อ</button>
+      <div id="quizFeedback" class="feedback">เลือกคำตอบหนึ่งข้อ.</div>
+    </section>
+
+    <section>
+      <h2>8. Homework ก่อนบทเรียน 6</h2>
+      <p>เลือก 1 channel แล้วทำจริง 7 วัน หรืออย่างน้อยเริ่ม Day 1-2:</p>
+      <ol>
+        <li>เขียน segment 1 ประโยค</li>
+        <li>เลือก channel เดียว</li>
+        <li>ทำ lead list 50 ราย</li>
+        <li>เขียน message 2 version</li>
+        <li>ส่งจริงอย่างน้อย 20 รายแรก</li>
+      </ol>
+      <p>เอา message draft หรือ result กลับมาให้ผมดูได้ ผมจะช่วย diagnose ว่า issue อยู่ที่ segment, offer, message, หรือ channel.</p>
+    </section>
+
+    <section>
+      <h2>References</h2>
+      <ul class="refs">
+        <li><a href="https://brianbalfour.com/essays/product-channel-fit-for-growth">Brian Balfour: Product Channel Fit Will Make or Break Your Growth Strategy</a></li>
+        <li><a href="https://brianbalfour.com/four-fits-growth-framework">Brian Balfour: Four Fits For $100M+ Growth</a></li>
+        <li><a href="https://www.ycombinator.com/library/96-do-things-that-don-t-scale">Y Combinator: Do Things That Don't Scale</a></li>
+        <li><a href="https://www.ycombinator.com/library/4D-yc-s-essential-startup-advice">Y Combinator: YC's Essential Startup Advice</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>Reference sheet: <a href="../reference/0005-distribution-sprint-cheatsheet.html">Distribution Sprint Cheat Sheet</a></p>
+  </footer>
+
+  <script>
+    function hasAny(text, terms) {
+      return terms.some(function(term) { return term.test(text); });
+    }
+
+    function wordCount(text) {
+      return text.trim().split(/\s+/).filter(Boolean).length;
+    }
+
+    function scoreSprint() {
+      const segment = document.getElementById('segment').value.trim();
+      const channel = document.getElementById('channel').value.trim();
+      const leadSource = document.getElementById('leadSource').value.trim();
+      const offer = document.getElementById('offer').value.trim();
+      const message = document.getElementById('message').value.trim();
+      let score = 0;
+      const notes = [];
+
+      if (wordCount(segment) >= 6 && hasAny(segment.toLowerCase(), [/ร้าน|คลินิก|agency|เจ้าของ|ทีม|บริษัท|สาขา|line|b2b|sme|กรุงเทพ|global/])) {
+        score++;
+        notes.push('<span class="good">Segment:</span> แคบพอเริ่มหา lead list.');
+      } else {
+        notes.push('<span class="bad">Segment:</span> ยังควรระบุ role, business type, size, context ให้แคบกว่าเดิม.');
+      }
+
+      if (channel) {
+        score++;
+        notes.push('<span class="good">Channel:</span> เลือกช่องทางเดียว ทำให้ sprint วัดผลได้.');
+      } else {
+        notes.push('<span class="bad">Channel:</span> ต้องเลือก channel เดียวก่อน อย่าทดลองทุกอย่างพร้อมกัน.');
+      }
+
+      if (wordCount(leadSource) >= 7 && hasAny(leadSource.toLowerCase(), [/google|maps|facebook|line|linkedin|directory|รายชื่อ|intro|partner|กลุ่ม|community|เพจ/])) {
+        score++;
+        notes.push('<span class="good">Lead source:</span> มีแหล่งหา 50 รายชื่อจริง.');
+      } else {
+        notes.push('<span class="warn">Lead source:</span> ระบุให้ชัดว่าจะหา 50 leads จากไหน ไม่ใช่แค่ "ออนไลน์".');
+      }
+
+      if (wordCount(offer) >= 10 && hasAny(offer.toLowerCase(), [/ราคา|บาท|pilot|ภายใน|วัน|ชั่วโมง|report|รายงาน|ลด|เพิ่ม|วิเคราะห์|สรุป/])) {
+        score++;
+        notes.push('<span class="good">Offer:</span> มี outcome และ commitment ชัดพอใช้ใน outreach.');
+      } else {
+        notes.push('<span class="warn">Offer:</span> เพิ่ม outcome, time window, และราคา/commitment ให้ชัด.');
+      }
+
+      if (wordCount(message) >= 18 && hasAny(message.toLowerCase(), [/เห็น|สงสัย|ปัญหา|ช่วย|ขอ|คุย|นาที|workflow|แชท|ลูกค้า|report|รายงาน/])) {
+        score++;
+        notes.push('<span class="good">Message:</span> ดูเป็น message ที่ส่งจริงได้ ไม่ใช่ slogan.');
+      } else {
+        notes.push('<span class="warn">Message:</span> เขียนเป็น 3-5 บรรทัดที่มี context + pain + outcome + small ask.');
+      }
+
+      let verdict = '';
+      if (score >= 5) verdict = '<p><strong class="good">พร้อมทำ sprint:</strong> ส่งจริง 20-50 ราย แล้ววัด reply/call/pilot.</p>';
+      else if (score >= 3) verdict = '<p><strong class="warn">ใกล้พร้อม:</strong> ปรับช่องที่ยังอ่อนก่อนส่งจริง.</p>';
+      else verdict = '<p><strong class="bad">ยังเสี่ยงยิงมั่ว:</strong> segment/channel/lead source ยังไม่ชัดพอ.</p>';
+
+      document.getElementById('sprintFeedback').innerHTML = verdict + '<ul><li>' + notes.join('</li><li>') + '</li></ul>';
+    }
+
+    function loadExample() {
+      document.getElementById('segment').value = 'ร้านอาหาร 1-3 สาขาในกรุงเทพที่รับออเดอร์ผ่าน LINE OA และมี Facebook page active';
+      document.getElementById('channel').value = 'Cold DM/email';
+      document.getElementById('leadSource').value = 'Google Maps ร้านอาหารในกรุงเทพ + Facebook pages ของร้าน + ขอ intro จากเพื่อนที่ทำ POS';
+      document.getElementById('offer').value = 'ผมช่วยร้านคุณวิเคราะห์แชท 100 รายการเพื่อหา lost order ภายใน 24 ชม. ราคา pilot 1,500 บาท';
+      document.getElementById('message').value = 'สวัสดีครับ ผมเห็นว่าร้านคุณรับออเดอร์ผ่าน LINE เลยสงสัยว่าช่วงพีคมีเคสลูกค้าหลุดเพราะตอบไม่ทันไหมครับ ตอนนี้ผมทำ pilot วิเคราะห์แชท 100 รายการ แล้วส่ง lost order report ภายใน 24 ชม. ถ้าใกล้เคียง ผมขอคุย workflow 15 นาทีได้ไหมครับ';
+      scoreSprint();
+    }
+
+    function scoreResults() {
+      const leads = Number(document.getElementById('leads').value || 0);
+      const replies = Number(document.getElementById('replies').value || 0);
+      const calls = Number(document.getElementById('calls').value || 0);
+      const pilots = Number(document.getElementById('pilots').value || 0);
+      const replyRate = leads > 0 ? Math.round((replies / leads) * 100) : 0;
+      const callRate = leads > 0 ? Math.round((calls / leads) * 100) : 0;
+      let verdict = '';
+
+      if (leads < 20) {
+        verdict = '<p><strong class="warn">sample ยังเล็ก:</strong> ส่งให้ถึงอย่างน้อย 20-50 leads ก่อนตัดสิน channel.</p>';
+      } else if (pilots >= 1 && calls >= 3) {
+        verdict = '<p><strong class="good">มี distribution signal:</strong> ทำ sprint ซ้ำกับ segment เดิม และ refine offer.</p>';
+      } else if (replies >= 5 && calls < 3) {
+        verdict = '<p><strong class="warn">message มีชีวิต แต่ ask/offer อาจยังไม่แรง:</strong> ดู objections แล้วปรับ offer.</p>';
+      } else if (replies === 0) {
+        verdict = '<p><strong class="bad">ยังไม่มี channel signal:</strong> ตรวจ list quality, personalization, channel fit, และ pain wording ก่อนสรุปว่า idea แย่.</p>';
+      } else {
+        verdict = '<p><strong class="warn">signal กลาง:</strong> ทำอีก sprint โดยเปลี่ยนแค่หนึ่งตัวแปร เช่น message หรือ segment.</p>';
+      }
+
+      document.getElementById('resultFeedback').innerHTML = verdict + '<p>Reply rate: <strong>' + replyRate + '%</strong>. Call rate: <strong>' + callRate + '%</strong>. Paid/serious pilots: <strong>' + pilots + '</strong>.</p>';
+    }
+
+    function quiz(answer) {
+      const el = document.getElementById('quizFeedback');
+      if (answer === 'b') {
+        el.innerHTML = '<span class="good">ถูก.</span> Reply 0 อาจแปลว่า list ผิด, message generic, channel ไม่ fit, หรือ pain ไม่ชัด ยังไม่ใช่หลักฐานสุดท้ายว่า product ไม่มี demand.';
+      } else if (answer === 'a') {
+        el.innerHTML = '<span class="warn">เร็วไป.</span> Sprint หนึ่งรอบที่ reply 0 ยังต้อง diagnose channel ก่อน kill idea.';
+      } else {
+        el.innerHTML = '<span class="bad">นี่คือ build-first.</span> ถ้าติดต่อคนไม่ได้เลย product ที่เสร็จขึ้นไม่ได้แก้ distribution risk.';
+      }
+    }
+  </script>
+</body>
+</html>

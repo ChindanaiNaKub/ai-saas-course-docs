@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lesson 0007: Turn Pilots Into Retention Loops</title>
+  <style>
+    :root {
+      --ink: #17211d;
+      --muted: #5f6f66;
+      --paper: #fffdf8;
+      --soft: #f4f1e7;
+      --line: #ded9c8;
+      --green: #246b4a;
+      --green-soft: #e8f3ec;
+      --red: #9b3b2f;
+      --gold: #a86518;
+      --blue: #285f8f;
+      --shadow: 0 18px 50px rgba(35, 45, 38, .10);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+      color: var(--ink);
+      background: linear-gradient(180deg, #eef5ec 0, var(--paper) 350px);
+    }
+    header, main, footer { max-width: 1040px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+    header { padding-top: 56px; padding-bottom: 26px; }
+    .eyebrow {
+      color: var(--green);
+      font-weight: 750;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: .78rem;
+    }
+    h1, h2, h3 { line-height: 1.15; margin: 0; letter-spacing: 0; }
+    h1 { max-width: 900px; font-size: clamp(2.1rem, 5vw, 4.6rem); margin-top: 8px; }
+    h2 { font-size: clamp(1.45rem, 2.4vw, 2rem); margin-top: 46px; padding-top: 26px; border-top: 1px solid var(--line); }
+    h3 { font-size: 1.08rem; margin-top: 20px; }
+    p { margin: 12px 0; }
+    a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    .lede { max-width: 840px; font-size: 1.18rem; color: var(--muted); margin-top: 18px; }
+    .hero-grid, .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 22px; }
+    .panel, .exercise, .quiz {
+      background: rgba(255,255,255,.88);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--muted);
+      font-weight: 650;
+      font-size: .88rem;
+    }
+    .rule {
+      margin: 28px 0;
+      padding: 24px;
+      background: var(--green-soft);
+      border-left: 5px solid var(--green);
+      border-radius: 8px;
+      font-size: 1.16rem;
+      font-weight: 760;
+    }
+    ul, ol { padding-left: 22px; }
+    li { margin: 8px 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: white;
+    }
+    th, td { text-align: left; vertical-align: top; padding: 13px; border-bottom: 1px solid var(--line); }
+    th { background: var(--soft); }
+    tr:last-child td { border-bottom: 0; }
+    textarea, input, select {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      font: inherit;
+      color: var(--ink);
+      background: white;
+      margin-top: 6px;
+      margin-bottom: 12px;
+    }
+    textarea { min-height: 78px; resize: vertical; }
+    button {
+      appearance: none;
+      border: 0;
+      border-radius: 8px;
+      padding: 11px 14px;
+      background: var(--green);
+      color: white;
+      font: inherit;
+      font-weight: 750;
+      cursor: pointer;
+      margin-top: 8px;
+      margin-right: 8px;
+    }
+    button.secondary { background: #f0ede2; color: var(--ink); border: 1px solid var(--line); }
+    .feedback {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      background: var(--soft);
+      border: 1px solid var(--line);
+      color: var(--muted);
+    }
+    .good { color: var(--green); font-weight: 750; }
+    .warn { color: var(--gold); font-weight: 750; }
+    .bad { color: var(--red); font-weight: 750; }
+    .refs { font-size: .96rem; color: var(--muted); }
+    footer { padding-top: 34px; padding-bottom: 56px; color: var(--muted); }
+    @media (max-width: 760px) {
+      header, main, footer { padding-left: 16px; padding-right: 16px; }
+      header { padding-top: 36px; }
+      .hero-grid, .grid { grid-template-columns: 1fr; }
+      table { font-size: .94rem; }
+    }
+    @media print {
+      body { background: white; }
+      header, main, footer { max-width: none; padding: 16mm; }
+      .panel, .exercise, .quiz { box-shadow: none; }
+      button, textarea, input, select { display: none; }
+      a::after { content: " (" attr(href) ")"; font-size: .82em; color: #555; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">Lesson 0007 · Retention loop</div>
+    <h1>เปลี่ยน paid pilot ให้เป็น retention loop</h1>
+    <p class="lede">บทเรียนนี้สอนทักษะเดียว: นิยามเหตุการณ์ที่พิสูจน์ว่าลูกค้าได้ value ซ้ำ เพื่อไม่ให้คุณสร้างแค่โปรเจกต์ครั้งเดียวแล้วเรียกมันว่า SaaS.</p>
+    <div class="hero-grid">
+      <div class="panel">
+        <span class="tag">กับดัก</span>
+        <p>มีคนจ่าย pilot แล้วรีบทำ subscription page ทั้งที่ยังไม่รู้ว่าเขาจะกลับมาใช้ทุกสัปดาห์/เดือนเพราะอะไร.</p>
+      </div>
+      <div class="panel">
+        <span class="tag">เป้าหมาย</span>
+        <p>หา repeat trigger, activation event, retention event และ build เฉพาะ loop ที่ทำให้ลูกค้ากลับมาใช้ซ้ำ.</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <h2>1. SaaS ชนะด้วย repeat value</h2>
+      <p>การมี subscription ไม่ได้ทำให้ product เป็น SaaS ที่ดีโดยอัตโนมัติ. SaaS ที่ดีคือ product ที่ฝังอยู่ในงานที่เกิดซ้ำ และลูกค้ากลับมาใช้เพราะไม่ใช้แล้วเสีย value. Stripe อธิบายว่า SaaS ต้องดู metrics เช่น activation, retention, churn, and expansion (<a href="https://stripe.com/resources/more/essential-saas-metrics">Stripe SaaS metrics</a>). สำหรับระยะเริ่มต้น คุณยังไม่ต้องมี dashboard metrics ซับซ้อน แต่ต้องนิยาม event ให้ถูก.</p>
+      <div class="rule">อย่าวัด login. วัดเหตุการณ์ที่แปลว่า "ลูกค้าได้ value จริง และมีเหตุผลจะกลับมาใช้ซ้ำ".</div>
+    </section>
+
+    <section>
+      <h2>2. จาก pilot เป็น loop</h2>
+      <p>Manual pilot มักเป็นงานครั้งเดียว เช่น report แรก, analysis แรก, audit แรก. Retention loop คือการถามว่า "งานนี้เกิดซ้ำตามธรรมชาติไหม และ product จะเข้าไปอยู่ตรงไหนในรอบซ้ำนั้น?"</p>
+      <table>
+        <thead>
+          <tr><th>Paid pilot</th><th>Repeat trigger</th><th>Retention event</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>วิเคราะห์แชท LINE 100 รายการ</td>
+            <td>ทุกสัปดาห์มีแชทใหม่และเจ้าของอยากรู้ lost order</td>
+            <td class="good">อัปโหลดแชทใหม่ทุกสัปดาห์ และเปิด report ใน meeting</td>
+          </tr>
+          <tr>
+            <td>ทำ agency campaign report ครั้งแรก</td>
+            <td>ก่อน client call รายสัปดาห์/รายเดือน</td>
+            <td class="good">สร้าง report ใหม่ก่อน client call อย่างน้อยเดือนละ 1 ครั้ง</td>
+          </tr>
+          <tr>
+            <td>ทำ no-show analysis ให้คลินิก</td>
+            <td>ทุกวันมี appointment พรุ่งนี้ที่ต้อง confirm</td>
+            <td class="good">ส่ง appointment list ใหม่ และใช้ call list ก่อนวันนัด</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>3. Activation event vs retention event</h2>
+      <div class="grid">
+        <div class="panel">
+          <h3>Activation event</h3>
+          <p>ครั้งแรกที่ลูกค้าได้ value. เช่น report แรกถูกใช้ในประชุม, reminder list แรกถูกส่งให้ทีม, insight แรกทำให้เปลี่ยน process.</p>
+        </div>
+        <div class="panel">
+          <h3>Retention event</h3>
+          <p>การกลับมาทำ action เดิม เพราะงานเกิดซ้ำ. เช่น อัปโหลดข้อมูลใหม่, สร้าง report รอบถัดไป, เช็ค alert ทุกเช้า, เชิญทีมมาใช้ workflow.</p>
+        </div>
+      </div>
+      <p>ถ้าคุณนิยามผิด เช่น activation = "สมัคร account" คุณจะสร้าง onboarding สวยๆ แต่ไม่รู้ว่าลูกค้าได้ value หรือยัง.</p>
+    </section>
+
+    <section>
+      <h2>4. Build เพื่อ loop ไม่ใช่ build เพื่อ checklist</h2>
+      <table>
+        <thead>
+          <tr><th>อยาก build</th><th>ถามก่อน</th><th>build ที่ดีกว่า</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Dashboard</td>
+            <td>ลูกค้าต้องกลับมาดูอะไรซ้ำ และเมื่อไหร่?</td>
+            <td class="good">weekly report page พร้อม upload รอบถัดไป</td>
+          </tr>
+          <tr>
+            <td>User roles</td>
+            <td>ใครต้องทำ action ใน loop จริง?</td>
+            <td class="good">ส่ง report ให้ owner + checklist ให้ admin</td>
+          </tr>
+          <tr>
+            <td>Billing</td>
+            <td>ลูกค้าจะจ่ายซ้ำเพราะ event ไหน?</td>
+            <td class="good">paid monthly pilot tied to repeated report/action</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="exercise">
+      <h2>5. แบบฝึกหัด: ออกแบบ retention loop</h2>
+      <p>กรอก loop ของคุณ แล้วกดประเมิน. ตัวประเมินนี้เป็น JavaScript ในไฟล์ ไม่เรียก AI และไม่ส่งข้อมูลออกไปไหน.</p>
+
+      <label for="pilot"><strong>1. Paid pilot / outcome แรก</strong></label>
+      <textarea id="pilot" placeholder="เช่น lost order report จากแชท LINE 100 รายการ"></textarea>
+
+      <label for="trigger"><strong>2. Repeat trigger</strong></label>
+      <textarea id="trigger" placeholder="เช่น ทุกสัปดาห์ร้านมีแชทใหม่และอยากรู้ว่าลูกค้าหลุดตรงไหน"></textarea>
+
+      <label for="input"><strong>3. Input ที่ลูกค้าต้องส่งซ้ำ</strong></label>
+      <textarea id="input" placeholder="เช่น export chat รายสัปดาห์ หรือ forward แชทเข้า folder"></textarea>
+
+      <label for="activation"><strong>4. Activation event</strong></label>
+      <textarea id="activation" placeholder="เช่น ลูกค้าใช้ report แรกในประชุมทีม และเลือก action 1 อย่างไปแก้"></textarea>
+
+      <label for="retention"><strong>5. Retention event</strong></label>
+      <textarea id="retention" placeholder="เช่น ลูกค้าอัปโหลดแชทใหม่และดู report ใหม่ทุกสัปดาห์ 3 สัปดาห์ติด"></textarea>
+
+      <button onclick="scoreLoop()">ประเมิน loop</button>
+      <button class="secondary" onclick="loadExample()">ใส่ตัวอย่าง</button>
+      <div id="loopFeedback" class="feedback">รอคำตอบของคุณอยู่.</div>
+    </section>
+
+    <section class="exercise">
+      <h2>6. Repeat revenue sanity check</h2>
+      <p>ใช้ดูว่าเหมาะกับ subscription หรือควรเป็น paid project / usage-based / monthly service ก่อน.</p>
+      <label for="frequency"><strong>งานนี้เกิดซ้ำกี่ครั้งต่อเดือน</strong></label>
+      <input id="frequency" type="number" min="0" value="4">
+      <label for="value"><strong>value ต่อรอบโดยประมาณ (บาท)</strong></label>
+      <input id="value" type="number" min="0" value="3000">
+      <label for="cost"><strong>ต้นทุนส่งมอบต่อรอบของคุณ (บาท)</strong></label>
+      <input id="cost" type="number" min="0" value="500">
+      <button onclick="checkRevenue()">ตรวจ repeat model</button>
+      <div id="revenueFeedback" class="feedback">ใส่ตัวเลขแล้วกดตรวจ.</div>
+    </section>
+
+    <section class="quiz">
+      <h2>7. Mini Quiz</h2>
+      <p><strong>สถานการณ์:</strong> ลูกค้าจ่าย pilot 1 ครั้ง ชอบ report แต่ยังไม่รู้ว่าจะใช้ครั้งต่อไปเมื่อไหร่. ควรทำอะไร?</p>
+      <button onclick="quiz('a')">A. ทำ subscription page ทันที</button>
+      <button onclick="quiz('b')">B. ถาม workflow รอบถัดไป และเสนอ monthly/weekly pilot ที่ผูกกับ trigger ซ้ำ</button>
+      <button onclick="quiz('c')">C. เพิ่ม dashboard กับ user roles ก่อน</button>
+      <div id="quizFeedback" class="feedback">เลือกคำตอบหนึ่งข้อ.</div>
+    </section>
+
+    <section>
+      <h2>8. Homework ก่อนบทเรียน 8</h2>
+      <p>เลือก paid pilot หนึ่งอัน แล้วเขียน 3 บรรทัด:</p>
+      <ol>
+        <li>Activation event: ลูกค้าได้ value ครั้งแรกเมื่อไหร่</li>
+        <li>Retention event: ลูกค้าต้องทำอะไรซ้ำเพื่อได้ value รอบถัดไป</li>
+        <li>Build next: feature เล็กที่สุดที่ทำให้ repeat event ง่ายขึ้น</li>
+      </ol>
+      <p>ส่งกลับมาให้ผมดูได้เลย ผมจะช่วยตัดให้เหลือ loop ที่วัดได้จริง.</p>
+    </section>
+
+    <section>
+      <h2>References</h2>
+      <ul class="refs">
+        <li><a href="https://stripe.com/resources/more/essential-saas-metrics">Stripe: Essential SaaS Metrics</a></li>
+        <li><a href="https://www.ycombinator.com/library/4D-yc-s-essential-startup-advice">Y Combinator: YC's Essential Startup Advice</a></li>
+        <li><a href="https://www.ycombinator.com/library/Io-how-to-build-an-mvp">Y Combinator: How to Build an MVP</a></li>
+        <li><a href="https://brianbalfour.com/four-fits-growth-framework">Brian Balfour: Four Fits For $100M+ Growth</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>Reference sheet: <a href="../reference/0007-retention-loop-cheatsheet.html">Retention Loop Cheat Sheet</a></p>
+  </footer>
+
+  <script>
+    function hasAny(text, terms) {
+      return terms.some(function(term) { return term.test(text); });
+    }
+
+    function wordCount(text) {
+      return text.trim().split(/\s+/).filter(Boolean).length;
+    }
+
+    function scoreLoop() {
+      const pilot = document.getElementById('pilot').value.trim();
+      const trigger = document.getElementById('trigger').value.trim();
+      const input = document.getElementById('input').value.trim();
+      const activation = document.getElementById('activation').value.trim();
+      const retention = document.getElementById('retention').value.trim();
+      let score = 0;
+      const notes = [];
+
+      if (wordCount(pilot) >= 5 && hasAny(pilot.toLowerCase(), [/report|รายงาน|สรุป|วิเคราะห์|ลด|เพิ่ม|list|แชท|pilot/])) {
+        score++;
+        notes.push('<span class="good">Pilot:</span> outcome แรกจับต้องได้.');
+      } else {
+        notes.push('<span class="warn">Pilot:</span> เขียน outcome แรกให้ชัดกว่า feature.');
+      }
+
+      if (wordCount(trigger) >= 7 && hasAny(trigger.toLowerCase(), [/ทุก|รายวัน|รายสัปดาห์|รายเดือน|สัปดาห์|เดือน|วัน|ใหม่|ก่อน|หลัง/])) {
+        score += 2;
+        notes.push('<span class="good">Trigger:</span> มีเหตุผลตามธรรมชาติให้กลับมาใช้ซ้ำ.');
+      } else {
+        notes.push('<span class="bad">Trigger:</span> ยังไม่เห็นว่างานนี้เกิดซ้ำเมื่อไหร่.');
+      }
+
+      if (wordCount(input) >= 5 && hasAny(input.toLowerCase(), [/ส่ง|อัปโหลด|upload|export|เชื่อม|ข้อมูล|แชท|ไฟล์|sheet|list/])) {
+        score++;
+        notes.push('<span class="good">Input:</span> เห็น action ที่ลูกค้าต้องทำซ้ำ.');
+      } else {
+        notes.push('<span class="warn">Input:</span> ระบุข้อมูลหรือ action ที่ลูกค้าต้องส่งซ้ำ.');
+      }
+
+      if (wordCount(activation) >= 7 && hasAny(activation.toLowerCase(), [/ใช้|ประชุม|ตัดสินใจ|แก้|action|ส่ง|ลด|เพิ่ม|ครั้งแรก|report|รายงาน/])) {
+        score += 2;
+        notes.push('<span class="good">Activation:</span> วัด value ครั้งแรก ไม่ใช่แค่ signup.');
+      } else {
+        notes.push('<span class="warn">Activation:</span> นิยามว่า value ครั้งแรกเกิดตอนไหน.');
+      }
+
+      if (wordCount(retention) >= 8 && hasAny(retention.toLowerCase(), [/ทุก|ซ้ำ|สัปดาห์|เดือน|รอบ|ติด|ครั้ง|กลับ|ใหม่|ใช้ต่อ|อัปโหลด/])) {
+        score += 2;
+        notes.push('<span class="good">Retention:</span> มี repeat event ที่วัดได้.');
+      } else {
+        notes.push('<span class="bad">Retention:</span> ยังไม่เห็น event ที่พิสูจน์การกลับมาใช้ซ้ำ.');
+      }
+
+      let verdict = '';
+      if (score >= 8) {
+        verdict = '<p><strong class="good">Loop ชัด:</strong> build next ควรทำให้ retention event ง่ายขึ้น ไม่ใช่เพิ่ม feature รอบนอก.</p>';
+      } else if (score >= 5) {
+        verdict = '<p><strong class="warn">ใกล้เป็น loop:</strong> เติม trigger หรือ retention event ให้ชัดก่อนขาย subscription.</p>';
+      } else {
+        verdict = '<p><strong class="bad">ยังเป็น project มากกว่า SaaS:</strong> กลับไปหา repeat trigger และ workflow รอบถัดไป.</p>';
+      }
+
+      document.getElementById('loopFeedback').innerHTML = verdict + '<p>Loop score: <strong>' + score + '/8</strong></p><ul><li>' + notes.join('</li><li>') + '</li></ul>';
+    }
+
+    function loadExample() {
+      document.getElementById('pilot').value = 'lost order report จากแชท LINE 100 รายการ';
+      document.getElementById('trigger').value = 'ทุกสัปดาห์ร้านมีแชทใหม่และเจ้าของอยากรู้ว่าลูกค้าหลุดตรงไหนก่อนประชุมทีม';
+      document.getElementById('input').value = 'ลูกค้าอัปโหลดหรือ export chat รายสัปดาห์เข้า template เดิม';
+      document.getElementById('activation').value = 'ลูกค้าใช้ report แรกในประชุมทีมและเลือก action 1 อย่างไปแก้ response workflow';
+      document.getElementById('retention').value = 'ลูกค้าอัปโหลดแชทใหม่และดู report ใหม่ทุกสัปดาห์ 3 สัปดาห์ติด';
+      scoreLoop();
+    }
+
+    function checkRevenue() {
+      const frequency = Number(document.getElementById('frequency').value || 0);
+      const value = Number(document.getElementById('value').value || 0);
+      const cost = Number(document.getElementById('cost').value || 0);
+      const monthlyValue = frequency * value;
+      const monthlyCost = frequency * cost;
+      const gross = monthlyValue - monthlyCost;
+      let verdict = '';
+
+      if (frequency >= 4 && gross > 0) {
+        verdict = '<p><strong class="good">เหมาะกับ recurring model:</strong> งานเกิดซ้ำบ่อยและ value เหลือหลังต้นทุน.</p>';
+      } else if (frequency >= 1 && gross > 0) {
+        verdict = '<p><strong class="warn">อาจเริ่มเป็น monthly service/pilot ก่อน:</strong> งานซ้ำไม่ถี่มาก ต้องพิสูจน์ว่าลูกค้าอยากจ่ายต่อ.</p>';
+      } else if (gross <= 0) {
+        verdict = '<p><strong class="bad">model เสี่ยง:</strong> ต้นทุนต่อรอบกิน value เกินไป ต้องลด cost, ขึ้นราคา, หรือเปลี่ยน segment.</p>';
+      } else {
+        verdict = '<p><strong class="warn">ยังไม่เห็น repeat:</strong> งานนี้อาจเป็น project/one-off มากกว่า SaaS.</p>';
+      }
+
+      document.getElementById('revenueFeedback').innerHTML = verdict + '<p>Value ต่อเดือนโดยประมาณ: <strong>' + monthlyValue.toLocaleString() + ' บาท</strong>. ต้นทุนต่อเดือน: <strong>' + monthlyCost.toLocaleString() + ' บาท</strong>. ส่วนต่างก่อนค่าใช้จ่ายอื่น: <strong>' + gross.toLocaleString() + ' บาท</strong>.</p>';
+    }
+
+    function quiz(answer) {
+      const el = document.getElementById('quizFeedback');
+      if (answer === 'b') {
+        el.innerHTML = '<span class="good">ถูก.</span> ก่อนทำ subscription ต้องรู้ trigger รอบถัดไป และเสนอ repeat pilot ที่ผูกกับ workflow จริง.';
+      } else if (answer === 'a') {
+        el.innerHTML = '<span class="warn">เร็วไป.</span> Subscription page ไม่ช่วยถ้ายังไม่รู้ว่าเขาจะกลับมาใช้ซ้ำเพราะอะไร.';
+      } else {
+        el.innerHTML = '<span class="bad">นี่คือ feature-first.</span> Dashboard กับ roles ควรมาหลังรู้ว่า repeat event คืออะไร.';
+      }
+    }
+  </script>
+</body>
+</html>

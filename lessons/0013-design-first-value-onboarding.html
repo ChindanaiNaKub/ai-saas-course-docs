@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lesson 0013: Design First Value Onboarding</title>
+  <style>
+    :root {
+      --ink: #17211d;
+      --muted: #5f6f66;
+      --paper: #fffdf8;
+      --soft: #f4f1e7;
+      --line: #ded9c8;
+      --green: #246b4a;
+      --green-soft: #e8f3ec;
+      --red: #9b3b2f;
+      --gold: #a86518;
+      --blue: #285f8f;
+      --shadow: 0 18px 50px rgba(35, 45, 38, .10);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.65; color: var(--ink); background: linear-gradient(180deg, #eef5ec 0, var(--paper) 350px); }
+    header, main, footer { max-width: 1040px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+    header { padding-top: 56px; padding-bottom: 26px; }
+    .eyebrow { color: var(--green); font-weight: 750; text-transform: uppercase; letter-spacing: .08em; font-size: .78rem; }
+    h1, h2, h3 { line-height: 1.15; margin: 0; letter-spacing: 0; }
+    h1 { max-width: 900px; font-size: clamp(2.1rem, 5vw, 4.6rem); margin-top: 8px; }
+    h2 { font-size: clamp(1.45rem, 2.4vw, 2rem); margin-top: 46px; padding-top: 26px; border-top: 1px solid var(--line); }
+    h3 { font-size: 1.08rem; margin-top: 20px; }
+    p { margin: 12px 0; }
+    a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    .lede { max-width: 840px; font-size: 1.18rem; color: var(--muted); margin-top: 18px; }
+    .hero-grid, .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 22px; }
+    .panel, .exercise, .quiz { background: rgba(255,255,255,.88); border: 1px solid var(--line); border-radius: 8px; box-shadow: var(--shadow); padding: 18px; }
+    .tag { display: inline-flex; align-items: center; min-height: 28px; padding: 3px 9px; border-radius: 999px; background: var(--soft); color: var(--muted); font-weight: 650; font-size: .88rem; }
+    .rule { margin: 28px 0; padding: 24px; background: var(--green-soft); border-left: 5px solid var(--green); border-radius: 8px; font-size: 1.16rem; font-weight: 760; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 8px 0; }
+    table { width: 100%; border-collapse: collapse; margin-top: 16px; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: white; }
+    th, td { text-align: left; vertical-align: top; padding: 13px; border-bottom: 1px solid var(--line); }
+    th { background: var(--soft); }
+    tr:last-child td { border-bottom: 0; }
+    textarea, input { width: 100%; border: 1px solid var(--line); border-radius: 8px; padding: 12px; font: inherit; color: var(--ink); background: white; margin-top: 6px; margin-bottom: 12px; }
+    textarea { min-height: 78px; resize: vertical; }
+    button { appearance: none; border: 0; border-radius: 8px; padding: 11px 14px; background: var(--green); color: white; font: inherit; font-weight: 750; cursor: pointer; margin-top: 8px; margin-right: 8px; }
+    button.secondary { background: #f0ede2; color: var(--ink); border: 1px solid var(--line); }
+    .feedback { margin-top: 12px; padding: 12px 14px; border-radius: 8px; background: var(--soft); border: 1px solid var(--line); color: var(--muted); }
+    .good { color: var(--green); font-weight: 750; }
+    .warn { color: var(--gold); font-weight: 750; }
+    .bad { color: var(--red); font-weight: 750; }
+    .refs { font-size: .96rem; color: var(--muted); }
+    footer { padding-top: 34px; padding-bottom: 56px; color: var(--muted); }
+    @media (max-width: 760px) { header, main, footer { padding-left: 16px; padding-right: 16px; } header { padding-top: 36px; } .hero-grid, .grid { grid-template-columns: 1fr; } table { font-size: .94rem; } }
+    @media print { body { background: white; } header, main, footer { max-width: none; padding: 16mm; } .panel, .exercise, .quiz { box-shadow: none; } button, textarea, input { display: none; } a::after { content: " (" attr(href) ")"; font-size: .82em; color: #555; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">Lesson 0013 · First value onboarding</div>
+    <h1>พาลูกค้าไปถึง value แรกให้เร็วที่สุด</h1>
+    <p class="lede">บทเรียนนี้สอนทักษะเดียว: ออกแบบ onboarding path จาก paid commitment ไปถึง first value เพื่อเพิ่มโอกาส retention และลดงาน support ที่ไม่จำเป็น.</p>
+    <div class="hero-grid">
+      <div class="panel">
+        <span class="tag">กับดัก</span>
+        <p>ลูกค้าจ่าย/ตกลง pilot แล้ว แต่ต้องกรอกเยอะ ส่งข้อมูลไม่ถูก งงว่าอะไรต่อ และยังไม่เห็น value ภายในหลายวัน.</p>
+      </div>
+      <div class="panel">
+        <span class="tag">เป้าหมาย</span>
+        <p>กำหนด activation event, input ที่ต้องใช้, owner, deadline, และ repeat hook ตั้งแต่ก่อนเริ่ม onboarding.</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <h2>1. First value สำคัญกว่า feature tour</h2>
+      <p>หลังจากลูกค้าตกลง pilot หรือเริ่มใช้ product ครั้งแรก สิ่งที่เขาต้องการไม่ใช่การดูทุกเมนู เขาต้องการรู้ว่า "สิ่งนี้ช่วยงานฉันจริงไหม" ให้เร็วที่สุด. Stripe พูดถึง activation เป็นหนึ่งใน SaaS metrics สำคัญ. สำหรับ early SaaS ของคุณ activation ควรเป็นเหตุการณ์ที่ลูกค้าได้ value จริง ไม่ใช่สมัคร account หรือ login สำเร็จ.</p>
+      <div class="rule">Onboarding ที่ดีไม่พาลูกค้าเดินชม product. มันพาลูกค้าไปถึง outcome แรก.</div>
+    </section>
+
+    <section>
+      <h2>2. นิยาม first value</h2>
+      <p>ตัวอย่าง first value ที่ดี:</p>
+      <table>
+        <thead>
+          <tr><th>Product</th><th>Bad activation</th><th>Better first value</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>AI lost-order report</td>
+            <td class="bad">ลูกค้า login แล้ว</td>
+            <td class="good">ลูกค้าได้รับ report แรกและเลือก action ที่จะปรับ workflow</td>
+          </tr>
+          <tr>
+            <td>Agency report assistant</td>
+            <td class="bad">เชื่อม account แล้ว</td>
+            <td class="good">สร้าง report แรกที่ใช้ใน client call จริง</td>
+          </tr>
+          <tr>
+            <td>Clinic no-show tool</td>
+            <td class="bad">สร้าง clinic profile แล้ว</td>
+            <td class="good">staff ใช้ call list แรกก่อนวันนัด</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>3. First value map</h2>
+      <ol>
+        <li><strong>Promise:</strong> ลูกค้าคาดหวัง outcome อะไรจากการเริ่ม</li>
+        <li><strong>Input:</strong> ต้องได้ข้อมูล/สิทธิ์/บริบทอะไร</li>
+        <li><strong>Friction:</strong> ขั้นไหนทำให้ลูกค้าช้า งง หรือหาย</li>
+        <li><strong>Processing:</strong> คุณ/product/AI สร้าง output ยังไง</li>
+        <li><strong>Review:</strong> ใครต้องตรวจ output ก่อนใช้จริง</li>
+        <li><strong>Action:</strong> ลูกค้าจะเอา output ไปทำอะไรทันที</li>
+        <li><strong>Repeat hook:</strong> รอบถัดไปเกิดเมื่อไหร่</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>4. Manual onboarding ยังดีอยู่</h2>
+      <p>ช่วงแรกคุณควร onboard ลูกค้าเองเยอะกว่าที่อยากทำ เพราะมันสอนว่าลูกค้าติดตรงไหนจริง. แต่ต้องระวังไม่ให้กลายเป็นงานบริการ custom ที่ไม่มีวันเป็น SaaS. กฎคือ manual เพื่อเรียนรู้ แล้ว automate เฉพาะ friction ที่ซ้ำ.</p>
+      <div class="grid">
+        <div class="panel">
+          <h3 class="good">Manual ไว้ก่อน</h3>
+          <ul>
+            <li>ถาม context ที่ยังไม่รู้ pattern</li>
+            <li>review output ที่ยังมีความเสี่ยง</li>
+            <li>ช่วยลูกค้าเข้าใจ report ครั้งแรก</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3 class="good">Automate ได้</h3>
+          <ul>
+            <li>file upload / import template</li>
+            <li>checklist ข้อมูลที่ต้องส่ง</li>
+            <li>report template ที่ใช้ซ้ำทุกลูกค้า</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="exercise">
+      <h2>5. แบบฝึกหัด: First value map</h2>
+      <p>กรอก path ของคุณ แล้วกดประเมิน. ตัวประเมินนี้เป็น JavaScript ในไฟล์ ไม่เรียก AI และไม่ส่งข้อมูลออกไปไหน.</p>
+
+      <label for="promise"><strong>1. Promise / outcome แรก</strong></label>
+      <textarea id="promise" placeholder="เช่น ส่ง lost-order report จากแชท 100 รายการภายใน 24 ชม."></textarea>
+
+      <label for="input"><strong>2. Input ที่ต้องได้จากลูกค้า</strong></label>
+      <textarea id="input" placeholder="เช่น export แชท 100 รายการ, ราคาเฉลี่ยต่อออเดอร์, context โปรโมชัน"></textarea>
+
+      <label for="friction"><strong>3. Friction ที่น่าจะทำให้ลูกค้าช้า/หาย</strong></label>
+      <textarea id="friction" placeholder="เช่น ไม่รู้ export แชทยังไง, กลัวข้อมูลลูกค้าหลุด, ไม่มีเวลาส่งไฟล์"></textarea>
+
+      <label for="activation"><strong>4. Activation / first value event</strong></label>
+      <textarea id="activation" placeholder="เช่น ลูกค้าได้รับ report แรกและเลือก action 1 อย่างไปแก้ response workflow"></textarea>
+
+      <label for="repeat"><strong>5. Repeat hook</strong></label>
+      <textarea id="repeat" placeholder="เช่น นัดส่งแชทรอบถัดไปทุกวันศุกร์ก่อนประชุมทีม"></textarea>
+
+      <button onclick="scoreFirstValue()">ประเมิน onboarding</button>
+      <button class="secondary" onclick="loadExample()">ใส่ตัวอย่าง</button>
+      <div id="firstValueFeedback" class="feedback">รอคำตอบของคุณอยู่.</div>
+    </section>
+
+    <section class="exercise">
+      <h2>6. Time-to-value calculator</h2>
+      <p>คำนวณหยาบๆ ว่าลูกค้าจะถึง value แรกเร็วพอไหม.</p>
+      <label for="inputHours"><strong>เวลารอลูกค้าส่งข้อมูล (ชั่วโมง)</strong></label>
+      <input id="inputHours" type="number" min="0" value="4">
+      <label for="processingHours"><strong>เวลาประมวลผล/ทำ report (ชั่วโมง)</strong></label>
+      <input id="processingHours" type="number" min="0" value="3">
+      <label for="reviewHours"><strong>เวลาตรวจ/รอ review (ชั่วโมง)</strong></label>
+      <input id="reviewHours" type="number" min="0" value="2">
+      <label for="customerActionHours"><strong>เวลาจนลูกค้าเอา output ไปใช้ (ชั่วโมง)</strong></label>
+      <input id="customerActionHours" type="number" min="0" value="12">
+      <button onclick="calcTTV()">คำนวณ time-to-value</button>
+      <div id="ttvFeedback" class="feedback">ใส่ตัวเลขแล้วกดคำนวณ.</div>
+    </section>
+
+    <section class="quiz">
+      <h2>7. Mini Quiz</h2>
+      <p><strong>สถานการณ์:</strong> ลูกค้าจ่าย pilot แล้ว แต่ยังไม่ส่งข้อมูลมา 5 วัน คุณควรทำอะไร?</p>
+      <button onclick="quiz('a')">A. รอเฉยๆ เพราะลูกค้าอาจยุ่ง</button>
+      <button onclick="quiz('b')">B. ลด friction: ส่ง checklist, ตัวอย่างไฟล์, วิธี redact, และนัด 15 นาทีช่วยเตรียมข้อมูล</button>
+      <button onclick="quiz('c')">C. Build dashboard เพิ่มให้ลูกค้าประทับใจ</button>
+      <div id="quizFeedback" class="feedback">เลือกคำตอบหนึ่งข้อ.</div>
+    </section>
+
+    <section>
+      <h2>8. Homework ก่อนบทเรียน 14</h2>
+      <p>เขียน onboarding path ของ pilot/product คุณ 5 บรรทัด:</p>
+      <ol>
+        <li>First value event:</li>
+        <li>Input ที่ลูกค้าต้องส่ง:</li>
+        <li>Friction ที่ต้องลด:</li>
+        <li>Manual step ที่คุณจะทำเอง:</li>
+        <li>Automation เล็กที่สุดที่จะลด time-to-value:</li>
+      </ol>
+      <p>ส่งมาให้ผมดูได้ ผมจะช่วยตัด path ให้สั้นลงและเลือก automation ที่ควร build ก่อน.</p>
+    </section>
+
+    <section>
+      <h2>References</h2>
+      <ul class="refs">
+        <li><a href="https://stripe.com/resources/more/essential-saas-metrics">Stripe: Essential SaaS Metrics</a></li>
+        <li><a href="https://www.ycombinator.com/library/Io-how-to-build-an-mvp">Y Combinator: How to Build an MVP</a></li>
+        <li><a href="https://www.ycombinator.com/library/4D-yc-s-essential-startup-advice">Y Combinator: YC's Essential Startup Advice</a></li>
+        <li><a href="https://brianbalfour.com/four-fits-growth-framework">Brian Balfour: Four Fits For $100M+ Growth</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>Reference sheet: <a href="../reference/0013-first-value-onboarding-cheatsheet.html">First Value Onboarding Cheat Sheet</a></p>
+  </footer>
+
+  <script>
+    function hasAny(text, terms) {
+      return terms.some(function(term) { return term.test(text); });
+    }
+
+    function wordCount(text) {
+      return text.trim().split(/\s+/).filter(Boolean).length;
+    }
+
+    function scoreFirstValue() {
+      const promise = document.getElementById('promise').value.trim();
+      const input = document.getElementById('input').value.trim();
+      const friction = document.getElementById('friction').value.trim();
+      const activation = document.getElementById('activation').value.trim();
+      const repeat = document.getElementById('repeat').value.trim();
+      let score = 0;
+      const notes = [];
+
+      if (wordCount(promise) >= 7 && hasAny(promise.toLowerCase(), [/report|รายงาน|ภายใน|ชั่วโมง|วัน|ส่ง|ลด|เพิ่ม|สรุป|วิเคราะห์/])) {
+        score += 2;
+        notes.push('<span class="good">Promise:</span> outcome แรกชัดและมี time window.');
+      } else {
+        notes.push('<span class="warn">Promise:</span> เขียน outcome แรกให้จับต้องได้และมีเวลา.');
+      }
+
+      if (wordCount(input) >= 6 && hasAny(input.toLowerCase(), [/ข้อมูล|แชท|ไฟล์|export|upload|ราคา|context|sheet|csv/])) {
+        score += 2;
+        notes.push('<span class="good">Input:</span> รู้ว่าต้องขออะไรเพื่อเริ่ม.');
+      } else {
+        notes.push('<span class="bad">Input:</span> ระบุ input ที่ต้องได้จากลูกค้าให้ชัด.');
+      }
+
+      if (wordCount(friction) >= 6 && hasAny(friction.toLowerCase(), [/ไม่รู้|กลัว|ช้า|ยุ่ง|ไม่มีเวลา|export|redact|ข้อมูล|ติด|ยาก/])) {
+        score++;
+        notes.push('<span class="good">Friction:</span> เห็นจุดที่ต้องลด.');
+      } else {
+        notes.push('<span class="warn">Friction:</span> ลองคิดว่าลูกค้าจะติดตรงไหนก่อนถึง value.');
+      }
+
+      if (wordCount(activation) >= 8 && hasAny(activation.toLowerCase(), [/ใช้|ได้รับ|เลือก|action|ประชุม|แก้|report|รายงาน|ครั้งแรก|workflow/])) {
+        score += 2;
+        notes.push('<span class="good">Activation:</span> วัด value จริง ไม่ใช่แค่ setup.');
+      } else {
+        notes.push('<span class="bad">Activation:</span> นิยาม first value event ให้ชัดกว่า login/setup.');
+      }
+
+      if (wordCount(repeat) >= 7 && hasAny(repeat.toLowerCase(), [/ทุก|รอบ|สัปดาห์|เดือน|ถัดไป|นัด|ส่ง|repeat|ประชุม/])) {
+        score++;
+        notes.push('<span class="good">Repeat:</span> มี hook ไป retention loop.');
+      } else {
+        notes.push('<span class="warn">Repeat:</span> เพิ่ม trigger รอบถัดไปเพื่อไม่ให้จบแค่ project ครั้งเดียว.');
+      }
+
+      let verdict = '';
+      if (score >= 8) verdict = '<p><strong class="good">Onboarding path ชัด:</strong> ต่อไปให้ทำ checklist/template ลด friction และวัด time-to-value.</p>';
+      else if (score >= 5) verdict = '<p><strong class="warn">ใกล้ใช้ได้:</strong> เติม input/activation/repeat ให้ชัดก่อน automate.</p>';
+      else verdict = '<p><strong class="bad">ยังเสี่ยงลูกค้าหายก่อนเห็น value:</strong> กลับไปนิยาม first value และ input ที่ต้องใช้.</p>';
+
+      document.getElementById('firstValueFeedback').innerHTML = verdict + '<p>Onboarding score: <strong>' + score + '/8</strong></p><ul><li>' + notes.join('</li><li>') + '</li></ul>';
+    }
+
+    function loadExample() {
+      document.getElementById('promise').value = 'ส่ง lost-order report จากแชท LINE 100 รายการภายใน 24 ชั่วโมง';
+      document.getElementById('input').value = 'export แชท 100 รายการ ราคาเฉลี่ยต่อออเดอร์ และ context โปรโมชันช่วงนั้น';
+      document.getElementById('friction').value = 'ลูกค้าไม่รู้ export แชทยังไง กลัวข้อมูลลูกค้าหลุด และไม่มีเวลาจัดไฟล์';
+      document.getElementById('activation').value = 'ลูกค้าได้รับ report แรกและเลือก action 1 อย่างไปแก้ response workflow ในประชุมทีม';
+      document.getElementById('repeat').value = 'นัดส่งแชทรอบถัดไปทุกวันศุกร์ก่อนประชุมทีมรายสัปดาห์';
+      scoreFirstValue();
+    }
+
+    function calcTTV() {
+      const inputHours = Number(document.getElementById('inputHours').value || 0);
+      const processingHours = Number(document.getElementById('processingHours').value || 0);
+      const reviewHours = Number(document.getElementById('reviewHours').value || 0);
+      const customerActionHours = Number(document.getElementById('customerActionHours').value || 0);
+      const total = inputHours + processingHours + reviewHours + customerActionHours;
+      let verdict = '';
+      if (total <= 24) verdict = '<p><strong class="good">เร็วดี:</strong> first value ภายใน 24 ชม. เหมาะกับ pilot แรก.</p>';
+      else if (total <= 72) verdict = '<p><strong class="warn">พอได้แต่ต้องคุม:</strong> ลด friction ที่ทำให้ช้า โดยเฉพาะ input และ review.</p>';
+      else verdict = '<p><strong class="bad">ช้าเกินไปสำหรับ early pilot:</strong> ลูกค้าอาจลืม momentum ก่อนเห็น value.</p>';
+
+      let bottleneck = 'input';
+      let max = inputHours;
+      if (processingHours > max) { max = processingHours; bottleneck = 'processing'; }
+      if (reviewHours > max) { max = reviewHours; bottleneck = 'review'; }
+      if (customerActionHours > max) { max = customerActionHours; bottleneck = 'customer action'; }
+      document.getElementById('ttvFeedback').innerHTML = verdict + '<p>Total time-to-value: <strong>' + total + ' ชั่วโมง</strong>. Bottleneck หลัก: <strong>' + bottleneck + '</strong>.</p>';
+    }
+
+    function quiz(answer) {
+      const el = document.getElementById('quizFeedback');
+      if (answer === 'b') {
+        el.innerHTML = '<span class="good">ถูก.</span> ปัญหาคือ friction ก่อน first value ไม่ใช่ feature ไม่พอ.';
+      } else if (answer === 'a') {
+        el.innerHTML = '<span class="bad">เสี่ยง momentum หาย.</span> หลัง paid commitment คุณควรช่วยเขาไปถึง value แรกเร็วที่สุด.';
+      } else {
+        el.innerHTML = '<span class="bad">นี่คือ feature-first.</span> Dashboard ไม่แก้ปัญหาลูกค้าส่งข้อมูลไม่สำเร็จ.';
+      }
+    }
+  </script>
+</body>
+</html>

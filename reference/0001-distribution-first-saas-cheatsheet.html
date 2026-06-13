@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Distribution-first SaaS Cheat Sheet</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17211b;
+      --muted: #5f6f66;
+      --line: #d8e1d7;
+      --paper: #fbfaf5;
+      --band: #eef5ec;
+      --accent: #276749;
+      --warn: #a55b15;
+      --blue: #285f8f;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+      color: var(--ink);
+      background: var(--paper);
+    }
+    main {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 40px 24px 64px;
+    }
+    h1, h2, h3 { line-height: 1.18; margin: 0; }
+    h1 { font-size: clamp(2rem, 4vw, 3.4rem); max-width: 780px; }
+    h2 { font-size: 1.35rem; margin-top: 34px; border-top: 1px solid var(--line); padding-top: 22px; }
+    h3 { font-size: 1rem; margin-top: 18px; color: var(--accent); }
+    p { margin: 10px 0; }
+    a { color: var(--blue); }
+    .lede { font-size: 1.15rem; color: var(--muted); max-width: 780px; margin-top: 14px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .box {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      background: white;
+    }
+    .box strong { color: var(--accent); }
+    .formula {
+      background: var(--band);
+      border-left: 4px solid var(--accent);
+      padding: 14px 16px;
+      margin: 16px 0;
+      font-weight: 650;
+    }
+    ul { padding-left: 20px; }
+    li { margin: 7px 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td {
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line);
+      padding: 12px;
+    }
+    th { background: var(--band); }
+    tr:last-child td { border-bottom: 0; }
+    .danger { color: var(--warn); font-weight: 700; }
+    @media (max-width: 720px) {
+      main { padding: 28px 16px 48px; }
+      .grid { grid-template-columns: 1fr; }
+      table { font-size: .94rem; }
+    }
+    @media print {
+      body { background: white; }
+      main { max-width: none; padding: 18mm; }
+      a::after { content: " (" attr(href) ")"; font-size: .82em; color: #555; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Distribution-first SaaS Cheat Sheet</h1>
+    <p class="lede">ใช้ก่อนเริ่มเขียนโค้ดจริง ถ้ายังตอบไม่ได้ว่าลูกค้าอยู่ที่ไหน เขามีปัญหาอะไร เขาจ่ายเพราะอะไร และเราจะเข้าถึงเขายังไง อย่าเพิ่งสร้าง product เต็มตัว.</p>
+
+    <section>
+      <h2>แก่นคิด</h2>
+      <div class="formula">AI ทำให้การสร้างถูกลง แต่ไม่ได้ทำให้ความต้องการของตลาดถูกสร้างขึ้นเอง.</div>
+      <div class="grid">
+        <div class="box"><strong>Product risk</strong><br>เราสร้างของได้ไหม และมันแก้ปัญหาได้จริงไหม?</div>
+        <div class="box"><strong>Market risk</strong><br>มีคนเจ็บพอ จ่ายพอ และรีบพอไหม?</div>
+        <div class="box"><strong>Channel risk</strong><br>เราหาคนกลุ่มนี้ซ้ำๆ ได้จากช่องทางไหน?</div>
+        <div class="box"><strong>Model risk</strong><br>ราคากับต้นทุน AI/ซัพพอร์ต/การขาย ทำให้ธุรกิจอยู่รอดไหม?</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>กฎ 4 ข้อก่อนสร้าง SaaS</h2>
+      <ol>
+        <li><strong>เริ่มจากลูกค้าที่เอื้อมถึง</strong> ไม่ใช่ไอเดียที่เรารักที่สุด.</li>
+        <li><strong>คุยเรื่องชีวิตจริงของเขา</strong> ไม่ขายไอเดียให้เขาชม.</li>
+        <li><strong>พิสูจน์ distribution พร้อมกับ product</strong> เพราะ product กับ channel ต้อง fit กัน.</li>
+        <li><strong>ขอ commitment เล็กๆ</strong> เช่น เงินมัดจำ, pilot, intro, ข้อมูลจริง, หรือเวลานัดครั้งถัดไป.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>คำถามคัดไอเดีย 10 นาที</h2>
+      <table>
+        <thead>
+          <tr><th>คำถาม</th><th>สัญญาณดี</th><th>สัญญาณอันตราย</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>ลูกค้ากลุ่มแรกคือใครแบบเจาะจง?</td>
+            <td>ระบุได้เป็น role + context เช่น "เจ้าของคลินิก 2-5 สาขาในไทย"</td>
+            <td class="danger">"ทุก SME", "คนทำธุรกิจ", "ทุกคนที่ใช้ AI"</td>
+          </tr>
+          <tr>
+            <td>ตอนนี้เขาแก้ปัญหานี้ยังไง?</td>
+            <td>ใช้ Excel, จ้างคน, manual, ใช้ tool แพง, หรือเสียเงินอยู่แล้ว</td>
+            <td class="danger">ยังไม่เคยพยายามแก้ หรือแค่บอกว่าน่าสนใจ</td>
+          </tr>
+          <tr>
+            <td>เราจะเจอเขา 20 คนแรกจากไหน?</td>
+            <td>มีรายชื่อ, community, LinkedIn, LINE group, marketplace, partner</td>
+            <td class="danger">หวัง SEO, ads, viral หลัง product เสร็จ</td>
+          </tr>
+          <tr>
+            <td>เขาจะจ่ายเพราะอะไร?</td>
+            <td>ลดรายจ่าย, เพิ่มรายได้, ลดเวลางานแพง, ลดความเสี่ยงที่เจ็บจริง</td>
+            <td class="danger">จ่ายเพราะ UI สวย, เพราะ AI, หรือเพราะเราคิดว่าเจ๋ง</td>
+          </tr>
+          <tr>
+            <td>AI ทำให้ business model ดีขึ้นหรือแย่ลง?</td>
+            <td>ต้นทุนต่อผลลัพธ์ต่ำกว่า value ที่ลูกค้าได้รับมาก</td>
+            <td class="danger">ยิ่งลูกค้าใช้เยอะ เรายิ่งขาดทุน หรือราคาอธิบายยาก</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Thailand vs Global</h2>
+      <p><strong>ขายไทยก่อน</strong> เมื่อคุณมี access, trust, ภาษา, ความเข้าใจกระบวนการ, และปัญหาเฉพาะตลาดไทยที่ต่างชาติไม่เห็น.</p>
+      <p><strong>ขาย global ก่อน</strong> เมื่อปัญหาไม่ผูกกับภาษาไทย/กฎหมายไทย, ลูกค้าค้นหาวิธีแก้เองเป็นภาษาอังกฤษ, และ willingness to pay สูงพอชดเชยการแข่งขัน.</p>
+      <p><strong>ทางสายกลาง</strong> คือเริ่มจาก niche ที่คุณ reach ได้ในไทยเพื่อเรียนรู้เร็ว แล้ว package บทเรียนเป็น product ที่ขาย global ได้.</p>
+    </section>
+
+    <section>
+      <h2>แหล่งอ้างอิงหลัก</h2>
+      <ul>
+        <li><a href="https://www.ycombinator.com/library/96-do-things-that-don-t-scale">YC: Do Things That Don't Scale</a></li>
+        <li><a href="https://brianbalfour.com/essays/product-channel-fit-for-growth">Brian Balfour: Product Channel Fit</a></li>
+        <li><a href="https://www.momtestbook.com/">The Mom Test</a></li>
+        <li><a href="https://datareportal.com/reports/digital-2026-thailand">DataReportal: Digital 2026 Thailand</a></li>
+        <li><a href="https://www.bain.com/insights/per-seat-software-pricing-isnt-dead-but-new-models-are-gaining-steam/">Bain: AI and SaaS pricing</a></li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

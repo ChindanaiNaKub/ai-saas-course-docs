@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lesson 0008: Sharpen Your ICP and Positioning</title>
+  <style>
+    :root {
+      --ink: #17211d;
+      --muted: #5f6f66;
+      --paper: #fffdf8;
+      --soft: #f4f1e7;
+      --line: #ded9c8;
+      --green: #246b4a;
+      --green-soft: #e8f3ec;
+      --red: #9b3b2f;
+      --gold: #a86518;
+      --blue: #285f8f;
+      --shadow: 0 18px 50px rgba(35, 45, 38, .10);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+      color: var(--ink);
+      background: linear-gradient(180deg, #eef5ec 0, var(--paper) 350px);
+    }
+    header, main, footer { max-width: 1040px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+    header { padding-top: 56px; padding-bottom: 26px; }
+    .eyebrow {
+      color: var(--green);
+      font-weight: 750;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: .78rem;
+    }
+    h1, h2, h3 { line-height: 1.15; margin: 0; letter-spacing: 0; }
+    h1 { max-width: 900px; font-size: clamp(2.1rem, 5vw, 4.6rem); margin-top: 8px; }
+    h2 { font-size: clamp(1.45rem, 2.4vw, 2rem); margin-top: 46px; padding-top: 26px; border-top: 1px solid var(--line); }
+    h3 { font-size: 1.08rem; margin-top: 20px; }
+    p { margin: 12px 0; }
+    a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    .lede { max-width: 840px; font-size: 1.18rem; color: var(--muted); margin-top: 18px; }
+    .hero-grid, .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 22px; }
+    .panel, .exercise, .quiz {
+      background: rgba(255,255,255,.88);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--muted);
+      font-weight: 650;
+      font-size: .88rem;
+    }
+    .rule {
+      margin: 28px 0;
+      padding: 24px;
+      background: var(--green-soft);
+      border-left: 5px solid var(--green);
+      border-radius: 8px;
+      font-size: 1.16rem;
+      font-weight: 760;
+    }
+    ul, ol { padding-left: 22px; }
+    li { margin: 8px 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: white;
+    }
+    th, td { text-align: left; vertical-align: top; padding: 13px; border-bottom: 1px solid var(--line); }
+    th { background: var(--soft); }
+    tr:last-child td { border-bottom: 0; }
+    textarea, input {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      font: inherit;
+      color: var(--ink);
+      background: white;
+      margin-top: 6px;
+      margin-bottom: 12px;
+    }
+    textarea { min-height: 78px; resize: vertical; }
+    button {
+      appearance: none;
+      border: 0;
+      border-radius: 8px;
+      padding: 11px 14px;
+      background: var(--green);
+      color: white;
+      font: inherit;
+      font-weight: 750;
+      cursor: pointer;
+      margin-top: 8px;
+      margin-right: 8px;
+    }
+    button.secondary { background: #f0ede2; color: var(--ink); border: 1px solid var(--line); }
+    .feedback {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      background: var(--soft);
+      border: 1px solid var(--line);
+      color: var(--muted);
+    }
+    .good { color: var(--green); font-weight: 750; }
+    .warn { color: var(--gold); font-weight: 750; }
+    .bad { color: var(--red); font-weight: 750; }
+    .refs { font-size: .96rem; color: var(--muted); }
+    footer { padding-top: 34px; padding-bottom: 56px; color: var(--muted); }
+    @media (max-width: 760px) {
+      header, main, footer { padding-left: 16px; padding-right: 16px; }
+      header { padding-top: 36px; }
+      .hero-grid, .grid { grid-template-columns: 1fr; }
+      table { font-size: .94rem; }
+    }
+    @media print {
+      body { background: white; }
+      header, main, footer { max-width: none; padding: 16mm; }
+      .panel, .exercise, .quiz { box-shadow: none; }
+      button, textarea, input { display: none; }
+      a::after { content: " (" attr(href) ")"; font-size: .82em; color: #555; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">Lesson 0008 · ICP and positioning</div>
+    <h1>ทำให้คนเข้าใจทันทีว่า product นี้สำหรับใคร</h1>
+    <p class="lede">บทเรียนนี้สอนทักษะเดียว: ใช้ evidence ที่คุณเก็บมาเพื่อ sharpen ICP และ positioning ให้แคบ คม และขายง่ายขึ้น.</p>
+    <div class="hero-grid">
+      <div class="panel">
+        <span class="tag">กับดัก</span>
+        <p>พอเริ่มมี signal แล้วกลับไปพูดกว้างว่า "AI tool for SMEs" เพราะกลัวตลาดเล็กเกินไป.</p>
+      </div>
+      <div class="panel">
+        <span class="tag">เป้าหมาย</span>
+        <p>เลือก beachhead ให้คม: ลูกค้ากลุ่มแรก, pain เฉพาะ, alternative ปัจจุบัน, value ชัด, channel ที่ reach ได้.</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <h2>1. Positioning ไม่ใช่คำสวย</h2>
+      <p>April Dunford อธิบาย positioning ว่าเป็นการทำให้ product เป็นผู้นำในการส่งมอบสิ่งที่ลูกค้ากลุ่มชัดเจนแคร์มาก (<a href="https://www.aprildunford.com/post/a-quickstart-guide-to-positioning">Quickstart Guide to Positioning</a>). แปลแบบตรงๆ: คุณต้องเลือกสนามที่คุณชนะได้.</p>
+      <p>สำหรับ founder ระยะเริ่มต้น positioning ไม่ได้เริ่มจาก branding. มันเริ่มจาก evidence: ใครเจ็บจริง, ใครจ่าย, ใครใช้ซ้ำ, ใครหาเจอจาก channel เดิม, และเขาเปรียบเทียบคุณกับอะไร.</p>
+      <div class="rule">ถ้า positioning กว้างเกินไป distribution จะยากขึ้นทันที เพราะ message ต้องพูดกับทุกคนจนไม่แทงใจใคร.</div>
+    </section>
+
+    <section>
+      <h2>2. ICP ไม่ใช่ persona สวยๆ</h2>
+      <p>ICP หรือ Ideal Customer Profile คือคำตอบว่า "ลูกค้ากลุ่มไหนที่เจ็บพอ จ่ายได้ ใช้ซ้ำ และเรา reach ได้". ไม่ใช่แค่ demographic หรือชื่อสมมติ.</p>
+      <table>
+        <thead>
+          <tr><th>อ่อน</th><th>แข็งแรงกว่า</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="bad">SME ไทย</td>
+            <td class="good">ร้านอาหาร 1-3 สาขาในกรุงเทพที่รับออเดอร์ผ่าน LINE OA และมีแชทเกิน 100 รายการ/สัปดาห์</td>
+          </tr>
+          <tr>
+            <td class="bad">Agency</td>
+            <td class="good">Performance agency 5-20 คนที่ต้องส่ง weekly campaign report ให้ลูกค้า 5+ accounts</td>
+          </tr>
+          <tr>
+            <td class="bad">Clinic</td>
+            <td class="good">คลินิกที่มี appointment 30+ เคส/วัน และใช้พนักงานโทร confirm นัดทุกเย็น</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Jobs-to-Be-Done ช่วยให้ไม่ติดกับ category กว้างๆ เพราะมันถามว่าลูกค้ากำลังพยายามทำ job อะไรให้สำเร็จในสถานการณ์ไหน (<a href="https://www.christenseninstitute.org/theory/jobs-to-be-done/">Christensen Institute</a>).</p>
+    </section>
+
+    <section>
+      <h2>3. Positioning canvas 6 ช่อง</h2>
+      <ol>
+        <li><strong>ICP:</strong> ลูกค้ากลุ่มแรกที่ evidence แข็งที่สุดคือใคร</li>
+        <li><strong>Urgent job:</strong> เขาพยายามทำงานอะไรให้สำเร็จ และติดตรงไหน</li>
+        <li><strong>Alternative:</strong> ตอนนี้เขาใช้คน, Excel, agency, generic AI, tool เก่า หรือไม่ทำอะไร</li>
+        <li><strong>Unique value:</strong> เราช่วยให้ดีกว่า alternative ตรงไหน</li>
+        <li><strong>Proof:</strong> มี evidence อะไร เช่น paid pilot, retention event, time saved, recovered revenue</li>
+        <li><strong>Channel:</strong> เราจะเจอ ICP นี้ซ้ำได้จากไหน</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>4. สูตร positioning statement</h2>
+      <div class="rule">For [ICP] who [urgent job], [product] is a [category] that [unique value], unlike [alternative], because [proof].</div>
+      <p>ตัวอย่าง:</p>
+      <p><strong>For</strong> LINE-first restaurant owners with 1-3 branches <strong>who</strong> lose orders during peak chat hours, <strong>our product is</strong> a weekly lost-order report <strong>that</strong> turns real chat logs into prioritized actions within 24 hours, <strong>unlike</strong> manually reading chat history, <strong>because</strong> our pilot found 8,000-12,000 THB/month in missed order signals from real chats.</p>
+    </section>
+
+    <section class="exercise">
+      <h2>5. แบบฝึกหัด: สร้าง ICP + positioning</h2>
+      <p>กรอกข้อมูลจาก evidence ของคุณ แล้วกดประเมิน. ตัวประเมินนี้เป็น JavaScript ในไฟล์ ไม่เรียก AI และไม่ส่งข้อมูลออกไปไหน.</p>
+
+      <label for="icp"><strong>1. ICP</strong></label>
+      <textarea id="icp" placeholder="เช่น ร้านอาหาร 1-3 สาขาในกรุงเทพที่รับออเดอร์ผ่าน LINE OA และมีแชทเกิน 100 รายการ/สัปดาห์"></textarea>
+
+      <label for="job"><strong>2. Urgent job / pain</strong></label>
+      <textarea id="job" placeholder="เช่น อยากรู้ว่าลูกค้าหลุดตรงไหนจากแชท เพื่อแก้ response workflow ก่อนเสียออเดอร์เพิ่ม"></textarea>
+
+      <label for="alternative"><strong>3. Current alternative</strong></label>
+      <textarea id="alternative" placeholder="เช่น เจ้าของหรือแอดมินเลื่อนอ่านแชทเอง ใช้ความรู้สึก ไม่มี report"></textarea>
+
+      <label for="value"><strong>4. Unique value</strong></label>
+      <textarea id="value" placeholder="เช่น เปลี่ยนแชทจริงเป็น lost-order report และ action list ภายใน 24 ชม."></textarea>
+
+      <label for="proof"><strong>5. Proof</strong></label>
+      <textarea id="proof" placeholder="เช่น paid pilot 1,500 บาท พบ lost order signal 8,000-12,000 บาท/เดือน จากแชทจริง"></textarea>
+
+      <label for="channel"><strong>6. Reach / channel</strong></label>
+      <textarea id="channel" placeholder="เช่น Facebook pages + Google Maps + intro จาก POS vendor"></textarea>
+
+      <button onclick="scorePositioning()">ประเมิน positioning</button>
+      <button class="secondary" onclick="loadExample()">ใส่ตัวอย่าง</button>
+      <div id="positionFeedback" class="feedback">รอคำตอบของคุณอยู่.</div>
+    </section>
+
+    <section class="exercise">
+      <h2>6. Message clarity check</h2>
+      <p>ลองเขียน one-liner แล้วตรวจว่ามันตอบคำถามพื้นฐานพอไหม.</p>
+      <label for="oneLiner"><strong>One-liner</strong></label>
+      <textarea id="oneLiner" placeholder="เช่น Weekly lost-order reports for LINE-first restaurants that show where customers drop off and what to fix"></textarea>
+      <button onclick="checkOneLiner()">ตรวจ one-liner</button>
+      <div id="oneLinerFeedback" class="feedback">รอ one-liner ของคุณอยู่.</div>
+    </section>
+
+    <section class="quiz">
+      <h2>7. Mini Quiz</h2>
+      <p>ข้อไหนเป็น positioning ที่ดีกว่าสำหรับเริ่มขาย?</p>
+      <button onclick="quiz('a')">A. AI platform for all Thai SMEs</button>
+      <button onclick="quiz('b')">B. Weekly lost-order reports for LINE-first restaurants with 1-3 branches</button>
+      <button onclick="quiz('c')">C. Smart business automation dashboard</button>
+      <div id="quizFeedback" class="feedback">เลือกคำตอบหนึ่งข้อ.</div>
+    </section>
+
+    <section>
+      <h2>8. Homework ก่อนบทเรียน 9</h2>
+      <p>เขียน positioning statement ของคุณหนึ่งประโยคตามสูตรนี้:</p>
+      <p><strong>For [ICP] who [urgent job], [product] is a [category] that [unique value], unlike [alternative], because [proof].</strong></p>
+      <p>ส่งกลับมาให้ผมดูได้ ผมจะช่วยตัดคำกว้างๆ ออกและทำให้ message เหมาะกับ distribution channel ที่คุณจะใช้.</p>
+    </section>
+
+    <section>
+      <h2>References</h2>
+      <ul class="refs">
+        <li><a href="https://www.aprildunford.com/post/a-quickstart-guide-to-positioning">April Dunford: A Quickstart Guide to Positioning</a></li>
+        <li><a href="https://medium.com/@aprildunford/startup-positioning-a-template-c15b010827de">April Dunford: Startup Positioning: A Template</a></li>
+        <li><a href="https://www.christenseninstitute.org/theory/jobs-to-be-done/">Christensen Institute: Jobs to Be Done Theory</a></li>
+        <li><a href="https://wynter.com/post/b2b-message-layers-framework-wynter">Wynter: B2B Message Layers Framework</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>Reference sheet: <a href="../reference/0008-icp-positioning-cheatsheet.html">ICP and Positioning Cheat Sheet</a></p>
+  </footer>
+
+  <script>
+    function hasAny(text, terms) {
+      return terms.some(function(term) { return term.test(text); });
+    }
+
+    function wordCount(text) {
+      return text.trim().split(/\s+/).filter(Boolean).length;
+    }
+
+    function scorePositioning() {
+      const icp = document.getElementById('icp').value.trim();
+      const job = document.getElementById('job').value.trim();
+      const alternative = document.getElementById('alternative').value.trim();
+      const value = document.getElementById('value').value.trim();
+      const proof = document.getElementById('proof').value.trim();
+      const channel = document.getElementById('channel').value.trim();
+      let score = 0;
+      const notes = [];
+
+      if (wordCount(icp) >= 8 && hasAny(icp.toLowerCase(), [/ร้าน|คลินิก|agency|เจ้าของ|ทีม|บริษัท|สาขา|line|b2b|sme|แชท|นัด|ราย/])) {
+        score += 2;
+        notes.push('<span class="good">ICP:</span> มี context ชัด ไม่ใช่ตลาดกว้าง.');
+      } else {
+        notes.push('<span class="bad">ICP:</span> ยังต้องเจาะ role, size, workflow, หรือ context ให้แคบกว่าเดิม.');
+      }
+
+      if (wordCount(job) >= 8 && hasAny(job.toLowerCase(), [/อยาก|ต้อง|เสีย|ลด|เพิ่ม|ก่อน|หลัง|ลูกค้า|รายได้|เวลา|workflow|job/])) {
+        score += 2;
+        notes.push('<span class="good">Job:</span> เห็นงานหรือความคืบหน้าที่ลูกค้าต้องการ.');
+      } else {
+        notes.push('<span class="warn">Job:</span> เขียนให้เป็น job/pain ในชีวิตจริง ไม่ใช่ feature.');
+      }
+
+      if (wordCount(alternative) >= 5 && hasAny(alternative.toLowerCase(), [/excel|sheet|line|แอดมิน|คน|manual|agency|tool|อ่าน|ไม่ทำ|เอง/])) {
+        score++;
+        notes.push('<span class="good">Alternative:</span> รู้ว่าลูกค้าเปรียบเทียบเรากับอะไร.');
+      } else {
+        notes.push('<span class="warn">Alternative:</span> ระบุ current workaround ให้ชัด.');
+      }
+
+      if (wordCount(value) >= 7 && hasAny(value.toLowerCase(), [/ภายใน|ชั่วโมง|วัน|ลด|เพิ่ม|report|รายงาน|action|สรุป|วิเคราะห์|เร็ว/])) {
+        score += 2;
+        notes.push('<span class="good">Value:</span> มีผลลัพธ์จับต้องได้.');
+      } else {
+        notes.push('<span class="warn">Value:</span> ทำให้ unique value วัดได้หรือเห็นภาพกว่านี้.');
+      }
+
+      if (wordCount(proof) >= 5 && hasAny(proof.toLowerCase(), [/จ่าย|paid|บาท|pilot|ราย|คน|%|เดือน|สัปดาห์|พบ|ลด|เพิ่ม/])) {
+        score += 2;
+        notes.push('<span class="good">Proof:</span> มี evidence สนับสนุน positioning.');
+      } else {
+        notes.push('<span class="bad">Proof:</span> ยังไม่มีหลักฐาน ให้ใช้ paid pilot/interview/distribution result มาอ้าง.');
+      }
+
+      if (wordCount(channel) >= 4 && hasAny(channel.toLowerCase(), [/facebook|line|google|maps|linkedin|intro|partner|กลุ่ม|community|vendor|เพจ/])) {
+        score++;
+        notes.push('<span class="good">Reach:</span> มีทางไปหา ICP นี้ซ้ำ.');
+      } else {
+        notes.push('<span class="warn">Reach:</span> positioning ต้องผูกกับ channel ที่ reach ได้.');
+      }
+
+      let verdict = '';
+      if (score >= 9) {
+        verdict = '<p><strong class="good">Positioning คม:</strong> ลองใช้กับ outreach/landing copy แล้ววัด reply หรือ comprehension.</p>';
+      } else if (score >= 6) {
+        verdict = '<p><strong class="warn">ใกล้ใช้ได้:</strong> ปรับส่วนที่ยังอ่อน โดยเฉพาะ ICP/proof/alternative.</p>';
+      } else {
+        verdict = '<p><strong class="bad">ยังกว้างเกิน:</strong> กลับไปเลือก segment ที่ evidence แข็งที่สุดก่อน.</p>';
+      }
+
+      const statement = 'For ' + (icp || '[ICP]') + ' who ' + (job || '[urgent job]') + ', this product is a solution that ' + (value || '[unique value]') + ', unlike ' + (alternative || '[alternative]') + ', because ' + (proof || '[proof]') + '.';
+      document.getElementById('positionFeedback').innerHTML = verdict + '<p><strong>Draft statement:</strong><br>' + statement + '</p><p>Score: <strong>' + score + '/10</strong></p><ul><li>' + notes.join('</li><li>') + '</li></ul>';
+    }
+
+    function loadExample() {
+      document.getElementById('icp').value = 'ร้านอาหาร 1-3 สาขาในกรุงเทพที่รับออเดอร์ผ่าน LINE OA และมีแชทเกิน 100 รายการต่อสัปดาห์';
+      document.getElementById('job').value = 'อยากรู้ว่าลูกค้าหลุดตรงไหนจากแชท เพื่อแก้ response workflow ก่อนเสียออเดอร์เพิ่ม';
+      document.getElementById('alternative').value = 'เจ้าของหรือแอดมินเลื่อนอ่านแชทเองใน LINE ใช้ความรู้สึก ไม่มี report';
+      document.getElementById('value').value = 'เปลี่ยนแชทจริงเป็น lost-order report และ action list ภายใน 24 ชั่วโมง';
+      document.getElementById('proof').value = 'paid pilot 1,500 บาท พบ lost order signal 8,000-12,000 บาทต่อเดือนจากแชทจริง';
+      document.getElementById('channel').value = 'Facebook pages ของร้านอาหาร Google Maps และ intro จาก POS vendor';
+      scorePositioning();
+    }
+
+    function checkOneLiner() {
+      const text = document.getElementById('oneLiner').value.trim();
+      const lower = text.toLowerCase();
+      const notes = [];
+      let score = 0;
+
+      if (hasAny(lower, [/for|สำหรับ|ร้าน|คลินิก|agency|ทีม|เจ้าของ|restaurants|clinics/])) {
+        score++;
+        notes.push('<span class="good">Who:</span> บอกว่าของนี้สำหรับใคร.');
+      } else {
+        notes.push('<span class="warn">Who:</span> เพิ่มกลุ่มลูกค้าเป้าหมาย.');
+      }
+
+      if (hasAny(lower, [/report|รายงาน|ลด|เพิ่ม|lost|no-show|campaign|แชท|ลูกค้า|order|workflow/])) {
+        score++;
+        notes.push('<span class="good">What:</span> บอกผลลัพธ์หรือ job ที่ช่วย.');
+      } else {
+        notes.push('<span class="warn">What:</span> ยังไม่เห็นงานที่ product ช่วย.');
+      }
+
+      if (hasAny(lower, [/weekly|daily|ภายใน|ชั่วโมง|วัน|สัปดาห์|เร็ว|before|within/])) {
+        score++;
+        notes.push('<span class="good">Specificity:</span> มี timing/context ที่ทำให้จับต้องได้.');
+      } else {
+        notes.push('<span class="warn">Specificity:</span> เพิ่ม context เช่น weekly, before client call, within 24 hours.');
+      }
+
+      if (hasAny(lower, [/ai platform|dashboard|automation|smart|all|ทุก|sme ทั้งหมด|ธุรกิจทุกประเภท/])) {
+        score--;
+        notes.push('<span class="bad">Generic words:</span> มีคำกว้างที่อาจทำให้ message เบลอ.');
+      }
+
+      let verdict = score >= 3 ? '<p><strong class="good">One-liner ชัดพอเริ่มทดสอบ.</strong></p>' : score >= 1 ? '<p><strong class="warn">พอเริ่มได้ แต่ยังควรเจาะ who/what/context.</strong></p>' : '<p><strong class="bad">ยัง generic เกินไป.</strong></p>';
+      document.getElementById('oneLinerFeedback').innerHTML = verdict + '<ul><li>' + notes.join('</li><li>') + '</li></ul>';
+    }
+
+    function quiz(answer) {
+      const el = document.getElementById('quizFeedback');
+      if (answer === 'b') {
+        el.innerHTML = '<span class="good">ถูก.</span> มันระบุ customer, workflow, outcome และ category แคบพอให้ distribution เริ่มทำงาน.';
+      } else if (answer === 'a') {
+        el.innerHTML = '<span class="bad">กว้างเกิน.</span> AI platform for all Thai SMEs ฟังใหญ่ แต่ไม่มีใครรู้ว่าควรสนใจเพราะ pain อะไร.';
+      } else {
+        el.innerHTML = '<span class="warn">ยัง generic.</span> Smart dashboard ไม่บอก ICP, job, value, หรือ alternative.';
+      }
+    }
+  </script>
+</body>
+</html>

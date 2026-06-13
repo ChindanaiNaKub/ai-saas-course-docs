@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lost Deal Learning Cheat Sheet</title>
+  <style>
+    :root {
+      --ink: #17211d;
+      --muted: #5d6d65;
+      --paper: #fffdf8;
+      --line: #ded9c8;
+      --band: #eef5ec;
+      --green: #246b4a;
+      --red: #9b3b2f;
+      --gold: #9b6317;
+      --blue: #285f8f;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--ink); background: var(--paper); line-height: 1.62; }
+    main { max-width: 980px; margin: 0 auto; padding: 42px 24px 64px; }
+    h1, h2, h3 { line-height: 1.16; margin: 0; letter-spacing: 0; }
+    h1 { font-size: clamp(2rem, 4vw, 3.4rem); max-width: 820px; }
+    h2 { font-size: 1.35rem; margin-top: 34px; padding-top: 22px; border-top: 1px solid var(--line); }
+    h3 { font-size: 1rem; margin-top: 18px; color: var(--green); }
+    p { margin: 10px 0; }
+    a { color: var(--blue); }
+    .lede { font-size: 1.14rem; color: var(--muted); max-width: 800px; margin-top: 14px; }
+    .rule { margin: 18px 0; padding: 16px; border-left: 5px solid var(--green); background: var(--band); border-radius: 8px; font-weight: 750; }
+    table { width: 100%; border-collapse: collapse; margin-top: 14px; background: white; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+    th, td { text-align: left; vertical-align: top; padding: 12px; border-bottom: 1px solid var(--line); }
+    th { background: var(--band); }
+    tr:last-child td { border-bottom: 0; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 7px 0; }
+    .bad { color: var(--red); font-weight: 750; }
+    .good { color: var(--green); font-weight: 750; }
+    .warn { color: var(--gold); font-weight: 750; }
+    code { background: var(--band); padding: 2px 5px; border-radius: 5px; }
+    @media (max-width: 720px) { main { padding: 28px 16px 48px; } table { font-size: .94rem; } }
+    @media print { body { background: white; } main { max-width: none; padding: 18mm; } a::after { content: " (" attr(href) ")"; font-size: .82em; color: #555; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Lost Deal Learning Cheat Sheet</h1>
+    <p class="lede">ใช้หลัง sales call/proposal ที่ไม่ close. เป้าหมายคือหา root cause จริง ไม่ใช่ react ตาม objection แรกที่ prospect พูด.</p>
+
+    <section>
+      <h2>แก่นคิด</h2>
+      <div class="rule">ทุกดีลที่แพ้ต้องให้ learning หนึ่งข้อและ experiment ถัดไปหนึ่งอย่าง.</div>
+      <p>คำว่า "แพงไป" อาจหมายถึง price จริง หรืออาจหมายถึง value, urgency, trust, buyer fit ยังไม่ชัด.</p>
+    </section>
+
+    <section>
+      <h2>Lost reason categories</h2>
+      <table>
+        <thead>
+          <tr><th>Category</th><th>Signal</th><th>Next experiment</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>ICP fit</td>
+            <td>ไม่ใช่ buyer/workflow/budget ที่ package ออกแบบมา</td>
+            <td class="good">ปรับ targeting และ qualification</td>
+          </tr>
+          <tr>
+            <td>Pain weak</td>
+            <td>ไม่มี cost, workaround, urgency ชัด</td>
+            <td class="good">ถาม past behavior และหา segment ที่เจ็บกว่า</td>
+          </tr>
+          <tr>
+            <td>Trust gap</td>
+            <td>กังวล proof, accuracy, data, security</td>
+            <td class="good">เพิ่ม proof, pilot, case study, trust docs</td>
+          </tr>
+          <tr>
+            <td>Urgency gap</td>
+            <td>เห็นด้วยแต่เลื่อนเรื่อยๆ</td>
+            <td class="good">หา trigger/deadline หรือเปลี่ยน segment</td>
+          </tr>
+          <tr>
+            <td>Package mismatch</td>
+            <td>outcome ใช่ แต่ scope/usage/onboarding ไม่ fit</td>
+            <td class="good">ปรับ package ladder</td>
+          </tr>
+          <tr>
+            <td>Price/value gap</td>
+            <td>ROI/budget ไม่ผ่านแม้เข้าใจ value</td>
+            <td class="good">ปรับ value metric, price metric, buyer segment</td>
+          </tr>
+          <tr>
+            <td>Timing</td>
+            <td>fit ดีแต่ติดงบ/season/internal priority</td>
+            <td class="good">ตั้ง follow-up date และ nurture proof</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Post-loss questions</h2>
+      <ol>
+        <li>ถ้าต้องเลือกเหตุผลเดียวที่ยังไม่เดินต่อ คืออะไร?</li>
+        <li>ปัญหานี้มี cost จริงเท่าไรในเดือนที่ผ่านมา?</li>
+        <li>ใครต้องเห็นหรืออนุมัติก่อน?</li>
+        <li>อะไรที่ยังไม่ trust: proof, accuracy, data, security, delivery?</li>
+        <li>ถ้ากลับมาคุยอีกครั้ง ควรเป็น trigger หรือช่วงเวลาไหน?</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Friday review</h2>
+      <ul>
+        <li><strong>3+ ICP losses:</strong> lead source/positioning ผิด</li>
+        <li><strong>3+ pain weak losses:</strong> segment ไม่เจ็บพอ หรือ discovery ยังไม่ลึก</li>
+        <li><strong>3+ trust losses:</strong> ต้องเพิ่ม proof, data handling, case study</li>
+        <li><strong>3+ price losses:</strong> เช็ก ROI, price metric, buyer budget</li>
+        <li><strong>3+ timing losses:</strong> หา trigger/event หรือ nurture sequence</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>แหล่งอ้างอิง</h2>
+      <ul>
+        <li><a href="https://www.ycombinator.com/library/Mo-the-sales-playbook-for-founders">YC: Sales Playbook for Founders</a></li>
+        <li><a href="https://www.ycombinator.com/library/Ip-how-to-get-your-first-customers">YC: How to Get Your First Customers</a></li>
+        <li><a href="https://review.firstround.com/founder-led-growth-playbook/">First Round Review: Founder-Led Growth Playbook</a></li>
+        <li><a href="https://www.momtestbook.com/">The Mom Test</a></li>
+        <li><a href="https://stripe.com/resources/more/essential-saas-metrics">Stripe: Essential SaaS metrics</a></li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

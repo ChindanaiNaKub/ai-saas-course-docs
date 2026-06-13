@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lesson 0006: Decide Build, Iterate, Pivot, or Kill</title>
+  <style>
+    :root {
+      --ink: #17211d;
+      --muted: #5f6f66;
+      --paper: #fffdf8;
+      --soft: #f4f1e7;
+      --line: #ded9c8;
+      --green: #246b4a;
+      --green-soft: #e8f3ec;
+      --red: #9b3b2f;
+      --gold: #a86518;
+      --blue: #285f8f;
+      --shadow: 0 18px 50px rgba(35, 45, 38, .10);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+      color: var(--ink);
+      background: linear-gradient(180deg, #eef5ec 0, var(--paper) 350px);
+    }
+    header, main, footer { max-width: 1040px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+    header { padding-top: 56px; padding-bottom: 26px; }
+    .eyebrow {
+      color: var(--green);
+      font-weight: 750;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: .78rem;
+    }
+    h1, h2, h3 { line-height: 1.15; margin: 0; letter-spacing: 0; }
+    h1 { max-width: 900px; font-size: clamp(2.1rem, 5vw, 4.6rem); margin-top: 8px; }
+    h2 { font-size: clamp(1.45rem, 2.4vw, 2rem); margin-top: 46px; padding-top: 26px; border-top: 1px solid var(--line); }
+    h3 { font-size: 1.08rem; margin-top: 20px; }
+    p { margin: 12px 0; }
+    a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    .lede { max-width: 840px; font-size: 1.18rem; color: var(--muted); margin-top: 18px; }
+    .hero-grid, .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 22px; }
+    .panel, .exercise, .quiz {
+      background: rgba(255,255,255,.88);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--muted);
+      font-weight: 650;
+      font-size: .88rem;
+    }
+    .rule {
+      margin: 28px 0;
+      padding: 24px;
+      background: var(--green-soft);
+      border-left: 5px solid var(--green);
+      border-radius: 8px;
+      font-size: 1.16rem;
+      font-weight: 760;
+    }
+    ul, ol { padding-left: 22px; }
+    li { margin: 8px 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: white;
+    }
+    th, td { text-align: left; vertical-align: top; padding: 13px; border-bottom: 1px solid var(--line); }
+    th { background: var(--soft); }
+    tr:last-child td { border-bottom: 0; }
+    textarea, input, select {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      font: inherit;
+      color: var(--ink);
+      background: white;
+      margin-top: 6px;
+      margin-bottom: 12px;
+    }
+    textarea { min-height: 78px; resize: vertical; }
+    button {
+      appearance: none;
+      border: 0;
+      border-radius: 8px;
+      padding: 11px 14px;
+      background: var(--green);
+      color: white;
+      font: inherit;
+      font-weight: 750;
+      cursor: pointer;
+      margin-top: 8px;
+      margin-right: 8px;
+    }
+    button.secondary { background: #f0ede2; color: var(--ink); border: 1px solid var(--line); }
+    .feedback {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      background: var(--soft);
+      border: 1px solid var(--line);
+      color: var(--muted);
+    }
+    .good { color: var(--green); font-weight: 750; }
+    .warn { color: var(--gold); font-weight: 750; }
+    .bad { color: var(--red); font-weight: 750; }
+    .refs { font-size: .96rem; color: var(--muted); }
+    footer { padding-top: 34px; padding-bottom: 56px; color: var(--muted); }
+    @media (max-width: 760px) {
+      header, main, footer { padding-left: 16px; padding-right: 16px; }
+      header { padding-top: 36px; }
+      .hero-grid, .grid { grid-template-columns: 1fr; }
+      table { font-size: .94rem; }
+    }
+    @media print {
+      body { background: white; }
+      header, main, footer { max-width: none; padding: 16mm; }
+      .panel, .exercise, .quiz { box-shadow: none; }
+      button, textarea, input, select { display: none; }
+      a::after { content: " (" attr(href) ")"; font-size: .82em; color: #555; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">Lesson 0006 · Evidence board</div>
+    <h1>ตัดสินใจจาก evidence: build, iterate, pivot, หรือ kill</h1>
+    <p class="lede">บทเรียนนี้สอนทักษะเดียว: รวมสัญญาณจาก interviews, pilots, money, และ distribution เพื่อเลือก next move โดยไม่กลับไป build จากความหวังล้วนๆ.</p>
+    <div class="hero-grid">
+      <div class="panel">
+        <span class="tag">กับดัก</span>
+        <p>ได้ reply นิดหน่อยแล้วดีใจจน build หรือโดน reject แล้วคิดว่า idea แย่ทันที ทั้งสองอย่างคืออารมณ์นำ evidence.</p>
+      </div>
+      <div class="panel">
+        <span class="tag">เป้าหมาย</span>
+        <p>แยก signal ตาม 4 ด้าน: pain, outcome, money, distribution แล้วตัดสินใจว่าจะ automate อะไร หรือควรปรับอะไร.</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <h2>1. ทำไมต้องมี decision gate?</h2>
+      <p>หลังผ่านบทเรียน 1-5 คุณมีเครื่องมือครบ: distribution-first idea, customer interview, manual pilot, paid offer, และ distribution sprint. แต่ founder ยังพลาดได้ที่จุดนี้ เพราะอยาก build มากจนมองข้าม signal อ่อน หรือกลัว rejection จน kill เร็วเกินไป.</p>
+      <p>Decision gate คือ checkpoint ที่บังคับให้ถามว่า "เราเรียนรู้อะไรจากของจริง?" ก่อนตัดสินใจ. แนวคิดนี้เข้ากับ <a href="https://leanstartup.co/resources/articles/what-is-an-mvp/">Lean Startup</a> เรื่อง validated learning และคำแนะนำของ YC เรื่อง launch, talk to users, build what people want (<a href="https://www.ycombinator.com/library/4D-yc-s-essential-startup-advice">YC Essential Startup Advice</a>).</p>
+      <div class="rule">อย่า build เพื่อหนีความไม่แน่นอน. Build เฉพาะเมื่อ evidence บอกว่าการ automate ส่วนหนึ่งจะเพิ่มการเรียนรู้หรือยอดขายเร็วขึ้น.</div>
+    </section>
+
+    <section>
+      <h2>2. Evidence 4 ด้าน</h2>
+      <table>
+        <thead>
+          <tr><th>ด้าน</th><th>คำถาม</th><th>สัญญาณที่อยากเห็น</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Customer pain</td>
+            <td>ปัญหานี้เกิดจริง บ่อย และเจ็บไหม?</td>
+            <td>recent events, cost, workaround, urgency</td>
+          </tr>
+          <tr>
+            <td>Outcome/pilot</td>
+            <td>ผลลัพธ์ที่เราส่งมอบถูกใช้ใน workflow จริงไหม?</td>
+            <td>ส่งข้อมูล, ใช้ report, ขอแก้/ใช้ต่อ, นัด review</td>
+          </tr>
+          <tr>
+            <td>Money</td>
+            <td>มี willingness to pay หรือ budget path ไหม?</td>
+            <td>จ่าย, มัดจำ, invoice, budget owner, serious negotiation</td>
+          </tr>
+          <tr>
+            <td>Distribution</td>
+            <td>เราหาลูกค้ากลุ่มนี้ซ้ำได้ไหม?</td>
+            <td>lead list, replies, calls, pilots จาก channel เดิม</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>3. Decision matrix</h2>
+      <div class="grid">
+        <div class="panel">
+          <h3 class="good">Build small automation</h3>
+          <p>เมื่อ pain, outcome, money, distribution เริ่มซ้ำ และ manual workflow มีส่วนที่ทำซ้ำจนเสียเวลา.</p>
+        </div>
+        <div class="panel">
+          <h3 class="warn">Iterate</h3>
+          <p>เมื่อ pain มีจริง แต่ offer, message, price, หรือ pilot output ยังไม่ convert.</p>
+        </div>
+        <div class="panel">
+          <h3 class="warn">Pivot</h3>
+          <p>เมื่อ evidence ชี้ว่าลูกค้าจริง, use case จริง, หรือ channel จริง ไม่ตรงกับสมมติฐานเดิม.</p>
+        </div>
+        <div class="panel">
+          <h3 class="bad">Kill</h3>
+          <p>เมื่อหลายรอบแล้วยังไม่มี pain ล่าสุด, ไม่มี commitment, ไม่มีคนจ่าย, หรือ cost to serve แพงกว่า value.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>4. ถ้าจะ build ให้ build แค่ friction ที่พิสูจน์แล้ว</h2>
+      <p>สมมติ manual pilot คือ AI lost order report จากแชท LINE. ถ้าลูกค้าจ่ายและส่งแชทจริง สิ่งที่ควร build แรกอาจไม่ใช่ dashboard แต่เป็น script/importer ที่ช่วยคุณทำ report เร็วขึ้น.</p>
+      <table>
+        <thead>
+          <tr><th>Manual pain ของคุณ</th><th>Automation แรกที่ดี</th><th>ยังไม่ควร build</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>copy chat เข้า AI เสียเวลามาก</td>
+            <td class="good">simple parser/import template</td>
+            <td class="bad">full dashboard + roles + billing</td>
+          </tr>
+          <tr>
+            <td>report format ต้องทำซ้ำทุก pilot</td>
+            <td class="good">report generator + reusable template</td>
+            <td class="bad">custom theme editor</td>
+          </tr>
+          <tr>
+            <td>ลูกค้าไม่เข้าใจ insight ถ้าไม่มี review call</td>
+            <td class="good">guided review checklist</td>
+            <td class="bad">self-serve onboarding เต็มระบบ</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="exercise">
+      <h2>5. แบบฝึกหัด: Evidence board</h2>
+      <p>ใส่ evidence ที่มีตอนนี้ แล้วกดประเมิน. ตัวประเมินนี้เป็น JavaScript ในไฟล์ ไม่เรียก AI และไม่ส่งข้อมูลออกไปไหน.</p>
+
+      <label for="pain"><strong>1. Customer pain evidence</strong></label>
+      <textarea id="pain" placeholder="เช่น คุย 8 ร้าน 5 ร้านมีเคสลูกค้าหลุดใน 30 วันล่าสุด มูลค่าประมาณ 8,000-12,000 บาท/เดือน"></textarea>
+
+      <label for="pilot"><strong>2. Outcome / pilot evidence</strong></label>
+      <textarea id="pilot" placeholder="เช่น 2 ร้านส่งแชทจริง 100 รายการ และใช้ report ในประชุมทีม"></textarea>
+
+      <label for="money"><strong>3. Money evidence</strong></label>
+      <textarea id="money" placeholder="เช่น 1 ร้านจ่าย pilot 1,500 บาท อีก 1 ร้านขอ invoice และนัด budget owner"></textarea>
+
+      <label for="distribution"><strong>4. Distribution evidence</strong></label>
+      <textarea id="distribution" placeholder="เช่น DM 50 ร้าน reply 6 นัด call 3 ได้ paid pilot 1 จาก Facebook page"></textarea>
+
+      <label for="manual"><strong>5. Manual workflow ที่ซ้ำและน่า automate</strong></label>
+      <textarea id="manual" placeholder="เช่น การจัดรูป report และแยก intent จากแชทใช้เวลาซ้ำทุก pilot"></textarea>
+
+      <button onclick="scoreEvidence()">ประเมิน next move</button>
+      <button class="secondary" onclick="loadExample()">ใส่ตัวอย่าง</button>
+      <div id="evidenceFeedback" class="feedback">รอ evidence ของคุณอยู่.</div>
+    </section>
+
+    <section class="exercise">
+      <h2>6. Build-scope guardrail</h2>
+      <p>ถ้าผลคือควร build ให้ใช้ตัวนี้ตัด scope. เขียนสิ่งที่อยาก build แล้วดูว่ามันใกล้กับ evidence หรือเป็นความอยากล้วนๆ.</p>
+      <label for="buildIdea"><strong>สิ่งที่อยาก build ต่อ</strong></label>
+      <textarea id="buildIdea" placeholder="เช่น dashboard ให้ร้าน login เข้ามาดู lost order report และ billing รายเดือน"></textarea>
+      <button onclick="checkScope()">ตรวจ scope</button>
+      <div id="scopeFeedback" class="feedback">รอ scope ของคุณอยู่.</div>
+    </section>
+
+    <section class="quiz">
+      <h2>7. Mini Quiz</h2>
+      <p><strong>สถานการณ์:</strong> คุณคุย 10 คน มี 6 คนเจอ pain จริง, 2 คนส่งข้อมูลให้ทำ pilot, 1 คนจ่าย 1,500 บาท, แต่ outreach 50 รายได้ reply แค่ 2. ควรทำอะไร?</p>
+      <button onclick="quiz('a')">A. Build product เต็ม เพราะมีคนจ่ายแล้ว</button>
+      <button onclick="quiz('b')">B. ทำ pilot ต่อและปรับ distribution/message ก่อน build ใหญ่ อาจ build เฉพาะ automation ที่ช่วยส่ง report เร็วขึ้น</button>
+      <button onclick="quiz('c')">C. Kill ทันที เพราะ reply rate ต่ำ</button>
+      <div id="quizFeedback" class="feedback">เลือกคำตอบหนึ่งข้อ.</div>
+    </section>
+
+    <section>
+      <h2>8. Homework ก่อนบทเรียน 7</h2>
+      <p>เอา idea/pilot ของคุณมาเขียน evidence board 4 ด้าน:</p>
+      <ol>
+        <li>Pain: หลักฐานจากลูกค้า</li>
+        <li>Outcome: ผลจาก manual pilot</li>
+        <li>Money: เงินหรือ budget signal</li>
+        <li>Distribution: lead/reply/call/pilot จาก channel</li>
+      </ol>
+      <p>ส่งกลับมาให้ผมดูได้เลย ผมจะช่วยอ่านว่า next move ควร build, iterate, pivot, หรือ kill และถ้า build ควร build แค่ไหน.</p>
+    </section>
+
+    <section>
+      <h2>References</h2>
+      <ul class="refs">
+        <li><a href="https://www.ycombinator.com/library/4D-yc-s-essential-startup-advice">Y Combinator: YC's Essential Startup Advice</a></li>
+        <li><a href="https://www.ycombinator.com/library/Io-how-to-build-an-mvp">Y Combinator: How to Build an MVP</a></li>
+        <li><a href="https://leanstartup.co/resources/articles/what-is-an-mvp/">Lean Startup Co.: What Is an MVP?</a></li>
+        <li><a href="https://brianbalfour.com/four-fits-growth-framework">Brian Balfour: Four Fits For $100M+ Growth</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>Reference sheet: <a href="../reference/0006-evidence-board-cheatsheet.html">Evidence Board Cheat Sheet</a></p>
+  </footer>
+
+  <script>
+    function hasAny(text, terms) {
+      return terms.some(function(term) { return term.test(text); });
+    }
+
+    function wordCount(text) {
+      return text.trim().split(/\s+/).filter(Boolean).length;
+    }
+
+    function scoreEvidence() {
+      const pain = document.getElementById('pain').value.trim();
+      const pilot = document.getElementById('pilot').value.trim();
+      const money = document.getElementById('money').value.trim();
+      const distribution = document.getElementById('distribution').value.trim();
+      const manual = document.getElementById('manual').value.trim();
+      let score = 0;
+      const notes = [];
+
+      if (wordCount(pain) >= 8 && hasAny(pain.toLowerCase(), [/ล่าสุด|วัน|เดือน|บาท|เสีย|ลูกค้า|เวลา|workaround|ออเดอร์|cost/])) {
+        score += 2;
+        notes.push('<span class="good">Pain:</span> มีสัญญาณปัญหาจริงและ cost.');
+      } else {
+        notes.push('<span class="warn">Pain:</span> ยังต้องเพิ่ม recent event, cost, หรือ workaround.');
+      }
+
+      if (wordCount(pilot) >= 7 && hasAny(pilot.toLowerCase(), [/ส่ง|ข้อมูล|ใช้|report|รายงาน|pilot|นัด|review|workflow/])) {
+        score += 2;
+        notes.push('<span class="good">Pilot:</span> มีการใช้ output หรือส่งข้อมูลจริง.');
+      } else {
+        notes.push('<span class="warn">Pilot:</span> ยังไม่เห็นว่า outcome ถูกใช้ใน workflow จริง.');
+      }
+
+      if (wordCount(money) >= 5 && hasAny(money.toLowerCase(), [/จ่าย|มัดจำ|บาท|invoice|budget|ราคา|ต่อรอง|paid/])) {
+        score += 3;
+        notes.push('<span class="good">Money:</span> มี willingness-to-pay signal.');
+      } else {
+        notes.push('<span class="bad">Money:</span> ยังไม่มีเงินหรือ budget signal. อย่าเพิ่ง build ใหญ่.');
+      }
+
+      if (wordCount(distribution) >= 7 && hasAny(distribution.toLowerCase(), [/dm|reply|call|lead|นัด|pilot|facebook|line|linkedin|ราย|คน/])) {
+        score += 2;
+        notes.push('<span class="good">Distribution:</span> มีตัวเลขจาก channel จริง.');
+      } else {
+        notes.push('<span class="warn">Distribution:</span> ยังต้องพิสูจน์ว่า reach ลูกค้าซ้ำได้.');
+      }
+
+      if (wordCount(manual) >= 5 && hasAny(manual.toLowerCase(), [/ซ้ำ|เวลา|report|รายงาน|แชท|จัด|แยก|template|automate|manual/])) {
+        score += 1;
+        notes.push('<span class="good">Manual workflow:</span> เห็น candidate สำหรับ automation เล็กๆ.');
+      } else {
+        notes.push('<span class="warn">Manual workflow:</span> ยังไม่ชัดว่าควร automate อะไรก่อน.');
+      }
+
+      let verdict = '';
+      if (score >= 8) {
+        verdict = '<p><strong class="good">Next move: build small automation.</strong> Build เฉพาะส่วนที่ลด friction ใน pilot และช่วยขาย/ส่งมอบเร็วขึ้น.</p>';
+      } else if (score >= 5) {
+        verdict = '<p><strong class="warn">Next move: iterate.</strong> มี signal บางด้าน แต่ยังควรทำ pilot/outreach เพิ่มก่อน build ใหญ่.</p>';
+      } else if (score >= 3) {
+        verdict = '<p><strong class="warn">Next move: pivot hypothesis.</strong> หา pattern ว่า pain, segment, offer หรือ channel อันไหนผิดสมมติฐาน.</p>';
+      } else {
+        verdict = '<p><strong class="bad">Next move: do not build.</strong> Evidence ยังอ่อนเกินไป ให้กลับไป interview หรือ distribution sprint.</p>';
+      }
+
+      document.getElementById('evidenceFeedback').innerHTML = verdict + '<p>Evidence score: <strong>' + score + '/10</strong></p><ul><li>' + notes.join('</li><li>') + '</li></ul>';
+    }
+
+    function loadExample() {
+      document.getElementById('pain').value = 'คุย 8 ร้าน 5 ร้านมีเคสลูกค้าหลุดใน 30 วันล่าสุด มูลค่าประมาณ 8,000-12,000 บาทต่อเดือน และตอนนี้ใช้แอดมินเช็ค LINE เอง';
+      document.getElementById('pilot').value = '2 ร้านส่งแชทจริง 100 รายการให้ทำ pilot และใช้ lost order report ในประชุมทีม';
+      document.getElementById('money').value = '1 ร้านจ่าย pilot 1,500 บาท อีก 1 ร้านขอ invoice และนัดเจ้าของร้านมาคุยราคา';
+      document.getElementById('distribution').value = 'DM 50 ร้านจาก Facebook page ได้ reply 6 นัด call 3 และได้ paid pilot 1';
+      document.getElementById('manual').value = 'การแยก intent จากแชทและจัด report format ใช้เวลาซ้ำทุก pilot ควรทำ template หรือ parser';
+      scoreEvidence();
+    }
+
+    function checkScope() {
+      const text = document.getElementById('buildIdea').value.trim().toLowerCase();
+      if (!text) {
+        document.getElementById('scopeFeedback').textContent = 'เขียนสิ่งที่อยาก build ก่อนครับ.';
+        return;
+      }
+
+      const bigScope = hasAny(text, [/dashboard|billing|subscription|role|permission|auth|login|portal|crm|integration|ระบบเต็ม|ครบ/]);
+      const smallScope = hasAny(text, [/template|parser|import|report|generator|script|checklist|manual|automation|แยก|สรุป/]);
+
+      if (bigScope && !smallScope) {
+        document.getElementById('scopeFeedback').innerHTML = '<span class="bad">scope ใหญ่เกิน evidence ที่ควรมีตอนนี้.</span> ลองถามว่า feature นี้ช่วย pilot ถัดไปเร็วขึ้นหรือช่วยขายได้มากขึ้นจริงไหม ถ้าไม่ ให้ตัดออก.';
+      } else if (bigScope && smallScope) {
+        document.getElementById('scopeFeedback').innerHTML = '<span class="warn">มีทั้ง scope เล็กและ scope ใหญ่ปนกัน.</span> เริ่มจากส่วนที่ลด manual friction ก่อน เช่น template, parser, report generator แล้วเลื่อน dashboard/billing ไปทีหลัง.';
+      } else if (smallScope) {
+        document.getElementById('scopeFeedback').innerHTML = '<span class="good">scope ดูใกล้ evidence.</span> ถ้าจะ build ให้ทำเป็น 3-7 วัน และวัดว่าช่วยส่ง pilot หรือปิดลูกค้าเร็วขึ้นไหม.';
+      } else {
+        document.getElementById('scopeFeedback').innerHTML = '<span class="warn">ยังอ่านไม่ออกว่า scope ผูกกับ evidence ตรงไหน.</span> เขียนให้ชัดว่า build นี้ลด friction ใดใน manual pilot.';
+      }
+    }
+
+    function quiz(answer) {
+      const el = document.getElementById('quizFeedback');
+      if (answer === 'b') {
+        el.innerHTML = '<span class="good">ถูก.</span> Evidence มี pain และ money บางส่วน แต่ distribution ยังอ่อน จึงควร iterate channel/message และ build เฉพาะ automation เล็กที่ช่วย pilot.';
+      } else if (answer === 'a') {
+        el.innerHTML = '<span class="warn">เร็วไป.</span> คนจ่าย 1 รายเป็น signal ดี แต่ยังไม่พอสำหรับ product เต็ม.';
+      } else {
+        el.innerHTML = '<span class="bad">kill เร็วไป.</span> Reply rate ต่ำคือ distribution problem ที่ต้อง diagnose ไม่ใช่หลักฐานว่าทุกอย่างล้มเหลว.';
+      }
+    }
+  </script>
+</body>
+</html>

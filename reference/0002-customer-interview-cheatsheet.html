@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Customer Interview Cheat Sheet</title>
+  <style>
+    :root {
+      --ink: #17211d;
+      --muted: #5d6d65;
+      --paper: #fffdf8;
+      --line: #ded9c8;
+      --band: #eef5ec;
+      --green: #246b4a;
+      --red: #9b3b2f;
+      --gold: #9b6317;
+      --blue: #285f8f;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.62;
+    }
+    main { max-width: 980px; margin: 0 auto; padding: 42px 24px 64px; }
+    h1, h2, h3 { line-height: 1.16; margin: 0; letter-spacing: 0; }
+    h1 { font-size: clamp(2rem, 4vw, 3.4rem); max-width: 760px; }
+    h2 { font-size: 1.35rem; margin-top: 34px; padding-top: 22px; border-top: 1px solid var(--line); }
+    h3 { font-size: 1rem; margin-top: 18px; color: var(--green); }
+    p { margin: 10px 0; }
+    a { color: var(--blue); }
+    .lede { font-size: 1.14rem; color: var(--muted); max-width: 780px; margin-top: 14px; }
+    .rule {
+      margin: 18px 0;
+      padding: 16px;
+      border-left: 5px solid var(--green);
+      background: var(--band);
+      border-radius: 8px;
+      font-weight: 750;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td { text-align: left; vertical-align: top; padding: 12px; border-bottom: 1px solid var(--line); }
+    th { background: var(--band); }
+    tr:last-child td { border-bottom: 0; }
+    .bad { color: var(--red); font-weight: 750; }
+    .good { color: var(--green); font-weight: 750; }
+    .warn { color: var(--gold); font-weight: 750; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 7px 0; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 16px; }
+    .box { background: white; border: 1px solid var(--line); border-radius: 8px; padding: 15px; }
+    @media (max-width: 720px) {
+      main { padding: 28px 16px 48px; }
+      .grid { grid-template-columns: 1fr; }
+      table { font-size: .94rem; }
+    }
+    @media print {
+      body { background: white; }
+      main { max-width: none; padding: 18mm; }
+      a::after { content: " (" attr(href) ")"; font-size: .82em; color: #555; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Customer Interview Cheat Sheet</h1>
+    <p class="lede">ใช้ก่อนคุยกับลูกค้า SaaS คนแรกๆ เป้าหมายไม่ใช่ให้เขาชอบไอเดียเรา แต่คือหาหลักฐานจากชีวิตจริงของเขา.</p>
+
+    <section>
+      <h2>กฎทอง</h2>
+      <div class="rule">ถามเรื่องอดีตและพฤติกรรมจริง อย่าถามความเห็นเกี่ยวกับไอเดียของเรา.</div>
+      <p>แนวคิดนี้มาจาก <a href="https://www.momtestbook.com/">The Mom Test</a>: คำชมเป็นสัญญาณอ่อน แต่พฤติกรรมจริง เงิน เวลา และ workaround เป็นสัญญาณแข็ง.</p>
+    </section>
+
+    <section>
+      <h2>คำถามที่ควรเลี่ยง vs ควรถาม</h2>
+      <table>
+        <thead>
+          <tr><th>อย่าถาม</th><th>เพราะอะไร</th><th>ถามแบบนี้แทน</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="bad">ถ้าผมทำ tool นี้ คุณจะใช้ไหม?</td>
+            <td>เขาตอบเอาใจได้ง่าย และไม่มีต้นทุน</td>
+            <td class="good">ครั้งล่าสุดที่คุณเจอปัญหานี้คือเมื่อไหร่?</td>
+          </tr>
+          <tr>
+            <td class="bad">คุณคิดว่าไอเดียนี้ดีไหม?</td>
+            <td>ได้ opinion ไม่ใช่ evidence</td>
+            <td class="good">ตอนนี้คุณแก้ปัญหานี้ยังไง?</td>
+          </tr>
+          <tr>
+            <td class="bad">คุณยอมจ่ายเดือนละ 500 ไหม?</td>
+            <td>คำตอบถูกกว่าการจ่ายเงินจริงมาก</td>
+            <td class="good">ตอนนี้คุณเสียเงินหรือเวลาตรงนี้ประมาณเท่าไหร่?</td>
+          </tr>
+          <tr>
+            <td class="bad">อยากได้ feature อะไรบ้าง?</td>
+            <td>พาเราไปสร้างตาม wishlist</td>
+            <td class="good">ถ้าปัญหานี้หายไป งานส่วนไหนจะเปลี่ยนก่อน?</td>
+          </tr>
+          <tr>
+            <td class="bad">คุณจะบอกเพื่อนให้ใช้ไหม?</td>
+            <td>ยังไม่มี commitment จริง</td>
+            <td class="good">มีอีก 2 คนที่เจอปัญหานี้ไหม ช่วยแนะนำผมได้ไหม?</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Script 20 นาที</h2>
+      <ol>
+        <li><strong>Context:</strong> "เล่า workflow ตอนนี้ให้ฟังหน่อย ตั้งแต่เริ่มจนจบ"</li>
+        <li><strong>Trigger:</strong> "ปัญหานี้เกิดบ่อยแค่ไหน ครั้งล่าสุดเมื่อไหร่"</li>
+        <li><strong>Cost:</strong> "เสียเวลา เงิน ลูกค้า หรือความเสี่ยงประมาณเท่าไหร่"</li>
+        <li><strong>Workaround:</strong> "ตอนนี้ใช้คน, Excel, LINE, agency, หรือ tool อะไรแก้อยู่"</li>
+        <li><strong>Priority:</strong> "เดือนนี้เรื่องนี้สำคัญกว่าเรื่องอื่นไหม เพราะอะไร"</li>
+        <li><strong>Commitment:</strong> "ขอดูตัวอย่างข้อมูลจริง / นัด follow-up / ขอ intro / ทดลอง manual pilot ได้ไหม"</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>สัญญาณหลังคุย</h2>
+      <div class="grid">
+        <div class="box">
+          <h3>Signal แข็ง</h3>
+          <ul>
+            <li>เขาเล่าเหตุการณ์จริงพร้อมรายละเอียด</li>
+            <li>มี workaround ที่ใช้เงินหรือแรงอยู่แล้ว</li>
+            <li>เขาขอดูต่อ, นัดต่อ, ส่งข้อมูล, หรือแนะนำคนอื่น</li>
+            <li>เขามี budget owner หรืออธิบาย ROI ได้</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h3>Signal อ่อน</h3>
+          <ul>
+            <li>"น่าสนใจ"</li>
+            <li>"ถ้าทำเสร็จแล้วส่งมาดูนะ"</li>
+            <li>"อาจจะใช้"</li>
+            <li>ชม UI/AI แต่ไม่เล่า pain จริง</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>แหล่งอ้างอิง</h2>
+      <ul>
+        <li><a href="https://www.momtestbook.com/">The Mom Test</a></li>
+        <li><a href="https://www.sachinrekhi.com/p/the-mom-test-rob-fitzpatrick">Sachin Rekhi: The Mom Test summary</a></li>
+        <li><a href="https://www.ycombinator.com/library/4D-yc-s-essential-startup-advice">YC Essential Startup Advice</a></li>
+        <li><a href="https://www.ycombinator.com/library/96-do-things-that-don-t-scale">YC: Do Things That Don't Scale</a></li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

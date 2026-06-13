@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lesson 0001: Stop Building Before Distribution</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #18211d;
+      --muted: #607169;
+      --soft: #f5f2e9;
+      --paper: #fffdfa;
+      --line: #dcd8c8;
+      --green: #246b4a;
+      --green-soft: #e8f3ec;
+      --gold: #a86518;
+      --red: #9b3b2f;
+      --blue: #285f8f;
+      --shadow: 0 18px 50px rgba(35, 45, 38, .10);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, #eef5ec 0, var(--paper) 360px);
+    }
+    header, main, footer {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+    header { padding-top: 56px; padding-bottom: 26px; }
+    .eyebrow {
+      color: var(--green);
+      font-weight: 750;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: .78rem;
+    }
+    h1, h2, h3 { line-height: 1.15; margin: 0; letter-spacing: 0; }
+    h1 {
+      max-width: 840px;
+      font-size: clamp(2.1rem, 5vw, 4.7rem);
+      margin-top: 8px;
+    }
+    h2 {
+      font-size: clamp(1.45rem, 2.4vw, 2rem);
+      margin-top: 46px;
+      padding-top: 26px;
+      border-top: 1px solid var(--line);
+    }
+    h3 { font-size: 1.08rem; margin-top: 22px; }
+    p { margin: 12px 0; }
+    a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    .lede {
+      max-width: 780px;
+      font-size: 1.18rem;
+      color: var(--muted);
+      margin-top: 18px;
+    }
+    .hero-panel {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .panel, .exercise, .quiz, .answer {
+      background: rgba(255,255,255,.86);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+    .panel strong { color: var(--green); }
+    .big-rule {
+      margin: 30px 0;
+      padding: 24px;
+      background: var(--green-soft);
+      border-left: 5px solid var(--green);
+      border-radius: 8px;
+      font-size: 1.18rem;
+      font-weight: 720;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--muted);
+      font-weight: 650;
+      font-size: .88rem;
+    }
+    ul, ol { padding-left: 22px; }
+    li { margin: 8px 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: white;
+    }
+    th, td {
+      text-align: left;
+      vertical-align: top;
+      padding: 13px;
+      border-bottom: 1px solid var(--line);
+    }
+    th { background: var(--soft); }
+    tr:last-child td { border-bottom: 0; }
+    textarea, input {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      font: inherit;
+      color: var(--ink);
+      background: white;
+    }
+    textarea { min-height: 92px; resize: vertical; }
+    button {
+      appearance: none;
+      border: 0;
+      border-radius: 8px;
+      padding: 11px 14px;
+      background: var(--green);
+      color: white;
+      font: inherit;
+      font-weight: 750;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button.secondary { background: #f0ede2; color: var(--ink); border: 1px solid var(--line); }
+    .feedback {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      background: var(--soft);
+      border: 1px solid var(--line);
+      color: var(--muted);
+    }
+    .good { color: var(--green); font-weight: 750; }
+    .warn { color: var(--gold); font-weight: 750; }
+    .bad { color: var(--red); font-weight: 750; }
+    .quote {
+      font-size: 1.05rem;
+      border-left: 4px solid var(--gold);
+      padding-left: 14px;
+      color: #4c4336;
+    }
+    .refs {
+      font-size: .96rem;
+      color: var(--muted);
+    }
+    footer { padding-top: 34px; padding-bottom: 56px; color: var(--muted); }
+    @media (max-width: 760px) {
+      header, main, footer { padding-left: 16px; padding-right: 16px; }
+      header { padding-top: 36px; }
+      .hero-panel, .grid { grid-template-columns: 1fr; }
+      table { font-size: .94rem; }
+    }
+    @media print {
+      body { background: white; }
+      header, main, footer { max-width: none; padding: 16mm; }
+      .panel, .exercise, .quiz, .answer { box-shadow: none; }
+      button, textarea, input { display: none; }
+      a::after { content: " (" attr(href) ")"; font-size: .82em; color: #555; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">Lesson 0001 · AI-era SaaS</div>
+    <h1>หยุดสร้างก่อนมี distribution</h1>
+    <p class="lede">บทเรียนนี้สอนทักษะเดียว: แปลงไอเดีย SaaS ให้เป็น “distribution-first validation test” ก่อนลงแรงสร้าง product 2-3 เดือน.</p>
+    <div class="hero-panel">
+      <div class="panel">
+        <span class="tag">Pain you described</span>
+        <p><strong>Pattern เดิม:</strong> ไอเดียดี → สร้างเว็บ → เสร็จแล้วไม่มีคนใช้ → เสียเวลา → เริ่มใหม่.</p>
+      </div>
+      <div class="panel">
+        <span class="tag">New pattern</span>
+        <p><strong>Pattern ใหม่:</strong> เลือกลูกค้าที่ reach ได้ → คุยเรื่องปัญหาจริง → ทดสอบช่องทาง → ขอ commitment → ค่อยสร้าง.</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <h2>1. ทำไมยังต้องมี SaaS ในยุค AI?</h2>
+      <p>เพราะลูกค้าไม่ได้ซื้อ “โค้ด” เขาซื้อผลลัพธ์ที่เกิดซ้ำได้: งานเสร็จเร็วขึ้น, รายได้เพิ่มขึ้น, ความผิดพลาดลดลง, ทีมทำงานเป็นระบบขึ้น, หรือ compliance ง่ายขึ้น. AI ลดต้นทุนการสร้าง แต่ไม่ได้ลบความต้องการเรื่อง workflow, trust, data, permission, billing, support, onboarding, และ accountability.</p>
+      <p>สิ่งที่เปลี่ยนคือ moat ของ SaaS ไม่ควรอยู่ที่ “ฉันเขียน feature ได้” อย่างเดียวอีกแล้ว. ในยุค AI moat มักย้ายไปอยู่ที่:</p>
+      <ul>
+        <li><strong>Distribution:</strong> เข้าถึงลูกค้าเฉพาะกลุ่มได้ซ้ำๆ</li>
+        <li><strong>Workflow ownership:</strong> อยู่ในงานประจำที่ลูกค้าทำทุกวันหรือทุกสัปดาห์</li>
+        <li><strong>Data/context:</strong> เข้าใจข้อมูลเฉพาะของลูกค้าดีกว่า generic AI</li>
+        <li><strong>Trust and switching cost:</strong> ลูกค้าไว้ใจให้ระบบทำงานสำคัญแทนเขา</li>
+        <li><strong>Business model:</strong> ราคา align กับ value และต้นทุน AI</li>
+      </ul>
+      <p class="refs">ดูเพิ่มเติม: <a href="https://www.bain.com/insights/per-seat-software-pricing-isnt-dead-but-new-models-are-gaining-steam/">Bain</a> และ <a href="https://a16z.com/newsletter/december-2024-enterprise-newsletter-ai-is-driving-a-shift-towards-outcome-based-pricing/">a16z</a> อธิบายว่า AI กำลังทำให้ SaaS pricing ขยับจาก seat อย่างเดียว ไปสู่ hybrid, usage, และ outcome-based models.</p>
+
+      <div class="big-rule">ถ้าใครๆ ก็สร้าง product ได้ สิ่งที่หายากขึ้นคือการรู้ว่า “ใครจะซื้อ ทำไมต้องตอนนี้ และเราจะไปถึงเขายังไง”.</div>
+    </section>
+
+    <section>
+      <h2>2. Distribution ไม่ใช่สิ่งที่ทำหลัง product เสร็จ</h2>
+      <p>Brian Balfour เรียกแนวคิดนี้ว่า <a href="https://brianbalfour.com/essays/product-channel-fit-for-growth">Product Channel Fit</a>: product กับ channel ต้องถูกออกแบบให้เข้ากัน ไม่ใช่สร้าง product ก่อนแล้วค่อยหวังว่าจะมี channel ที่เหมาะเอง.</p>
+      <p>ตัวอย่างแบบง่าย:</p>
+      <table>
+        <thead>
+          <tr><th>ถ้า channel แรกคือ...</th><th>Product ต้องหน้าตาแบบ...</th><th>ไม่ควรทำ...</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Cold outbound หาเจ้าของธุรกิจ</td>
+            <td>ROI ชัด, pain เฉพาะ, demo สั้น, setup ง่าย</td>
+            <td>product กว้างๆ ที่ต้องอธิบาย 30 นาที</td>
+          </tr>
+          <tr>
+            <td>SEO / search intent</td>
+            <td>แก้ปัญหาที่คนค้นหาอยู่แล้ว, landing pages เฉพาะ use case</td>
+            <td>หมวดใหม่ที่คนยังไม่รู้ว่าจะ search ว่าอะไร</td>
+          </tr>
+          <tr>
+            <td>Community / content</td>
+            <td>มี insight ที่คนกลุ่มนั้นแชร์และถกเถียงกันได้</td>
+            <td>tool ธรรมดาที่ไม่มี point of view</td>
+          </tr>
+          <tr>
+            <td>Partner / agency</td>
+            <td>ช่วย partner ทำเงินหรือส่งงานเร็วขึ้น</td>
+            <td>product ที่แย่งรายได้ partner</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>3. คนไทยไม่ซื้อง่ายจริงไหม?</h2>
+      <p>คำตอบที่มีประโยชน์กว่า “จริง/ไม่จริง” คือ: <strong>ใครคือคนไทยกลุ่มไหน และเขาจ่ายเพื่ออะไรอยู่แล้ว?</strong></p>
+      <p>บริบทไทยไม่ได้แปลว่าไม่มีโอกาส. DataReportal รายงานว่า Thailand มี internet penetration สูงมาก และ social media/mobile usage สูงมากในปี 2026 (<a href="https://datareportal.com/reports/digital-2026-thailand">Digital 2026: Thailand</a>). ปัญหาไม่ใช่คนไทยไม่ online. ปัญหาคือหลายตลาด price-sensitive, trust สำคัญ, และบางธุรกิจยังซื้อผ่าน relationship มากกว่า self-serve checkout.</p>
+      <div class="grid">
+        <div class="panel">
+          <h3>ไทยน่าลองก่อน ถ้า...</h3>
+          <ul>
+            <li>คุณเข้าถึงลูกค้าด้วยภาษา/เครือข่ายได้ง่าย</li>
+            <li>ปัญหาเฉพาะไทย เช่น LINE workflow, เอกสารไทย, ภาษี, กฎหมาย, marketplace ไทย</li>
+            <li>ขาย high-touch pilot ได้ แม้ยังไม่มี product เต็ม</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>Global น่าลองก่อน ถ้า...</h3>
+          <ul>
+            <li>ลูกค้ามี search intent ภาษาอังกฤษ</li>
+            <li>ปัญหาไม่ขึ้นกับภาษาไทยหรือ regulation ไทย</li>
+            <li>ราคาต่อเดือนสูงพอรับค่า acquisition และ support</li>
+          </ul>
+        </div>
+      </div>
+      <p class="quote">จุดสำคัญ: อย่าเลือกประเทศจากความรู้สึก ให้เลือกจาก access + pain + budget + repeatable channel.</p>
+    </section>
+
+    <section>
+      <h2>4. ทักษะวันนี้: Distribution-first Validation Test</h2>
+      <p>ก่อนสร้าง product ให้เขียน test 1 หน้า โดยตอบ 6 ช่องนี้:</p>
+      <ol>
+        <li><strong>Customer:</strong> ลูกค้ากลุ่มแรกคือใครแบบเฉพาะมาก?</li>
+        <li><strong>Pain:</strong> ปัญหานี้เกิดเมื่อไหร่ เสียเงิน/เวลา/โอกาสเท่าไหร่?</li>
+        <li><strong>Current workaround:</strong> ตอนนี้เขาแก้ยังไง และจ่ายอะไรอยู่แล้ว?</li>
+        <li><strong>Channel:</strong> จะหา 20 คนแรกจากที่ไหนใน 7 วัน?</li>
+        <li><strong>Commitment:</strong> จะขอหลักฐานอะไรที่หนักกว่าคำชม?</li>
+        <li><strong>Build threshold:</strong> ต้องเห็นสัญญาณอะไรถึงจะยอมสร้าง prototype?</li>
+      </ol>
+      <p>หลักนี้เข้ากับคำแนะนำของ YC เรื่องการทำสิ่งที่ยัง scale ไม่ได้ในช่วงแรก เช่น recruit users เองและเรียนรู้จากเขาโดยตรง (<a href="https://www.ycombinator.com/library/96-do-things-that-don-t-scale">YC</a>). และเข้ากับ <a href="https://www.momtestbook.com/">The Mom Test</a>: คุยเรื่องชีวิตและพฤติกรรมจริงของลูกค้า อย่าถามว่า “คุณจะใช้ไหม?” เพราะคนมักตอบเอาใจ.</p>
+    </section>
+
+    <section class="exercise">
+      <h2>5. แบบฝึกหัด 7 นาที</h2>
+      <p>ใส่ไอเดีย SaaS หนึ่งไอเดียที่คุณเคยคิด หรือไอเดียใหม่ที่อยากลอง แล้วกดประเมิน. ระบบจะให้ feedback เบื้องต้นว่า test นี้ยังเสี่ยงตรงไหน.</p>
+
+      <label for="customer"><strong>1. ลูกค้ากลุ่มแรกคือใคร?</strong></label>
+      <textarea id="customer" placeholder="เช่น เจ้าของร้านอาหาร 1-3 สาขาในกรุงเทพที่รับออเดอร์ผ่าน LINE OA ทุกวัน"></textarea>
+
+      <label for="pain"><strong>2. ปัญหาเจ็บจริงคืออะไร?</strong></label>
+      <textarea id="pain" placeholder="เช่น แอดมินตอบช้า ทำให้หลุดออเดอร์วันละ 10-20 รายการ และเจ้าของไม่เห็นรายงาน"></textarea>
+
+      <label for="channel"><strong>3. จะหา 20 คนแรกจากช่องทางไหนใน 7 วัน?</strong></label>
+      <textarea id="channel" placeholder="เช่น รายชื่อร้านจาก Google Maps + DM Facebook page + ขอ intro จากเพื่อนที่ทำ POS"></textarea>
+
+      <label for="commitment"><strong>4. จะขอ commitment อะไร?</strong></label>
+      <textarea id="commitment" placeholder="เช่น นัด demo 30 นาที, ขอ export chat 100 รายการ, จ่ายมัดจำ 1,000 บาท, หรือยอมทำ pilot 14 วัน"></textarea>
+
+      <button onclick="scoreExercise()">ประเมิน test</button>
+      <button class="secondary" onclick="clearExercise()">ล้างคำตอบ</button>
+      <div id="feedback" class="feedback">รอคำตอบของคุณอยู่.</div>
+    </section>
+
+    <section class="quiz">
+      <h2>6. Mini Quiz</h2>
+      <p><strong>สถานการณ์:</strong> คุณอยากทำ SaaS ช่วยร้านค้าไทยสรุปแชทลูกค้าจาก LINE ด้วย AI. ควรทำอะไรก่อน?</p>
+      <button onclick="quiz('a')">A. สร้าง dashboard, auth, subscription, AI summary ให้ครบก่อน</button>
+      <button onclick="quiz('b')">B. หาเจ้าของร้าน 15-20 คน คุยเรื่องแชทจริง แล้วทำ manual summary ให้ 3 ร้าน</button>
+      <button onclick="quiz('c')">C. ยิง ads ไป landing page ทันทีโดยยังไม่รู้ว่า wording ไหนตรง pain</button>
+      <div id="quizFeedback" class="feedback">เลือกคำตอบหนึ่งข้อ.</div>
+    </section>
+
+    <section>
+      <h2>7. Homework ก่อนบทเรียนถัดไป</h2>
+      <p>เลือก 1 niche แล้วทำสิ่งนี้ภายใน 48 ชั่วโมง:</p>
+      <ol>
+        <li>เขียน customer segment ให้แคบจนหา list 20 รายชื่อได้.</li>
+        <li>ทักหรือขอ intro อย่างน้อย 5 คน.</li>
+        <li>ถาม 5 คำถามแบบ Mom Test:
+          <br>ครั้งล่าสุดที่เจอปัญหานี้คือเมื่อไหร่?
+          <br>ตอนนี้แก้ยังไง?
+          <br>เสียเวลา/เงิน/ลูกค้าเท่าไหร่?
+          <br>เคยลองซื้อหรือใช้ tool อะไร?
+          <br>ถ้าแก้ได้ คุณอยากให้ผลลัพธ์หน้าตาเป็นยังไง?
+        </li>
+        <li>กลับมาบอกผมด้วย raw notes. ผมจะช่วยแยก signal จริงออกจากคำชม.</li>
+      </ol>
+      <p>ถ้าติดตรงไหน ให้ถามผมได้เลย. หน้าที่ผมใน workspace นี้คือเป็นครู/โค้ชที่ช่วยคุณไม่หลุดกลับไป build-first mode.</p>
+    </section>
+
+    <section>
+      <h2>References</h2>
+      <ul class="refs">
+        <li><a href="https://www.ycombinator.com/library/96-do-things-that-don-t-scale">Y Combinator: Do Things That Don't Scale</a></li>
+        <li><a href="https://www.ycombinator.com/library/4D-yc-s-essential-startup-advice">Y Combinator: YC's Essential Startup Advice</a></li>
+        <li><a href="https://brianbalfour.com/essays/product-channel-fit-for-growth">Brian Balfour: Product Channel Fit Will Make or Break Your Growth Strategy</a></li>
+        <li><a href="https://brianbalfour.com/four-fits-growth-framework">Brian Balfour: Four Fits For $100M+ Growth</a></li>
+        <li><a href="https://www.momtestbook.com/">Rob Fitzpatrick: The Mom Test</a></li>
+        <li><a href="https://www.sachinrekhi.com/p/the-mom-test-rob-fitzpatrick">Sachin Rekhi: A Primer on The Mom Test</a></li>
+        <li><a href="https://datareportal.com/reports/digital-2026-thailand">DataReportal: Digital 2026 Thailand</a></li>
+        <li><a href="https://stripe.com/resources/more/essential-saas-metrics">Stripe: Essential SaaS Metrics</a></li>
+        <li><a href="https://www.bain.com/insights/per-seat-software-pricing-isnt-dead-but-new-models-are-gaining-steam/">Bain: Per-seat software pricing and AI models</a></li>
+        <li><a href="https://a16z.com/newsletter/december-2024-enterprise-newsletter-ai-is-driving-a-shift-towards-outcome-based-pricing/">a16z: AI and outcome-based pricing</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>Reference sheet: <a href="../reference/0001-distribution-first-saas-cheatsheet.html">Distribution-first SaaS Cheat Sheet</a></p>
+  </footer>
+
+  <script>
+    function countWords(text) {
+      return text.trim().split(/\s+/).filter(Boolean).length;
+    }
+
+    function hasSpecificity(text) {
+      return /\d|owner|founder|clinic|restaurant|agency|ร้าน|คลินิก|โรงงาน|บริษัท|ทีม|สาขา|LINE|Shopify|Shopee|Lazada|บัญชี|แอดมิน|B2B|SME/i.test(text);
+    }
+
+    function scoreExercise() {
+      const customer = document.getElementById('customer').value;
+      const pain = document.getElementById('pain').value;
+      const channel = document.getElementById('channel').value;
+      const commitment = document.getElementById('commitment').value;
+      let score = 0;
+      const notes = [];
+
+      if (countWords(customer) >= 6 && hasSpecificity(customer)) {
+        score++;
+        notes.push('<span class="good">Customer:</span> เริ่มเฉพาะพอจะหา list ได้.');
+      } else {
+        notes.push('<span class="bad">Customer:</span> ยังฟังดูกว้างไป. ลองระบุ role, industry, size, location, และ workflow.');
+      }
+
+      if (countWords(pain) >= 8 && /เสีย|เงิน|เวลา|ช้า|พลาด|หลุด|แพง|risk|รายได้|cost|hour|บาท|ลูกค้า/i.test(pain)) {
+        score++;
+        notes.push('<span class="good">Pain:</span> มีภาษาของ cost หรือ urgency แล้ว.');
+      } else {
+        notes.push('<span class="warn">Pain:</span> เพิ่มตัวเลขหรือผลเสียจริง เช่น เสียกี่ชั่วโมง กี่บาท กี่ลูกค้า.');
+      }
+
+      if (countWords(channel) >= 7 && /list|รายชื่อ|intro|group|community|LinkedIn|Facebook|LINE|Google|cold|partner|marketplace|สมาคม|เพจ/i.test(channel)) {
+        score++;
+        notes.push('<span class="good">Channel:</span> มีทางไปหา 20 คนแรกแบบ proactive.');
+      } else {
+        notes.push('<span class="bad">Channel:</span> ยังไม่เห็น distribution path. อย่าพึ่งหวังว่า launch แล้วคนจะมาเอง.');
+      }
+
+      if (countWords(commitment) >= 5 && /จ่าย|มัดจำ|pilot|demo|นัด|ข้อมูล|export|intro|สัญญา|ทดลอง|deposit|pay|บาท|call/i.test(commitment)) {
+        score++;
+        notes.push('<span class="good">Commitment:</span> มีหลักฐานที่หนักกว่าคำชม.');
+      } else {
+        notes.push('<span class="warn">Commitment:</span> ควรขอ action ที่มีต้นทุนจริง เช่น เวลา เงิน ข้อมูล หรือ intro.');
+      }
+
+      let verdict = '';
+      if (score === 4) verdict = '<p><strong class="good">พร้อมเริ่ม validation:</strong> ขั้นต่อไปคือคุย 5-10 คน อย่าเพิ่ง build เกิน demo/manual workflow.</p>';
+      else if (score >= 2) verdict = '<p><strong class="warn">ใกล้ใช้ได้:</strong> ปรับช่องที่ยังอ่อนก่อน แล้วค่อยออกไปคุยลูกค้า.</p>';
+      else verdict = '<p><strong class="bad">ยังเสี่ยง build-first:</strong> ตอนนี้ไอเดียยังมีหมอกเยอะเกินไป ให้เริ่มจากลูกค้าและ channel ก่อน.</p>';
+
+      document.getElementById('feedback').innerHTML = verdict + '<ul><li>' + notes.join('</li><li>') + '</li></ul>';
+    }
+
+    function clearExercise() {
+      ['customer', 'pain', 'channel', 'commitment'].forEach(function(id) {
+        document.getElementById(id).value = '';
+      });
+      document.getElementById('feedback').textContent = 'รอคำตอบของคุณอยู่.';
+    }
+
+    function quiz(answer) {
+      const el = document.getElementById('quizFeedback');
+      if (answer === 'b') {
+        el.innerHTML = '<span class="good">ถูก.</span> นี่คือ distribution-first validation: คุณเรียนจากชีวิตจริงของลูกค้าและพิสูจน์ willingness to engage ก่อนสร้างระบบเต็ม.';
+      } else if (answer === 'a') {
+        el.innerHTML = '<span class="bad">ยังเป็น build-first.</span> เสี่ยงใช้ 2-3 เดือนสร้างของที่ไม่มีใครขอ. Dashboard/auth/subscription ควรมาหลังมีสัญญาณ demand.';
+      } else {
+        el.innerHTML = '<span class="warn">อาจใช้ได้ภายหลัง แต่ยังเร็วไป.</span> Ads ดีเมื่อรู้ segment และ message แล้ว. ถ้ายังไม่รู้ pain จริง ads จะเผาเงินเพื่อซื้อความสับสน.';
+      }
+    }
+  </script>
+</body>
+</html>

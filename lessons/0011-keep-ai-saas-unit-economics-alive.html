@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lesson 0011: Keep AI SaaS Unit Economics Alive</title>
+  <style>
+    :root {
+      --ink: #17211d;
+      --muted: #5f6f66;
+      --paper: #fffdf8;
+      --soft: #f4f1e7;
+      --line: #ded9c8;
+      --green: #246b4a;
+      --green-soft: #e8f3ec;
+      --red: #9b3b2f;
+      --gold: #a86518;
+      --blue: #285f8f;
+      --shadow: 0 18px 50px rgba(35, 45, 38, .10);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.65; color: var(--ink); background: linear-gradient(180deg, #eef5ec 0, var(--paper) 350px); }
+    header, main, footer { max-width: 1040px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+    header { padding-top: 56px; padding-bottom: 26px; }
+    .eyebrow { color: var(--green); font-weight: 750; text-transform: uppercase; letter-spacing: .08em; font-size: .78rem; }
+    h1, h2, h3 { line-height: 1.15; margin: 0; letter-spacing: 0; }
+    h1 { max-width: 900px; font-size: clamp(2.1rem, 5vw, 4.6rem); margin-top: 8px; }
+    h2 { font-size: clamp(1.45rem, 2.4vw, 2rem); margin-top: 46px; padding-top: 26px; border-top: 1px solid var(--line); }
+    h3 { font-size: 1.08rem; margin-top: 20px; }
+    p { margin: 12px 0; }
+    a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    .lede { max-width: 840px; font-size: 1.18rem; color: var(--muted); margin-top: 18px; }
+    .hero-grid, .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 22px; }
+    .panel, .exercise, .quiz { background: rgba(255,255,255,.88); border: 1px solid var(--line); border-radius: 8px; box-shadow: var(--shadow); padding: 18px; }
+    .tag { display: inline-flex; align-items: center; min-height: 28px; padding: 3px 9px; border-radius: 999px; background: var(--soft); color: var(--muted); font-weight: 650; font-size: .88rem; }
+    .rule { margin: 28px 0; padding: 24px; background: var(--green-soft); border-left: 5px solid var(--green); border-radius: 8px; font-size: 1.16rem; font-weight: 760; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 8px 0; }
+    table { width: 100%; border-collapse: collapse; margin-top: 16px; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: white; }
+    th, td { text-align: left; vertical-align: top; padding: 13px; border-bottom: 1px solid var(--line); }
+    th { background: var(--soft); }
+    tr:last-child td { border-bottom: 0; }
+    textarea, input { width: 100%; border: 1px solid var(--line); border-radius: 8px; padding: 12px; font: inherit; color: var(--ink); background: white; margin-top: 6px; margin-bottom: 12px; }
+    textarea { min-height: 78px; resize: vertical; }
+    button { appearance: none; border: 0; border-radius: 8px; padding: 11px 14px; background: var(--green); color: white; font: inherit; font-weight: 750; cursor: pointer; margin-top: 8px; margin-right: 8px; }
+    button.secondary { background: #f0ede2; color: var(--ink); border: 1px solid var(--line); }
+    .feedback { margin-top: 12px; padding: 12px 14px; border-radius: 8px; background: var(--soft); border: 1px solid var(--line); color: var(--muted); }
+    .good { color: var(--green); font-weight: 750; }
+    .warn { color: var(--gold); font-weight: 750; }
+    .bad { color: var(--red); font-weight: 750; }
+    .refs { font-size: .96rem; color: var(--muted); }
+    footer { padding-top: 34px; padding-bottom: 56px; color: var(--muted); }
+    @media (max-width: 760px) { header, main, footer { padding-left: 16px; padding-right: 16px; } header { padding-top: 36px; } .hero-grid, .grid { grid-template-columns: 1fr; } table { font-size: .94rem; } }
+    @media print { body { background: white; } header, main, footer { max-width: none; padding: 16mm; } .panel, .exercise, .quiz { box-shadow: none; } button, textarea, input { display: none; } a::after { content: " (" attr(href) ")"; font-size: .82em; color: #555; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">Lesson 0011 · AI unit economics</div>
+    <h1>อย่าให้ AI SaaS ยิ่งโตยิ่งขาดทุน</h1>
+    <p class="lede">บทเรียนนี้สอนทักษะเดียว: คำนวณต้นทุนต่อ outcome/customer เพื่อเลือก pricing และ usage limits ที่ทำให้ธุรกิจอยู่รอด.</p>
+    <div class="hero-grid">
+      <div class="panel">
+        <span class="tag">กับดัก</span>
+        <p>ตั้งราคา 499 บาท/เดือน แต่ลูกค้า heavy user ใช้ AI จนต้นทุน 700 บาท แถมยังต้อง support manual อีก.</p>
+      </div>
+      <div class="panel">
+        <span class="tag">เป้าหมาย</span>
+        <p>รู้ variable cost ต่อ customer, gross margin, safe price floor, และควรใช้ fixed, usage-based, hybrid หรือ outcome-based pricing.</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <h2>1. AI เปลี่ยนต้นทุนของ SaaS</h2>
+      <p>SaaS แบบเก่าหลายประเภทมีต้นทุนต่อ user เพิ่มไม่มากหลังระบบเสร็จ. แต่ AI SaaS มักมีต้นทุนผันแปรตาม usage: tokens, embeddings, image/video generation, retrieval, third-party APIs, human review, และ support. ถ้าคุณไม่วัด cost per outcome ตั้งแต่แรก คุณอาจดีใจที่มี usage เพิ่ม ทั้งที่ margin กำลังหาย.</p>
+      <p>Stripe แนะนำให้ดู SaaS metrics เช่น gross margin และ unit economics (<a href="https://stripe.com/resources/more/essential-saas-metrics">Stripe SaaS metrics</a>). Bain และ a16z ก็ชี้ว่า AI software กำลังผลัก pricing ไปทาง hybrid, usage, และ outcome-based มากขึ้น เพราะ cost/value ไม่ได้ผูกกับ seat อย่างเดียว.</p>
+      <div class="rule">AI cost ต้องถูกออกแบบเข้า pricing ตั้งแต่ pilot ไม่ใช่รอให้ product โตแล้วค่อยพบว่าทุกลูกค้าที่ active ทำให้คุณขาดทุน.</div>
+    </section>
+
+    <section>
+      <h2>2. Unit economics 5 ช่อง</h2>
+      <ol>
+        <li><strong>Price:</strong> เก็บเงินลูกค้าต่อเดือน/ต่อ run/ต่อ outcome เท่าไหร่</li>
+        <li><strong>AI cost:</strong> ต้นทุน model/API ต่อ action หรือ customer เท่าไหร่</li>
+        <li><strong>Non-AI variable cost:</strong> storage, third-party APIs, payment fees, human review, support</li>
+        <li><strong>Gross margin:</strong> หลังหัก variable cost เหลือกี่เปอร์เซ็นต์</li>
+        <li><strong>Usage risk:</strong> heavy user ทำให้ cost พุ่งเกินราคาไหม</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>3. Fixed vs usage vs hybrid</h2>
+      <table>
+        <thead>
+          <tr><th>Model</th><th>เหมาะเมื่อ</th><th>ความเสี่ยง</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Fixed subscription</td>
+            <td>usage ค่อนข้างคงที่ และ value เป็น recurring workflow</td>
+            <td class="warn">heavy users กิน margin ถ้าไม่มี limit</td>
+          </tr>
+          <tr>
+            <td>Usage-based</td>
+            <td>cost และ value โตตาม run/report/message ชัด</td>
+            <td class="warn">ลูกค้ากลัว bill shock ถ้าอธิบายไม่ดี</td>
+          </tr>
+          <tr>
+            <td>Hybrid</td>
+            <td>ต้องการ revenue floor + ป้องกัน overuse</td>
+            <td class="good">มักเหมาะกับ AI SaaS ระยะแรก</td>
+          </tr>
+          <tr>
+            <td>Outcome-based</td>
+            <td>วัดผลลัพธ์ได้และลูกค้าเชื่อ attribution</td>
+            <td class="warn">ดีมากแต่ต้อง define outcome และ proof แข็ง</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>4. Cost control ที่ควรคิดก่อน scale</h2>
+      <div class="grid">
+        <div class="panel">
+          <h3>Product guardrails</h3>
+          <ul>
+            <li>monthly report/run limits</li>
+            <li>fair-use policy</li>
+            <li>batch processing แทน real-time ถ้าไม่จำเป็น</li>
+            <li>cache output ที่ซ้ำ</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>AI guardrails</h3>
+          <ul>
+            <li>ใช้ model แพงเฉพาะงานที่ต้องใช้</li>
+            <li>ลด prompt/context ที่ไม่จำเป็น</li>
+            <li>confidence threshold ก่อน human review</li>
+            <li>วัด cost ต่อ report/customer ทุกสัปดาห์</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="exercise">
+      <h2>5. แบบฝึกหัด: คำนวณ AI unit economics</h2>
+      <p>ใส่ตัวเลขของคุณเอง. ราคา API/model เปลี่ยนได้บ่อย บทเรียนนี้จึงให้คุณกรอก cost จริงจาก provider ที่ใช้.</p>
+
+      <label for="price"><strong>1. Price per customer ต่อเดือน (บาท)</strong></label>
+      <input id="price" type="number" min="0" value="1500">
+
+      <label for="aiCost"><strong>2. AI cost ต่อ customer ต่อเดือน (บาท)</strong></label>
+      <input id="aiCost" type="number" min="0" value="150">
+
+      <label for="apiCost"><strong>3. Third-party/storage/payment cost ต่อเดือน (บาท)</strong></label>
+      <input id="apiCost" type="number" min="0" value="100">
+
+      <label for="humanCost"><strong>4. Human review/support cost ต่อเดือน (บาท)</strong></label>
+      <input id="humanCost" type="number" min="0" value="300">
+
+      <label for="targetMargin"><strong>5. Target gross margin (%)</strong></label>
+      <input id="targetMargin" type="number" min="0" max="95" value="70">
+
+      <button onclick="scoreEconomics()">คำนวณ margin</button>
+      <button class="secondary" onclick="loadExample()">ใส่ตัวอย่าง</button>
+      <div id="economicsFeedback" class="feedback">ใส่ตัวเลขแล้วกดคำนวณ.</div>
+    </section>
+
+    <section class="exercise">
+      <h2>6. Heavy-user stress test</h2>
+      <p>ทดสอบว่าถ้าลูกค้าใช้เยอะกว่าค่าเฉลี่ย คุณยังมีกำไรไหม.</p>
+      <label for="basePrice"><strong>ราคาแพ็กเกจต่อเดือน (บาท)</strong></label>
+      <input id="basePrice" type="number" min="0" value="1500">
+      <label for="costPerRun"><strong>ต้นทุนต่อ run/report (บาท)</strong></label>
+      <input id="costPerRun" type="number" min="0" value="35">
+      <label for="includedRuns"><strong>จำนวน run/report ที่รวมในแพ็กเกจ</strong></label>
+      <input id="includedRuns" type="number" min="0" value="20">
+      <label for="heavyRuns"><strong>heavy user ใช้กี่ run/report ต่อเดือน</strong></label>
+      <input id="heavyRuns" type="number" min="0" value="80">
+      <button onclick="stressTest()">ทดสอบ heavy user</button>
+      <div id="stressFeedback" class="feedback">ใส่ตัวเลขแล้วกดทดสอบ.</div>
+    </section>
+
+    <section class="quiz">
+      <h2>7. Mini Quiz</h2>
+      <p><strong>สถานการณ์:</strong> ลูกค้าจ่าย 1,500 บาท/เดือน แต่ cost เฉลี่ยต่อ customer คือ AI 600 + support 500 + API/storage 200 = 1,300 บาท. ควรทำอะไร?</p>
+      <button onclick="quiz('a')">A. ดีแล้ว มีลูกค้าจ่ายก็พอ</button>
+      <button onclick="quiz('b')">B. ปรับราคา/limit/scope หรือลด cost ก่อน scale เพราะ gross margin ต่ำมาก</button>
+      <button onclick="quiz('c')">C. เพิ่ม feature ให้คุ้มกว่าเดิม</button>
+      <div id="quizFeedback" class="feedback">เลือกคำตอบหนึ่งข้อ.</div>
+    </section>
+
+    <section>
+      <h2>8. Homework ก่อนบทเรียน 12</h2>
+      <p>สำหรับ product/pilot ของคุณ เขียน 4 บรรทัดนี้:</p>
+      <ol>
+        <li>Price ต่อ customer ต่อเดือนหรือ per outcome</li>
+        <li>AI/API/support variable cost ต่อ customer</li>
+        <li>Gross margin โดยประมาณ</li>
+        <li>Guardrail ที่จะใช้: limits, usage-based add-on, hybrid pricing, หรือ scope cut</li>
+      </ol>
+      <p>ส่งมาให้ผมดูได้ ผมจะช่วยอ่านว่า model นี้ scale แล้วรอดไหม.</p>
+    </section>
+
+    <section>
+      <h2>References</h2>
+      <ul class="refs">
+        <li><a href="https://stripe.com/resources/more/essential-saas-metrics">Stripe: Essential SaaS Metrics</a></li>
+        <li><a href="https://www.bain.com/insights/per-seat-software-pricing-isnt-dead-but-new-models-are-gaining-steam/">Bain: Per-seat software pricing and new models</a></li>
+        <li><a href="https://a16z.com/newsletter/december-2024-enterprise-newsletter-ai-is-driving-a-shift-towards-outcome-based-pricing/">a16z: AI and outcome-based pricing</a></li>
+        <li><a href="https://www.ycombinator.com/library/6f-how-to-plan-an-mvp">Y Combinator: How to Plan an MVP</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>Reference sheet: <a href="../reference/0011-ai-unit-economics-cheatsheet.html">AI Unit Economics Cheat Sheet</a></p>
+  </footer>
+
+  <script>
+    function money(n) {
+      return Math.round(n).toLocaleString() + ' บาท';
+    }
+
+    function scoreEconomics() {
+      const price = Number(document.getElementById('price').value || 0);
+      const aiCost = Number(document.getElementById('aiCost').value || 0);
+      const apiCost = Number(document.getElementById('apiCost').value || 0);
+      const humanCost = Number(document.getElementById('humanCost').value || 0);
+      const targetMargin = Number(document.getElementById('targetMargin').value || 0) / 100;
+      const variableCost = aiCost + apiCost + humanCost;
+      const grossProfit = price - variableCost;
+      const margin = price > 0 ? grossProfit / price : 0;
+      const safeFloor = targetMargin < 1 ? variableCost / (1 - targetMargin) : variableCost;
+      let verdict = '';
+
+      if (price <= 0) {
+        verdict = '<p><strong class="bad">ยังไม่มีราคา:</strong> ต้องตั้งราคาเพื่อวัด margin.</p>';
+      } else if (margin >= 0.7) {
+        verdict = '<p><strong class="good">Margin แข็งแรง:</strong> ยังต้อง monitor heavy users แต่เริ่ม scale test ได้.</p>';
+      } else if (margin >= 0.4) {
+        verdict = '<p><strong class="warn">Margin พอใช้แต่ต้องระวัง:</strong> เพิ่ม usage limits หรือ optimize cost ก่อน scale.</p>';
+      } else if (margin > 0) {
+        verdict = '<p><strong class="bad">Margin ต่ำ:</strong> ราคา/ต้นทุน/scope ยังไม่เหมาะกับ SaaS scale.</p>';
+      } else {
+        verdict = '<p><strong class="bad">ขาดทุนต่อ customer:</strong> ห้าม scale แบบนี้ ต้องแก้ pricing หรือ cost ก่อน.</p>';
+      }
+
+      document.getElementById('economicsFeedback').innerHTML = verdict + '<p>Variable cost: <strong>' + money(variableCost) + '</strong>. Gross profit: <strong>' + money(grossProfit) + '</strong>. Gross margin: <strong>' + Math.round(margin * 100) + '%</strong>. Safe price floor สำหรับ target margin: <strong>' + money(safeFloor) + '</strong>.</p>';
+    }
+
+    function loadExample() {
+      document.getElementById('price').value = '2500';
+      document.getElementById('aiCost').value = '250';
+      document.getElementById('apiCost').value = '150';
+      document.getElementById('humanCost').value = '300';
+      document.getElementById('targetMargin').value = '70';
+      scoreEconomics();
+    }
+
+    function stressTest() {
+      const basePrice = Number(document.getElementById('basePrice').value || 0);
+      const costPerRun = Number(document.getElementById('costPerRun').value || 0);
+      const includedRuns = Number(document.getElementById('includedRuns').value || 0);
+      const heavyRuns = Number(document.getElementById('heavyRuns').value || 0);
+      const expectedCost = includedRuns * costPerRun;
+      const heavyCost = heavyRuns * costPerRun;
+      const expectedMargin = basePrice > 0 ? (basePrice - expectedCost) / basePrice : 0;
+      const heavyMargin = basePrice > 0 ? (basePrice - heavyCost) / basePrice : 0;
+      let verdict = '';
+
+      if (heavyMargin < 0) {
+        verdict = '<p><strong class="bad">Heavy user ทำให้ขาดทุน:</strong> ต้องมี usage limit, overage fee, หรือ tier สูงกว่า.</p>';
+      } else if (heavyMargin < 0.4) {
+        verdict = '<p><strong class="warn">Heavy user กิน margin มาก:</strong> ต้องคุม usage หรือใช้ hybrid pricing.</p>';
+      } else {
+        verdict = '<p><strong class="good">Heavy user ยังพอรับได้:</strong> แต่ควร monitor cost จริงต่อ customer.</p>';
+      }
+
+      document.getElementById('stressFeedback').innerHTML = verdict + '<p>Cost ที่คาดไว้จาก included usage: <strong>' + money(expectedCost) + '</strong>, margin: <strong>' + Math.round(expectedMargin * 100) + '%</strong>. Heavy user cost: <strong>' + money(heavyCost) + '</strong>, margin: <strong>' + Math.round(heavyMargin * 100) + '%</strong>.</p>';
+    }
+
+    function quiz(answer) {
+      const el = document.getElementById('quizFeedback');
+      if (answer === 'b') {
+        el.innerHTML = '<span class="good">ถูก.</span> รายได้ 1,500 กับ variable cost 1,300 เหลือ margin บางมาก ยังไม่ควร scale ก่อนแก้ model.';
+      } else if (answer === 'a') {
+        el.innerHTML = '<span class="bad">ไม่พอ.</span> ลูกค้าจ่ายจริงเป็น signal ดี แต่ unit economics แย่จะทำให้โตแล้วเจ็บ.';
+      } else {
+        el.innerHTML = '<span class="warn">เพิ่ม feature อาจทำให้ cost หนักขึ้น.</span> ต้องแก้ราคา ต้นทุน หรือ scope ก่อน.';
+      }
+    }
+  </script>
+</body>
+</html>

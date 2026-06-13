@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lesson 0003: Sell the Outcome Before the Software</title>
+  <style>
+    :root {
+      --ink: #17211d;
+      --muted: #5f6f66;
+      --paper: #fffdf8;
+      --soft: #f4f1e7;
+      --line: #ded9c8;
+      --green: #246b4a;
+      --green-soft: #e8f3ec;
+      --red: #9b3b2f;
+      --gold: #a86518;
+      --blue: #285f8f;
+      --shadow: 0 18px 50px rgba(35, 45, 38, .10);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+      color: var(--ink);
+      background: linear-gradient(180deg, #eef5ec 0, var(--paper) 350px);
+    }
+    header, main, footer { max-width: 1040px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+    header { padding-top: 56px; padding-bottom: 26px; }
+    .eyebrow {
+      color: var(--green);
+      font-weight: 750;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: .78rem;
+    }
+    h1, h2, h3 { line-height: 1.15; margin: 0; letter-spacing: 0; }
+    h1 { max-width: 860px; font-size: clamp(2.1rem, 5vw, 4.6rem); margin-top: 8px; }
+    h2 { font-size: clamp(1.45rem, 2.4vw, 2rem); margin-top: 46px; padding-top: 26px; border-top: 1px solid var(--line); }
+    h3 { font-size: 1.08rem; margin-top: 20px; }
+    p { margin: 12px 0; }
+    a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    .lede { max-width: 820px; font-size: 1.18rem; color: var(--muted); margin-top: 18px; }
+    .hero-grid, .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 22px; }
+    .panel, .exercise, .quiz {
+      background: rgba(255,255,255,.88);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--muted);
+      font-weight: 650;
+      font-size: .88rem;
+    }
+    .rule {
+      margin: 28px 0;
+      padding: 24px;
+      background: var(--green-soft);
+      border-left: 5px solid var(--green);
+      border-radius: 8px;
+      font-size: 1.16rem;
+      font-weight: 760;
+    }
+    ul, ol { padding-left: 22px; }
+    li { margin: 8px 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: white;
+    }
+    th, td { text-align: left; vertical-align: top; padding: 13px; border-bottom: 1px solid var(--line); }
+    th { background: var(--soft); }
+    tr:last-child td { border-bottom: 0; }
+    textarea, input {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      font: inherit;
+      color: var(--ink);
+      background: white;
+      margin-top: 6px;
+      margin-bottom: 12px;
+    }
+    textarea { min-height: 84px; resize: vertical; }
+    button {
+      appearance: none;
+      border: 0;
+      border-radius: 8px;
+      padding: 11px 14px;
+      background: var(--green);
+      color: white;
+      font: inherit;
+      font-weight: 750;
+      cursor: pointer;
+      margin-top: 8px;
+      margin-right: 8px;
+    }
+    button.secondary { background: #f0ede2; color: var(--ink); border: 1px solid var(--line); }
+    .feedback {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      background: var(--soft);
+      border: 1px solid var(--line);
+      color: var(--muted);
+    }
+    .good { color: var(--green); font-weight: 750; }
+    .warn { color: var(--gold); font-weight: 750; }
+    .bad { color: var(--red); font-weight: 750; }
+    .refs { font-size: .96rem; color: var(--muted); }
+    footer { padding-top: 34px; padding-bottom: 56px; color: var(--muted); }
+    @media (max-width: 760px) {
+      header, main, footer { padding-left: 16px; padding-right: 16px; }
+      header { padding-top: 36px; }
+      .hero-grid, .grid { grid-template-columns: 1fr; }
+      table { font-size: .94rem; }
+    }
+    @media print {
+      body { background: white; }
+      header, main, footer { max-width: none; padding: 16mm; }
+      .panel, .exercise, .quiz { box-shadow: none; }
+      button, textarea, input { display: none; }
+      a::after { content: " (" attr(href) ")"; font-size: .82em; color: #555; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">Lesson 0003 · MVP without overbuilding</div>
+    <h1>ขายผลลัพธ์ก่อนสร้างซอฟต์แวร์</h1>
+    <p class="lede">บทเรียนนี้สอนทักษะเดียว: ออกแบบ manual pilot 7 วัน เพื่อพิสูจน์ว่าลูกค้าต้องการผลลัพธ์จริง ก่อนคุณเสียเวลา build SaaS เต็มตัว.</p>
+    <div class="hero-grid">
+      <div class="panel">
+        <span class="tag">กับดักเดิม</span>
+        <p>คุยแล้วลูกค้าดูสนใจ → เรากลับไป build dashboard, auth, billing, settings, integration → ผ่านไป 2 เดือน ยังไม่รู้ว่าเขาจะใช้จริงไหม.</p>
+      </div>
+      <div class="panel">
+        <span class="tag">ทางที่ดีกว่า</span>
+        <p>รับปาก outcome เล็กๆ → ส่งมอบแบบ manual → วัดว่าเขาใช้, จ่าย, ส่งข้อมูล, และขอนัดต่อไหม → ค่อย automate ส่วนที่ซ้ำ.</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <h2>1. MVP ไม่ใช่ product เวอร์ชันเล็กเสมอไป</h2>
+      <p>หลายคนเข้าใจว่า MVP คือ "ทำ product ให้ feature น้อยลง". บางครั้งถูก แต่สำหรับ founder ที่เคยเสียเวลา build 2-3 เดือน จุดที่ดีกว่าคือทำ <strong>manual pilot</strong>: ส่งมอบผลลัพธ์ด้วยมือก่อน แล้วค่อยดูว่าควรสร้างอะไร.</p>
+      <p><a href="https://leanstartup.co/resources/articles/what-is-an-mvp/">Lean Startup Co.</a> อธิบาย MVP ว่าเป็น version ที่ช่วยให้ทีมเก็บ validated learning ได้มากที่สุดด้วย effort น้อยที่สุด. แปลเป็นภาษาคนสร้าง SaaS คือ: ถ้าคุณเรียนรู้ได้โดยใช้ Google Sheet, AI chat, manual report, และ call 20 นาที ก็ยังไม่ต้อง build ระบบเต็ม.</p>
+      <div class="rule">MVP ที่ดีไม่ได้ถามว่า "เราสร้างน้อยสุดได้แค่ไหน" แต่ถามว่า "เราต้องเรียนรู้อะไรที่เสี่ยงที่สุด และพิสูจน์ด้วยแรงน้อยสุดได้ยังไง".</div>
+    </section>
+
+    <section>
+      <h2>2. Manual pilot คืออะไร?</h2>
+      <p>Manual pilot คือการทำหน้าที่แทน software แบบจำกัดขอบเขตให้ลูกค้าจริง 1-3 ราย โดยลูกค้ารู้ว่ามันยัง manual หรือกึ่ง manual. เป้าหมายไม่ใช่แกล้งทำว่ามีระบบแล้ว เป้าหมายคือพิสูจน์ว่า outcome มี value จริง.</p>
+      <table>
+        <thead>
+          <tr><th>อยากทำ SaaS</th><th>Manual pilot ที่ควรทำก่อน</th><th>ยังไม่ต้อง build</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>AI สรุปแชท LINE ร้านค้า</td>
+            <td>รับแชท 100 รายการ → สรุปคำถามซ้ำ, lost order, response issue → ส่ง report ภายใน 24 ชม.</td>
+            <td class="bad">LINE OA integration, dashboard, user roles</td>
+          </tr>
+          <tr>
+            <td>AI report สำหรับ agency</td>
+            <td>รับ campaign data 1 ลูกค้า → ทำ executive summary + insight 5 ข้อ → ส่งให้ account manager ใช้ประชุม</td>
+            <td class="bad">template builder, API sync, multi-client portal</td>
+          </tr>
+          <tr>
+            <td>ระบบติดตาม no-show คลินิก</td>
+            <td>รับ appointment sheet 1 สัปดาห์ → ส่ง reminder list + no-show pattern + call script</td>
+            <td class="bad">booking system, patient app, staff permissions</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="refs">YC มีบทเรียนเรื่อง <a href="https://www.ycombinator.com/library/6f-how-to-plan-an-mvp">How to Plan an MVP</a> และ <a href="https://www.ycombinator.com/library/Io-how-to-build-an-mvp">How to Build an MVP</a> ที่ย้ำเรื่อง scope แคบและเรียนรู้จาก users เร็วที่สุด.</p>
+    </section>
+
+    <section>
+      <h2>3. Manual pilot 7 ช่อง</h2>
+      <p>ก่อน build อะไร ให้เขียนคำตอบ 7 ช่องนี้:</p>
+      <ol>
+        <li><strong>Customer:</strong> ลูกค้ารายแรกคือใคร ชื่อ/role/ธุรกิจชัดไหม</li>
+        <li><strong>Promise:</strong> ผลลัพธ์ที่สัญญาจะส่งใน 7 วันคืออะไร</li>
+        <li><strong>Input:</strong> ต้องขอข้อมูลอะไรจากลูกค้า</li>
+        <li><strong>Manual workflow:</strong> เราจะทำเองด้วย tool ง่ายๆ ยังไง</li>
+        <li><strong>Delivery:</strong> ส่งงานเป็นอะไร report, file, call, dashboard mock, LINE message</li>
+        <li><strong>Commitment:</strong> ลูกค้าต้องจ่าย/มัดจำ/ส่งข้อมูล/นัดต่อ/intro อะไร</li>
+        <li><strong>Decision rule:</strong> เห็น signal แบบไหนถึง build, continue, หรือ kill</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>4. ขอบเขตที่ดี: เล็กแต่มีฟัน</h2>
+      <div class="grid">
+        <div class="panel">
+          <h3 class="good">ดี</h3>
+          <ul>
+            <li>ลูกค้า 1-3 ราย</li>
+            <li>ระยะเวลา 3-7 วัน</li>
+            <li>output ใช้ใน workflow จริง</li>
+            <li>มี commitment ก่อนเริ่ม</li>
+            <li>มี metric ชัด เช่น save 3 hours, recover 10 leads, reduce no-show</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3 class="bad">เสี่ยงกลับไป build-first</h3>
+          <ul>
+            <li>เริ่มจาก "ทำระบบก่อนแล้วค่อยหาลูกค้า"</li>
+            <li>ต้องใช้ integration หลายตัวก่อนเรียนรู้ได้</li>
+            <li>output เป็น demo ที่ไม่มีใครใช้ทำงานจริง</li>
+            <li>ไม่มีใครยอมส่งข้อมูลหรือจ่ายอะไรเลย</li>
+            <li>ทุกลูกค้าต้อง custom คนละแบบจนไม่เห็น product pattern</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="exercise">
+      <h2>5. แบบฝึกหัด: ออกแบบ manual pilot</h2>
+      <p>กรอก 5 ช่องนี้ แล้วกดประเมิน. ระบบนี้ยังเป็น JavaScript rule-based ในไฟล์ ไม่ได้เรียก AI หรือส่งข้อมูลออกไปไหน.</p>
+
+      <label for="customer"><strong>1. ลูกค้ารายแรก / segment แรก</strong></label>
+      <textarea id="customer" placeholder="เช่น เจ้าของร้านอาหาร 1-3 สาขาที่รับออเดอร์ผ่าน LINE OA"></textarea>
+
+      <label for="promise"><strong>2. ผลลัพธ์ที่รับปากใน 7 วัน</strong></label>
+      <textarea id="promise" placeholder="เช่น สรุป lost order จากแชท 100 รายการ และบอก 5 จุดที่ทำให้ลูกค้าหลุด"></textarea>
+
+      <label for="input"><strong>3. ข้อมูลที่ต้องขอจากลูกค้า</strong></label>
+      <textarea id="input" placeholder="เช่น export chat, รายการออเดอร์, ราคาเฉลี่ยต่อออเดอร์, เวลาตอบแชท"></textarea>
+
+      <label for="commitment"><strong>4. Commitment ที่จะขอ</strong></label>
+      <textarea id="commitment" placeholder="เช่น มัดจำ 1,000 บาท, ส่งข้อมูลจริง, นัด follow-up 30 นาที, แนะนำร้านอีก 2 ร้าน"></textarea>
+
+      <label for="decision"><strong>5. Decision rule</strong></label>
+      <textarea id="decision" placeholder="เช่น ถ้า 2 ใน 3 ร้านใช้ report และยอมจ่ายต่อ จะ build automation เฉพาะ report generation"></textarea>
+
+      <button onclick="scorePilot()">ประเมิน pilot</button>
+      <button class="secondary" onclick="loadExample()">ใส่ตัวอย่าง</button>
+      <div id="pilotFeedback" class="feedback">รอคำตอบของคุณอยู่.</div>
+    </section>
+
+    <section class="exercise">
+      <h2>6. Build Threshold Calculator</h2>
+      <p>ให้คะแนน signal จาก pilot แบบเร็วๆ. ถ้ายังไม่ถึง threshold อย่าเพิ่ง build product เต็ม.</p>
+      <label for="paid"><strong>จำนวนลูกค้าที่จ่ายหรือมัดจำ</strong></label>
+      <input id="paid" type="number" min="0" value="0">
+      <label for="data"><strong>จำนวนลูกค้าที่ส่งข้อมูลจริงให้ทำงาน</strong></label>
+      <input id="data" type="number" min="0" value="0">
+      <label for="repeat"><strong>จำนวนลูกค้าที่ขอใช้ต่อหรือนัด follow-up</strong></label>
+      <input id="repeat" type="number" min="0" value="0">
+      <label for="similar"><strong>จำนวนลูกค้าคล้ายกันที่มี pain แบบเดียวกัน</strong></label>
+      <input id="similar" type="number" min="0" value="0">
+      <button onclick="scoreThreshold()">คำนวณ threshold</button>
+      <div id="thresholdFeedback" class="feedback">ใส่ตัวเลขหลังทำ pilot.</div>
+    </section>
+
+    <section class="quiz">
+      <h2>7. Mini Quiz</h2>
+      <p><strong>สถานการณ์:</strong> ลูกค้า 1 รายบอกว่าสนใจ AI สรุปแชท LINE แต่ยังไม่เคยส่งข้อมูลจริงหรือจ่ายเงิน คุณควรทำอะไร?</p>
+      <button onclick="quiz('a')">A. Build LINE integration ก่อน จะได้ดูจริงจัง</button>
+      <button onclick="quiz('b')">B. ขอแชทตัวอย่าง 100 รายการ แล้วทำ manual report ให้ดูภายใน 24 ชม.</button>
+      <button onclick="quiz('c')">C. ทำ landing page สวยๆ แล้วรอให้เขาสมัคร</button>
+      <div id="quizFeedback" class="feedback">เลือกคำตอบหนึ่งข้อ.</div>
+    </section>
+
+    <section>
+      <h2>8. Homework ก่อนบทเรียน 4</h2>
+      <p>เลือก 1 idea แล้วเขียน manual pilot 7 ช่องจากบทนี้. ถ้าคุณยังไม่มีลูกค้าจริง ให้เลือก segment ที่จะหา 5 คนภายใน 48 ชั่วโมงก่อน.</p>
+      <p>เอา draft มาให้ผมดูได้เลย ผมจะช่วยตัด scope ให้เล็กลงจนทำได้จริงใน 7 วัน และบอกว่าอะไรควร manual, อะไรยังไม่ควร build.</p>
+    </section>
+
+    <section>
+      <h2>References</h2>
+      <ul class="refs">
+        <li><a href="https://www.ycombinator.com/library/6f-how-to-plan-an-mvp">Y Combinator: How to Plan an MVP</a></li>
+        <li><a href="https://www.ycombinator.com/library/Io-how-to-build-an-mvp">Y Combinator: How to Build an MVP</a></li>
+        <li><a href="https://leanstartup.co/resources/articles/what-is-an-mvp/">Lean Startup Co.: What Is an MVP?</a></li>
+        <li><a href="https://steveblank.com/2021/04/20/the-secret-to-the-minimum-viable-product/">Steve Blank: A Path to the Minimum Viable Product</a></li>
+        <li><a href="https://www.ycombinator.com/library/96-do-things-that-don-t-scale">Y Combinator: Do Things That Don't Scale</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>Reference sheet: <a href="../reference/0003-manual-pilot-cheatsheet.html">Manual Pilot Cheat Sheet</a></p>
+  </footer>
+
+  <script>
+    function hasAny(text, terms) {
+      return terms.some(function(term) { return term.test(text); });
+    }
+
+    function wordCount(text) {
+      return text.trim().split(/\s+/).filter(Boolean).length;
+    }
+
+    function scorePilot() {
+      const customer = document.getElementById('customer').value.trim();
+      const promise = document.getElementById('promise').value.trim();
+      const input = document.getElementById('input').value.trim();
+      const commitment = document.getElementById('commitment').value.trim();
+      const decision = document.getElementById('decision').value.trim();
+      let score = 0;
+      const notes = [];
+
+      if (wordCount(customer) >= 6 && hasAny(customer.toLowerCase(), [/ร้าน/, /คลินิก/, /agency/, /เจ้าของ/, /ทีม/, /บริษัท/, /สาขา/, /line/, /b2b|sme/])) {
+        score++;
+        notes.push('<span class="good">Customer:</span> แคบพอจะหา 5-20 รายชื่อแรก.');
+      } else {
+        notes.push('<span class="bad">Customer:</span> ยังควรเจาะ role + business type + context ให้ชัดกว่านี้.');
+      }
+
+      if (wordCount(promise) >= 8 && hasAny(promise.toLowerCase(), [/ภายใน|วัน|ชั่วโมง|ลด|เพิ่ม|สรุป|report|รายงาน|lost|save|recover|วิเคราะห์/])) {
+        score++;
+        notes.push('<span class="good">Promise:</span> เริ่มเป็น outcome ที่ส่งมอบได้ในเวลาสั้น.');
+      } else {
+        notes.push('<span class="warn">Promise:</span> เขียนให้เป็นผลลัพธ์ที่จับต้องได้ภายใน 3-7 วัน.');
+      }
+
+      if (wordCount(input) >= 5 && hasAny(input.toLowerCase(), [/ข้อมูล|export|sheet|แชท|ไฟล์|csv|รายงาน|access|ตัวอย่าง/])) {
+        score++;
+        notes.push('<span class="good">Input:</span> รู้แล้วว่าต้องขออะไรเพื่อทำงานจริง.');
+      } else {
+        notes.push('<span class="warn">Input:</span> ต้องระบุข้อมูลจริงที่ลูกค้าต้องส่ง ไม่งั้น pilot จะลอย.');
+      }
+
+      if (wordCount(commitment) >= 5 && hasAny(commitment.toLowerCase(), [/จ่าย|มัดจำ|บาท|นัด|ส่ง|ข้อมูล|intro|แนะนำ|pilot|follow/])) {
+        score++;
+        notes.push('<span class="good">Commitment:</span> มี action ที่หนักกว่าคำชม.');
+      } else {
+        notes.push('<span class="bad">Commitment:</span> ขอ commitment ให้ชัดก่อนเริ่ม ไม่งั้นยังเป็น validation อ่อน.');
+      }
+
+      if (wordCount(decision) >= 7 && hasAny(decision.toLowerCase(), [/ถ้า|อย่างน้อย|ใน|จ่าย|ใช้ต่อ|build|kill|continue|ร้าน|ราย|คน/])) {
+        score++;
+        notes.push('<span class="good">Decision rule:</span> มีเกณฑ์ตัดสินใจ ไม่ใช่ใช้ความรู้สึกหลังจบ pilot.');
+      } else {
+        notes.push('<span class="warn">Decision rule:</span> ตั้งเกณฑ์ build/continue/kill ก่อนทำ pilot.');
+      }
+
+      let verdict = '';
+      if (score >= 5) verdict = '<p><strong class="good">พร้อมลอง manual pilot:</strong> scope ดูเล็กพอและมี commitment path.</p>';
+      else if (score >= 3) verdict = '<p><strong class="warn">ใกล้พร้อม:</strong> เติมช่องที่ยังอ่อนก่อน อย่าเพิ่ง build automation.</p>';
+      else verdict = '<p><strong class="bad">ยังเสี่ยง build-first:</strong> pilot ยังไม่ชัดพอ ให้เริ่มจาก customer, promise, และ commitment.</p>';
+
+      document.getElementById('pilotFeedback').innerHTML = verdict + '<ul><li>' + notes.join('</li><li>') + '</li></ul>';
+    }
+
+    function loadExample() {
+      document.getElementById('customer').value = 'เจ้าของร้านอาหาร 1-3 สาขาในกรุงเทพที่รับออเดอร์ผ่าน LINE OA ทุกวัน';
+      document.getElementById('promise').value = 'ภายใน 24 ชั่วโมงจะสรุป lost order จากแชท 100 รายการ และบอก 5 จุดที่ทำให้ลูกค้าหลุด';
+      document.getElementById('input').value = 'export chat หรือ screenshot แชท 100 รายการ ราคาเฉลี่ยต่อออเดอร์ และเวลาตอบเฉลี่ย';
+      document.getElementById('commitment').value = 'ขอมัดจำ 1,000 บาท ส่งข้อมูลจริง และนัด follow-up 30 นาทีหลังส่ง report';
+      document.getElementById('decision').value = 'ถ้า 2 ใน 3 ร้านใช้ report และยอมจ่ายต่อ จะ build automation เฉพาะ report generation';
+      scorePilot();
+    }
+
+    function scoreThreshold() {
+      const paid = Number(document.getElementById('paid').value || 0);
+      const data = Number(document.getElementById('data').value || 0);
+      const repeat = Number(document.getElementById('repeat').value || 0);
+      const similar = Number(document.getElementById('similar').value || 0);
+      const total = paid * 3 + data * 2 + repeat * 3 + similar;
+      let verdict = '';
+
+      if (paid >= 2 && data >= 2 && repeat >= 2 && similar >= 3) {
+        verdict = '<p><strong class="good">Build small automation ได้:</strong> แต่ build เฉพาะส่วนที่ซ้ำใน pilot เท่านั้น.</p>';
+      } else if (total >= 8) {
+        verdict = '<p><strong class="warn">ทำ pilot ต่ออีก 3-5 ราย:</strong> มี signal แต่ยังไม่ควรสร้าง product เต็ม.</p>';
+      } else {
+        verdict = '<p><strong class="bad">ยังไม่ build:</strong> signal ยังอ่อน ให้ปรับ segment, promise, หรือ commitment.</p>';
+      }
+
+      document.getElementById('thresholdFeedback').innerHTML = verdict + '<p>คะแนน signal: <strong>' + total + '</strong>. Paid/repeat สำคัญที่สุด เพราะมันพิสูจน์ value จริงมากกว่าคำชม.</p>';
+    }
+
+    function quiz(answer) {
+      const el = document.getElementById('quizFeedback');
+      if (answer === 'b') {
+        el.innerHTML = '<span class="good">ถูก.</span> คุณกำลังพิสูจน์ outcome ด้วยข้อมูลจริง ก่อน build integration แพงๆ.';
+      } else if (answer === 'a') {
+        el.innerHTML = '<span class="bad">นี่คือ build-first.</span> Integration เป็นต้นทุนสูงเกินไปก่อนรู้ว่า report มี value จริงไหม.';
+      } else {
+        el.innerHTML = '<span class="warn">ยัง passive ไป.</span> Landing page อาจใช้ทีหลัง แต่ตอนนี้คุณต้องดึงข้อมูลจริงและส่งมอบ outcome ให้ลูกค้า 1 รายก่อน.';
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lesson 0014: Prevent Churn With Customer Health Signals</title>
+  <style>
+    :root {
+      --ink: #17211d;
+      --muted: #5f6f66;
+      --paper: #fffdf8;
+      --soft: #f4f1e7;
+      --line: #ded9c8;
+      --green: #246b4a;
+      --green-soft: #e8f3ec;
+      --red: #9b3b2f;
+      --red-soft: #f8e8e3;
+      --gold: #a86518;
+      --gold-soft: #fff1d6;
+      --blue: #285f8f;
+      --shadow: 0 18px 50px rgba(35, 45, 38, .10);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.65; color: var(--ink); background: linear-gradient(180deg, #eef5ec 0, var(--paper) 360px); }
+    header, main, footer { max-width: 1040px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+    header { padding-top: 56px; padding-bottom: 26px; }
+    .eyebrow { color: var(--green); font-weight: 750; text-transform: uppercase; letter-spacing: .08em; font-size: .78rem; }
+    h1, h2, h3 { line-height: 1.15; margin: 0; letter-spacing: 0; }
+    h1 { max-width: 900px; font-size: clamp(2.1rem, 5vw, 4.45rem); margin-top: 8px; }
+    h2 { font-size: clamp(1.45rem, 2.4vw, 2rem); margin-top: 46px; padding-top: 26px; border-top: 1px solid var(--line); }
+    h3 { font-size: 1.08rem; margin-top: 20px; }
+    p { margin: 12px 0; }
+    a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    .lede { max-width: 850px; font-size: 1.18rem; color: var(--muted); margin-top: 18px; }
+    .hero-grid, .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 22px; }
+    .panel, .exercise, .quiz { background: rgba(255,255,255,.88); border: 1px solid var(--line); border-radius: 8px; box-shadow: var(--shadow); padding: 18px; }
+    .tag { display: inline-flex; align-items: center; min-height: 28px; padding: 3px 9px; border-radius: 999px; background: var(--soft); color: var(--muted); font-weight: 650; font-size: .88rem; }
+    .rule { margin: 28px 0; padding: 24px; background: var(--green-soft); border-left: 5px solid var(--green); border-radius: 8px; font-size: 1.16rem; font-weight: 760; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 8px 0; }
+    table { width: 100%; border-collapse: collapse; margin-top: 16px; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: white; }
+    th, td { text-align: left; vertical-align: top; padding: 13px; border-bottom: 1px solid var(--line); }
+    th { background: var(--soft); }
+    tr:last-child td { border-bottom: 0; }
+    textarea, input, select { width: 100%; border: 1px solid var(--line); border-radius: 8px; padding: 12px; font: inherit; color: var(--ink); background: white; margin-top: 6px; margin-bottom: 12px; }
+    textarea { min-height: 78px; resize: vertical; }
+    button { appearance: none; border: 0; border-radius: 8px; padding: 11px 14px; background: var(--green); color: white; font: inherit; font-weight: 750; cursor: pointer; margin-top: 8px; margin-right: 8px; }
+    button.secondary { background: #f0ede2; color: var(--ink); border: 1px solid var(--line); }
+    .feedback { margin-top: 12px; padding: 12px 14px; border-radius: 8px; background: var(--soft); border: 1px solid var(--line); color: var(--muted); }
+    .scorecard { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 14px; }
+    .score { border: 1px solid var(--line); border-radius: 8px; padding: 12px; background: white; }
+    .good { color: var(--green); font-weight: 750; }
+    .warn { color: var(--gold); font-weight: 750; }
+    .bad { color: var(--red); font-weight: 750; }
+    .healthy { background: var(--green-soft); border-color: #b7d8c4; }
+    .risk { background: var(--gold-soft); border-color: #e3c17a; }
+    .critical { background: var(--red-soft); border-color: #e0aaa1; }
+    .refs { font-size: .96rem; color: var(--muted); }
+    footer { padding-top: 34px; padding-bottom: 56px; color: var(--muted); }
+    @media (max-width: 760px) { header, main, footer { padding-left: 16px; padding-right: 16px; } header { padding-top: 36px; } .hero-grid, .grid, .scorecard { grid-template-columns: 1fr; } table { font-size: .94rem; } }
+    @media print { body { background: white; } header, main, footer { max-width: none; padding: 16mm; } .panel, .exercise, .quiz { box-shadow: none; } button, textarea, input, select { display: none; } a::after { content: " (" attr(href) ")"; font-size: .82em; color: #555; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">Lesson 0014 · Customer health signals</div>
+    <h1>กัน churn ก่อนลูกค้าหายเงียบ</h1>
+    <p class="lede">บทเรียนนี้สอนทักษะเดียว: สร้าง customer health score แบบง่ายสำหรับ SaaS ช่วงแรก เพื่อรู้ว่าลูกค้าคนไหนควรช่วย, ควรขยาย, หรือควรหยุดไล่ตาม.</p>
+    <div class="hero-grid">
+      <div class="panel">
+        <span class="tag">กับดัก</span>
+        <p>ลูกค้าได้ first value แล้วคุณคิดว่า "โอเค เขาคงอยู่ต่อ" แต่สัปดาห์ถัดมาเขาไม่ส่งข้อมูล ไม่ตอบ ไม่ชวนทีมใช้ และสุดท้ายไม่ต่อ.</p>
+      </div>
+      <div class="panel">
+        <span class="tag">เป้าหมาย</span>
+        <p>มีสัญญาณ 5-6 ตัวที่ตรวจทุกสัปดาห์ แล้วเปลี่ยนเป็น action ที่ชัด: help, recover, expand, หรือ stop.</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <h2>1. First value ยังไม่ใช่ retention</h2>
+      <p>บทเรียนก่อนเราพาลูกค้าไปถึง value แรก. แต่ใน SaaS ลูกค้าจะไม่อยู่เพราะเคยได้ value หนึ่งครั้ง เขาจะอยู่เพราะ value นั้นเกิดซ้ำในงานจริง. Stripe แยก metrics เรื่อง activation, engagement, retention, churn เพราะแต่ละช่วงตอบคำถามคนละแบบ. Early founder ต้องแปล metrics เหล่านี้เป็นพฤติกรรมลูกค้าที่เห็นได้จริง.</p>
+      <div class="rule">ถ้าลูกค้าไม่กลับมาทำ repeat event รอบที่สอง คุณยังไม่มี retention loop มีแค่ good demo.</div>
+    </section>
+
+    <section>
+      <h2>2. Health signal ที่ควรดู</h2>
+      <table>
+        <thead>
+          <tr><th>Signal</th><th>Healthy</th><th>At risk / Critical</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Repeat usage</td>
+            <td class="good">กลับมาใช้/ส่ง input/รัน workflow ตามรอบ</td>
+            <td class="bad">ได้ report แรกแล้วไม่มีรอบถัดไป</td>
+          </tr>
+          <tr>
+            <td>Outcome action</td>
+            <td class="good">เอา output ไปตัดสินใจหรือแก้งานจริง</td>
+            <td class="bad">อ่านแล้วชมว่า interesting แต่ไม่ทำอะไร</td>
+          </tr>
+          <tr>
+            <td>Stakeholder</td>
+            <td class="good">มี owner และ budget owner รู้ว่าทำไมต้องใช้</td>
+            <td class="bad">มีแต่ user คนเดียว ไม่มีคนซื้อ/หัวหน้ารับรู้</td>
+          </tr>
+          <tr>
+            <td>Friction</td>
+            <td class="good">support ลดลงหลังใช้รอบแรก</td>
+            <td class="bad">ทุกครั้งต้องให้คุณช่วยเยอะเท่าเดิม</td>
+          </tr>
+          <tr>
+            <td>Next commitment</td>
+            <td class="good">มีนัดรอบถัดไป, next report, renewal, expansion</td>
+            <td class="bad">ไม่มีวันที่แน่นอน มีแต่ "เดี๋ยวดูอีกที"</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>3. Weekly customer success loop</h2>
+      <ol>
+        <li><strong>Check usage:</strong> รอบนี้ลูกค้าได้ทำ repeat event ไหม</li>
+        <li><strong>Ask outcome:</strong> output ล่าสุดเอาไปทำอะไรจริง</li>
+        <li><strong>Capture blocker:</strong> ถ้าไม่ใช้ซ้ำ ติดคน ข้อมูล เวลา ความเชื่อใจ หรือ value ไม่พอ</li>
+        <li><strong>Agree next action:</strong> นัดวันที่และ action ถัดไปแบบ specific</li>
+        <li><strong>Score health:</strong> Healthy, At risk, หรือ Critical แล้วเลือก response</li>
+      </ol>
+      <p>นี่คือ "do things that don't scale" ในรูปแบบ customer success. คุณยังไม่ต้องมี dashboard health score ใหญ่โต แค่ต้องไม่ปล่อยให้สัญญาณหายไปในความรู้สึก.</p>
+    </section>
+
+    <section>
+      <h2>4. Churn risk ไม่ได้หน้าตาเหมือนคำด่าเสมอไป</h2>
+      <div class="grid">
+        <div class="panel">
+          <h3 class="warn">คำพูดที่ฟังดูดีแต่เสี่ยง</h3>
+          <ul>
+            <li>"น่าสนใจมาก เดี๋ยวลองดู"</li>
+            <li>"ทีมเรายุ่ง เดี๋ยวส่งข้อมูลให้"</li>
+            <li>"ขอดู dashboard เพิ่มก่อน"</li>
+            <li>"ถ้าทำได้ครบกว่านี้น่าจะดี"</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3 class="good">พฤติกรรมที่น่าเชื่อกว่า</h3>
+          <ul>
+            <li>นัดรอบถัดไปทันที</li>
+            <li>ชวนหัวหน้าหรือทีมเข้ามาดู</li>
+            <li>เอา output ไปแก้ process จริง</li>
+            <li>ถามเรื่องราคา, security, rollout</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="exercise">
+      <h2>5. แบบฝึกหัด: Customer health score</h2>
+      <p>ให้คะแนนลูกค้า pilot หรือ customer คนหนึ่ง. ตัวประเมินนี้เป็น JavaScript ในไฟล์ ไม่เรียก AI และไม่ส่งข้อมูลออกไปไหน.</p>
+
+      <label for="repeatEvents"><strong>Repeat events ใน 14 วันที่ผ่านมา</strong></label>
+      <input id="repeatEvents" type="number" min="0" value="1">
+
+      <label for="daysSinceTouch"><strong>ผ่านมาแล้วกี่วันตั้งแต่ last meaningful touch</strong></label>
+      <input id="daysSinceTouch" type="number" min="0" value="5">
+
+      <label for="outcomeAction"><strong>ลูกค้าเอา output ไป action จริงไหม</strong></label>
+      <select id="outcomeAction">
+        <option value="2">ใช่ มี action ชัดเจน</option>
+        <option value="1">ยังไม่ชัด / แค่ดู output</option>
+        <option value="0">ไม่เอาไปใช้</option>
+      </select>
+
+      <label for="stakeholder"><strong>มี owner/budget owner ที่เกี่ยวข้องไหม</strong></label>
+      <select id="stakeholder">
+        <option value="2">มีทั้ง user owner และ budget owner</option>
+        <option value="1">มี user owner แต่คนซื้อยังไม่ชัด</option>
+        <option value="0">ไม่มี owner ที่รับผิดชอบจริง</option>
+      </select>
+
+      <label for="friction"><strong>ระดับ friction/support burden</strong></label>
+      <select id="friction">
+        <option value="2">ต่ำ: ใช้ซ้ำได้โดยแทบไม่ต้องช่วย</option>
+        <option value="1">กลาง: ต้องช่วยบ้างแต่ pattern ชัด</option>
+        <option value="0">สูง: ทุกครั้งต้อง custom/help เยอะ</option>
+      </select>
+
+      <label for="nextStep"><strong>next commitment</strong></label>
+      <select id="nextStep">
+        <option value="2">มีวัน/งานถัดไปชัดเจน</option>
+        <option value="1">มีความตั้งใจ แต่ยังไม่ระบุวัน</option>
+        <option value="0">ไม่มี next step</option>
+      </select>
+
+      <button onclick="scoreHealth()">ประเมิน health</button>
+      <button class="secondary" onclick="loadRiskExample()">ใส่ตัวอย่างลูกค้าเสี่ยง</button>
+      <div id="healthFeedback" class="feedback">รอข้อมูลลูกค้าอยู่.</div>
+    </section>
+
+    <section class="exercise">
+      <h2>6. เลือก action หลังได้ score</h2>
+      <div class="scorecard">
+        <div class="score healthy">
+          <h3>Healthy</h3>
+          <p><strong>ทำ:</strong> ขอ case study, referral, เพิ่ม use case, ชวนทีมเพิ่ม.</p>
+        </div>
+        <div class="score risk">
+          <h3>At risk</h3>
+          <p><strong>ทำ:</strong> นัด recovery call 15 นาที หา blocker จริง และ agree next action ภายในสัปดาห์นี้.</p>
+        </div>
+        <div class="score critical">
+          <h3>Critical</h3>
+          <p><strong>ทำ:</strong> ตัดสินใจว่าจะ save ด้วย concierge help หนึ่งรอบ หรือหยุดไล่ตามถ้า value ไม่พอ.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="quiz">
+      <h2>7. Mini Quiz</h2>
+      <p><strong>สถานการณ์:</strong> ลูกค้าได้รับ report แรกแล้วบอกว่า "ดีมาก" แต่ 10 วันผ่านไปไม่ส่งข้อมูลรอบใหม่ และตอบว่า "ช่วงนี้ยุ่งมาก เดี๋ยวกลับมาดู" คุณควรทำอะไร?</p>
+      <button onclick="quiz('a')">A. Build feature เพิ่ม เพราะเขาอาจยังไม่ wow พอ</button>
+      <button onclick="quiz('b')">B. ถาม blocker ของ repeat event แล้วเสนอ assisted next run พร้อมวันชัดเจน</button>
+      <button onclick="quiz('c')">C. ส่ง pricing page ไปให้ตัดสินใจเอง</button>
+      <div id="quizFeedback" class="feedback">เลือกคำตอบหนึ่งข้อ.</div>
+    </section>
+
+    <section>
+      <h2>8. Homework ก่อนบทเรียน 15</h2>
+      <p>เลือก pilot/customer 1 คน แล้วกรอก health note 6 บรรทัด:</p>
+      <ol>
+        <li>Repeat event ล่าสุดคืออะไรและเมื่อไหร่:</li>
+        <li>Output ถูกเอาไป action อะไร:</li>
+        <li>Owner/budget owner คือใคร:</li>
+        <li>Friction ใหญ่สุดตอนนี้:</li>
+        <li>Next commitment ที่มีวันที่ชัดเจน:</li>
+        <li>Action ที่คุณจะทำใน 48 ชม.:</li>
+      </ol>
+      <p>ส่งมาให้ผมดูได้ แล้วผมจะช่วยแยกว่าเคสนี้ควร save, expand, หรือ stop.</p>
+    </section>
+
+    <section>
+      <h2>References</h2>
+      <ul class="refs">
+        <li><a href="https://stripe.com/resources/more/essential-saas-metrics">Stripe: Essential SaaS Metrics</a></li>
+        <li><a href="https://www.ycombinator.com/library/96-do-things-that-don-t-scale">Y Combinator: Do Things That Don't Scale</a></li>
+        <li><a href="https://www.ycombinator.com/library/4D-yc-s-essential-startup-advice">Y Combinator: YC's Essential Startup Advice</a></li>
+        <li><a href="https://review.firstround.com/founder-led-growth-playbook/">First Round Review: Founder-Led Growth Playbook</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>Reference sheet: <a href="../reference/0014-customer-health-cheatsheet.html">Customer Health Cheat Sheet</a></p>
+  </footer>
+
+  <script>
+    function scoreHealth() {
+      const repeatEvents = Number(document.getElementById('repeatEvents').value || 0);
+      const daysSinceTouch = Number(document.getElementById('daysSinceTouch').value || 0);
+      const outcomeAction = Number(document.getElementById('outcomeAction').value);
+      const stakeholder = Number(document.getElementById('stakeholder').value);
+      const friction = Number(document.getElementById('friction').value);
+      const nextStep = Number(document.getElementById('nextStep').value);
+      const feedback = document.getElementById('healthFeedback');
+
+      let score = 0;
+      score += repeatEvents >= 3 ? 3 : repeatEvents >= 1 ? 1 : -2;
+      score += daysSinceTouch <= 3 ? 2 : daysSinceTouch <= 7 ? 0 : -2;
+      score += outcomeAction;
+      score += stakeholder;
+      score += friction;
+      score += nextStep;
+
+      const risks = [];
+      if (repeatEvents === 0) risks.push('ไม่มี repeat event');
+      if (daysSinceTouch > 7) risks.push('ห่างจาก meaningful touch เกิน 7 วัน');
+      if (outcomeAction === 0) risks.push('output ยังไม่ถูกใช้ทำงานจริง');
+      if (stakeholder === 0) risks.push('ไม่มี owner ที่รับผิดชอบ');
+      if (friction === 0) risks.push('support burden สูง');
+      if (nextStep === 0) risks.push('ไม่มี next commitment');
+
+      let state = 'Healthy';
+      let className = 'feedback healthy';
+      let action = 'ขอ commitment ที่ใหญ่ขึ้น: case study, referral, เพิ่มทีม, หรือ use case ถัดไป.';
+      if (score <= 3 || risks.length >= 3) {
+        state = 'Critical';
+        className = 'feedback critical';
+        action = 'ทำ recovery call ภายใน 48 ชม. ถาม blocker ตรงๆ แล้วเสนอ assisted next run หนึ่งรอบ. ถ้ายังไม่มี value หรือ owner ให้หยุดไล่ตาม.';
+      } else if (score <= 7 || risks.length >= 1) {
+        state = 'At risk';
+        className = 'feedback risk';
+        action = 'นัด 15 นาทีในสัปดาห์นี้เพื่อหา blocker ของ repeat event และล็อก next action พร้อมวันที่.';
+      }
+
+      feedback.className = className;
+      feedback.innerHTML = '<strong>Status: ' + state + '</strong><br>Score: ' + score + '/13<br>' +
+        (risks.length ? 'Risk signals: ' + risks.join(', ') + '<br>' : 'Risk signals: ยังไม่เห็นสัญญาณเสี่ยงหลัก<br>') +
+        '<strong>Next action:</strong> ' + action;
+    }
+
+    function loadRiskExample() {
+      document.getElementById('repeatEvents').value = 0;
+      document.getElementById('daysSinceTouch').value = 10;
+      document.getElementById('outcomeAction').value = '1';
+      document.getElementById('stakeholder').value = '1';
+      document.getElementById('friction').value = '0';
+      document.getElementById('nextStep').value = '0';
+      scoreHealth();
+    }
+
+    function quiz(choice) {
+      const box = document.getElementById('quizFeedback');
+      if (choice === 'b') {
+        box.className = 'feedback healthy';
+        box.innerHTML = '<strong>ถูก.</strong> คำชมไม่ใช่ retention. ต้องหา blocker ของ repeat event และทำให้รอบถัดไปเกิดจริงพร้อมวันชัดเจน.';
+      } else if (choice === 'a') {
+        box.className = 'feedback critical';
+        box.innerHTML = '<strong>ยังไม่ใช่.</strong> การ build เพิ่มก่อนรู้ blocker มักพาคุณกลับไปวงจรเดิม: ทำของเยอะขึ้นแต่ลูกค้ายังไม่ใช้ซ้ำ.';
+      } else {
+        box.className = 'feedback risk';
+        box.innerHTML = '<strong>ยังเร็วไป.</strong> pricing page ไม่แก้ปัญหาลูกค้าไม่เกิด repeat value. ก่อนขายต่อ ต้องรู้ว่าเขาติดอะไร.';
+      }
+    }
+  </script>
+</body>
+</html>

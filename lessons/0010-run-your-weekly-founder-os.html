@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lesson 0010: Run Your Weekly Founder OS</title>
+  <style>
+    :root {
+      --ink: #17211d;
+      --muted: #5f6f66;
+      --paper: #fffdf8;
+      --soft: #f4f1e7;
+      --line: #ded9c8;
+      --green: #246b4a;
+      --green-soft: #e8f3ec;
+      --red: #9b3b2f;
+      --gold: #a86518;
+      --blue: #285f8f;
+      --shadow: 0 18px 50px rgba(35, 45, 38, .10);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+      color: var(--ink);
+      background: linear-gradient(180deg, #eef5ec 0, var(--paper) 350px);
+    }
+    header, main, footer { max-width: 1040px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+    header { padding-top: 56px; padding-bottom: 26px; }
+    .eyebrow {
+      color: var(--green);
+      font-weight: 750;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: .78rem;
+    }
+    h1, h2, h3 { line-height: 1.15; margin: 0; letter-spacing: 0; }
+    h1 { max-width: 900px; font-size: clamp(2.1rem, 5vw, 4.6rem); margin-top: 8px; }
+    h2 { font-size: clamp(1.45rem, 2.4vw, 2rem); margin-top: 46px; padding-top: 26px; border-top: 1px solid var(--line); }
+    h3 { font-size: 1.08rem; margin-top: 20px; }
+    p { margin: 12px 0; }
+    a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    .lede { max-width: 840px; font-size: 1.18rem; color: var(--muted); margin-top: 18px; }
+    .hero-grid, .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 22px; }
+    .panel, .exercise, .quiz {
+      background: rgba(255,255,255,.88);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--muted);
+      font-weight: 650;
+      font-size: .88rem;
+    }
+    .rule {
+      margin: 28px 0;
+      padding: 24px;
+      background: var(--green-soft);
+      border-left: 5px solid var(--green);
+      border-radius: 8px;
+      font-size: 1.16rem;
+      font-weight: 760;
+    }
+    ul, ol { padding-left: 22px; }
+    li { margin: 8px 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: white;
+    }
+    th, td { text-align: left; vertical-align: top; padding: 13px; border-bottom: 1px solid var(--line); }
+    th { background: var(--soft); }
+    tr:last-child td { border-bottom: 0; }
+    textarea, input {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      font: inherit;
+      color: var(--ink);
+      background: white;
+      margin-top: 6px;
+      margin-bottom: 12px;
+    }
+    textarea { min-height: 78px; resize: vertical; }
+    button {
+      appearance: none;
+      border: 0;
+      border-radius: 8px;
+      padding: 11px 14px;
+      background: var(--green);
+      color: white;
+      font: inherit;
+      font-weight: 750;
+      cursor: pointer;
+      margin-top: 8px;
+      margin-right: 8px;
+    }
+    button.secondary { background: #f0ede2; color: var(--ink); border: 1px solid var(--line); }
+    .feedback {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      background: var(--soft);
+      border: 1px solid var(--line);
+      color: var(--muted);
+    }
+    .good { color: var(--green); font-weight: 750; }
+    .warn { color: var(--gold); font-weight: 750; }
+    .bad { color: var(--red); font-weight: 750; }
+    .refs { font-size: .96rem; color: var(--muted); }
+    footer { padding-top: 34px; padding-bottom: 56px; color: var(--muted); }
+    @media (max-width: 760px) {
+      header, main, footer { padding-left: 16px; padding-right: 16px; }
+      header { padding-top: 36px; }
+      .hero-grid, .grid { grid-template-columns: 1fr; }
+      table { font-size: .94rem; }
+    }
+    @media print {
+      body { background: white; }
+      header, main, footer { max-width: none; padding: 16mm; }
+      .panel, .exercise, .quiz { box-shadow: none; }
+      button, textarea, input { display: none; }
+      a::after { content: " (" attr(href) ")"; font-size: .82em; color: #555; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">Lesson 0010 · Weekly Founder OS</div>
+    <h1>ทำให้ SaaS progress เป็นรอบรายสัปดาห์</h1>
+    <p class="lede">บทเรียนนี้สอนทักษะเดียว: ตั้ง weekly operating system ที่บังคับให้คุณขาย เรียนรู้ ส่งมอบ และ build เฉพาะจาก evidence.</p>
+    <div class="hero-grid">
+      <div class="panel">
+        <span class="tag">กับดัก</span>
+        <p>สัปดาห์นี้เขียนโค้ด สัปดาห์หน้าทำ landing อีกสัปดาห์เปลี่ยนไอเดีย โดยไม่มี scoreboard ว่าอะไรดีขึ้นจริง.</p>
+      </div>
+      <div class="panel">
+        <span class="tag">เป้าหมาย</span>
+        <p>ทุกสัปดาห์มี hypothesis, customer-facing work, evidence review, และ next decision: sell, learn, build small, pivot, หรือ kill.</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <h2>1. ทำไมต้องมี Founder OS?</h2>
+      <p>บทเรียน 1-9 ให้เครื่องมือเยอะแล้ว: distribution-first validation, interviews, manual pilot, paid offer, distribution sprint, evidence board, retention loop, positioning, sales call. ปัญหาถัดไปคือ execution drift: รู้หลักการแล้ว แต่ชีวิตจริงพากลับไป build-first เพราะมันสบายกว่าโดนลูกค้าปฏิเสธ.</p>
+      <p>Founder OS คือ cadence ที่ทำให้คุณไม่ต้องใช้แรงใจตัดสินทุกวัน. มันบังคับให้ถามทุกสัปดาห์ว่า "เราได้ evidence อะไรเพิ่ม?" ไม่ใช่ "เราทำงานยุ่งแค่ไหน?"</p>
+      <div class="rule">Progress ของ early SaaS ไม่ใช่จำนวน feature. Progress คือจำนวน assumption สำคัญที่ถูกพิสูจน์หรือฆ่าด้วยลูกค้าจริง.</div>
+    </section>
+
+    <section>
+      <h2>2. Weekly scoreboard</h2>
+      <p>ใช้ตัวเลขน้อยๆ พอ แต่ต้องเป็นตัวเลขที่บังคับให้เจอลูกค้า:</p>
+      <table>
+        <thead>
+          <tr><th>Metric</th><th>เริ่มต้นวัด</th><th>สัญญาณ</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Leads contacted</td>
+            <td>ส่ง outreach กี่ราย</td>
+            <td>ถ้าต่ำกว่า 20/สัปดาห์ คุณอาจยังไม่ได้ทดสอบ channel จริง</td>
+          </tr>
+          <tr>
+            <td>Replies</td>
+            <td>มีคนตอบกี่ราย</td>
+            <td>วัด message + segment fit</td>
+          </tr>
+          <tr>
+            <td>Calls</td>
+            <td>นัดคุยกี่สาย</td>
+            <td>วัด interest ที่หนักกว่าคำชม</td>
+          </tr>
+          <tr>
+            <td>Paid/serious pilots</td>
+            <td>จ่าย/ส่งข้อมูล/ขอ invoice/นัด budget owner</td>
+            <td>วัด willingness to pay</td>
+          </tr>
+          <tr>
+            <td>Retention events</td>
+            <td>กลับมาใช้ซ้ำหรือส่งข้อมูลรอบถัดไป</td>
+            <td>วัดว่าเริ่มเป็น SaaS loop ไหม</td>
+          </tr>
+          <tr>
+            <td>Evidence-linked build</td>
+            <td>ชั่วโมง build ที่ผูกกับ friction จริง</td>
+            <td>กันไม่ให้ build feature เพราะความกังวล</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="refs">สิ่งนี้โยงกับ YC ที่ย้ำว่า founders ต้อง launch, talk to users, do things that do not scale, และ build what people want. Stripe metrics ช่วยตอนเริ่มมี usage/retention แล้ว แต่ช่วงแรก scoreboard ต้องบังคับให้คุณคุยกับตลาดก่อน.</p>
+    </section>
+
+    <section>
+      <h2>3. One-week loop</h2>
+      <ol>
+        <li><strong>Monday: Hypothesis.</strong> สัปดาห์นี้จะพิสูจน์อะไร เช่น "LINE-first restaurants will pay for lost-order report."</li>
+        <li><strong>Tuesday: Lead list.</strong> หา 20-50 leads ใน segment เดียว.</li>
+        <li><strong>Wednesday: Outreach/calls.</strong> ส่ง message และนัด calls.</li>
+        <li><strong>Thursday: Pilot/proof.</strong> ส่งมอบ manual pilot หรือ proof เฉพาะจุด.</li>
+        <li><strong>Friday: Evidence review.</strong> ดู scoreboard แล้วตัดสินใจ sell more, learn more, build small, pivot, kill.</li>
+        <li><strong>Weekend: Build small.</strong> ถ้า evidence อนุญาต ค่อย automate friction หนึ่งอย่าง.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>4. Weekly decision rules</h2>
+      <div class="grid">
+        <div class="panel">
+          <h3 class="good">Sell more</h3>
+          <p>มี replies/calls/pilots แต่ sample ยังเล็ก. เพิ่ม volume ก่อนเปลี่ยน product.</p>
+        </div>
+        <div class="panel">
+          <h3 class="warn">Learn more</h3>
+          <p>คุยแล้วมี pain แต่ยังไม่รู้ buyer, budget, urgency หรือ current workaround.</p>
+        </div>
+        <div class="panel">
+          <h3 class="good">Build small</h3>
+          <p>มี paid/repeat signal และ manual friction ซ้ำ. Build เฉพาะ friction นั้น.</p>
+        </div>
+        <div class="panel">
+          <h3 class="bad">Pivot/kill</h3>
+          <p>ทำ sprint ครบแล้วยังไม่มี pain, money, reach, หรือ repeat. เปลี่ยน hypothesis อย่างมีเหตุผล.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="exercise">
+      <h2>5. แบบฝึกหัด: ตั้ง weekly plan</h2>
+      <p>กรอกแผนสัปดาห์หน้า แล้วกดประเมิน. ตัวประเมินนี้เป็น JavaScript ในไฟล์ ไม่เรียก AI และไม่ส่งข้อมูลออกไปไหน.</p>
+
+      <label for="hypothesis"><strong>1. Hypothesis สัปดาห์นี้</strong></label>
+      <textarea id="hypothesis" placeholder="เช่น ร้านอาหารที่รับออเดอร์ผ่าน LINE จะยอมจ่าย 1,500 บาทสำหรับ lost-order report ภายใน 24 ชม."></textarea>
+
+      <label for="segment"><strong>2. Segment เดียว</strong></label>
+      <textarea id="segment" placeholder="เช่น ร้านอาหาร 1-3 สาขาในกรุงเทพที่มี LINE OA และ Facebook page active"></textarea>
+
+      <label for="channel"><strong>3. Channel เดียว</strong></label>
+      <textarea id="channel" placeholder="เช่น Cold DM ไป Facebook pages + Google Maps lead list"></textarea>
+
+      <label for="activity"><strong>4. Activity target</strong></label>
+      <textarea id="activity" placeholder="เช่น contact 50 leads, book 3 calls, run 1 paid pilot"></textarea>
+
+      <label for="decision"><strong>5. Friday decision rule</strong></label>
+      <textarea id="decision" placeholder="เช่น ถ้าได้ 5 replies และ 1 paid pilot จะทำ sprint ซ้ำ ถ้า reply 0 จะปรับ message/list ก่อนเปลี่ยน idea"></textarea>
+
+      <button onclick="scorePlan()">ประเมิน weekly plan</button>
+      <button class="secondary" onclick="loadExample()">ใส่ตัวอย่าง</button>
+      <div id="planFeedback" class="feedback">รอแผนของคุณอยู่.</div>
+    </section>
+
+    <section class="exercise">
+      <h2>6. Weekly scoreboard calculator</h2>
+      <p>หลังจบสัปดาห์ ใส่ตัวเลขเพื่อเลือก next move.</p>
+      <label for="leads"><strong>Leads contacted</strong></label>
+      <input id="leads" type="number" min="0" value="0">
+      <label for="replies"><strong>Replies</strong></label>
+      <input id="replies" type="number" min="0" value="0">
+      <label for="calls"><strong>Calls</strong></label>
+      <input id="calls" type="number" min="0" value="0">
+      <label for="pilots"><strong>Paid/serious pilots</strong></label>
+      <input id="pilots" type="number" min="0" value="0">
+      <label for="retention"><strong>Retention/repeat events</strong></label>
+      <input id="retention" type="number" min="0" value="0">
+      <label for="buildHours"><strong>Build hours</strong></label>
+      <input id="buildHours" type="number" min="0" value="0">
+      <button onclick="scoreWeek()">อ่านผลสัปดาห์</button>
+      <div id="weekFeedback" class="feedback">ใส่ตัวเลขหลังจบสัปดาห์.</div>
+    </section>
+
+    <section class="quiz">
+      <h2>7. Mini Quiz</h2>
+      <p><strong>สถานการณ์:</strong> สัปดาห์นี้คุณ build 25 ชั่วโมง แต่ contact leads 0, calls 0, pilots 0. ควรสรุปว่าอะไร?</p>
+      <button onclick="quiz('a')">A. Product คืบหน้าเยอะแล้ว</button>
+      <button onclick="quiz('b')">B. คุณมี engineering progress แต่ไม่มี market learning ต้องกลับไป customer-facing work</button>
+      <button onclick="quiz('c')">C. ควร build ต่ออีกสัปดาห์ให้เสร็จก่อนค่อยขาย</button>
+      <div id="quizFeedback" class="feedback">เลือกคำตอบหนึ่งข้อ.</div>
+    </section>
+
+    <section>
+      <h2>8. Homework</h2>
+      <p>สำหรับสัปดาห์หน้า เขียน 5 บรรทัดนี้:</p>
+      <ol>
+        <li>Hypothesis:</li>
+        <li>Segment:</li>
+        <li>Channel:</li>
+        <li>Activity target:</li>
+        <li>Friday decision rule:</li>
+      </ol>
+      <p>ส่งมาให้ผมดูได้ ผมจะช่วยทำให้แผนแคบพอ execute ได้จริง และไม่หลุดกลับไป build-first.</p>
+    </section>
+
+    <section>
+      <h2>References</h2>
+      <ul class="refs">
+        <li><a href="https://www.ycombinator.com/library/4D-yc-s-essential-startup-advice">Y Combinator: YC's Essential Startup Advice</a></li>
+        <li><a href="https://www.ycombinator.com/library/96-do-things-that-don-t-scale">Y Combinator: Do Things That Don't Scale</a></li>
+        <li><a href="https://www.ycombinator.com/library/Mo-the-sales-playbook-for-founders">Y Combinator: The Sales Playbook for Founders</a></li>
+        <li><a href="https://stripe.com/resources/more/essential-saas-metrics">Stripe: Essential SaaS Metrics</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>Reference sheet: <a href="../reference/0010-weekly-founder-os-cheatsheet.html">Weekly Founder OS Cheat Sheet</a></p>
+  </footer>
+
+  <script>
+    function hasAny(text, terms) {
+      return terms.some(function(term) { return term.test(text); });
+    }
+
+    function wordCount(text) {
+      return text.trim().split(/\s+/).filter(Boolean).length;
+    }
+
+    function scorePlan() {
+      const hypothesis = document.getElementById('hypothesis').value.trim();
+      const segment = document.getElementById('segment').value.trim();
+      const channel = document.getElementById('channel').value.trim();
+      const activity = document.getElementById('activity').value.trim();
+      const decision = document.getElementById('decision').value.trim();
+      let score = 0;
+      const notes = [];
+
+      if (wordCount(hypothesis) >= 10 && hasAny(hypothesis.toLowerCase(), [/จะ|ยอม|จ่าย|pilot|บาท|reply|call|ใช้|ซื้อ|สมมติฐาน/])) {
+        score += 2;
+        notes.push('<span class="good">Hypothesis:</span> ทดสอบได้ ไม่ใช่แค่ความตั้งใจ.');
+      } else {
+        notes.push('<span class="bad">Hypothesis:</span> เขียนให้เป็นสมมติฐานที่พิสูจน์/ฆ่าได้ใน 1 สัปดาห์.');
+      }
+
+      if (wordCount(segment) >= 7 && hasAny(segment.toLowerCase(), [/ร้าน|คลินิก|agency|เจ้าของ|ทีม|บริษัท|สาขา|line|b2b|sme|กรุงเทพ/])) {
+        score++;
+        notes.push('<span class="good">Segment:</span> แคบพอสำหรับ sprint.');
+      } else {
+        notes.push('<span class="warn">Segment:</span> เจาะ segment ให้แคบกว่านี้.');
+      }
+
+      if (wordCount(channel) >= 4 && hasAny(channel.toLowerCase(), [/dm|email|facebook|line|google|maps|linkedin|intro|partner|community|cold/])) {
+        score++;
+        notes.push('<span class="good">Channel:</span> เลือกช่องทางที่ลงมือได้.');
+      } else {
+        notes.push('<span class="warn">Channel:</span> ระบุ channel เดียวให้ชัด.');
+      }
+
+      if (wordCount(activity) >= 6 && hasAny(activity.toLowerCase(), [/[0-9]/, /lead|reply|call|pilot|contact|นัด|คุย|ส่ง|ราย/])) {
+        score += 2;
+        notes.push('<span class="good">Activity:</span> มี target เป็นตัวเลข.');
+      } else {
+        notes.push('<span class="bad">Activity:</span> ต้องมีตัวเลข เช่น 50 leads, 3 calls, 1 paid pilot.');
+      }
+
+      if (wordCount(decision) >= 10 && hasAny(decision.toLowerCase(), [/ถ้า|จะ|build|ทำซ้ำ|ปรับ|kill|pivot|reply|pilot|call|เปลี่ยน/])) {
+        score += 2;
+        notes.push('<span class="good">Decision:</span> มี rule ก่อนเริ่ม ไม่ตัดสินด้วยอารมณ์วันศุกร์.');
+      } else {
+        notes.push('<span class="warn">Decision:</span> เขียนเกณฑ์ Friday decision ให้ชัด.');
+      }
+
+      let verdict = '';
+      if (score >= 8) {
+        verdict = '<p><strong class="good">แผนพร้อม execute:</strong> เริ่มสัปดาห์นี้ได้เลย และอย่า build นอก evidence.</p>';
+      } else if (score >= 5) {
+        verdict = '<p><strong class="warn">ใกล้พร้อม:</strong> เติมตัวเลขหรือ decision rule ให้คมขึ้น.</p>';
+      } else {
+        verdict = '<p><strong class="bad">ยังเบลอ:</strong> แผนนี้อาจกลายเป็นงานยุ่งแต่ไม่เกิด learning.</p>';
+      }
+
+      document.getElementById('planFeedback').innerHTML = verdict + '<p>Plan score: <strong>' + score + '/8</strong></p><ul><li>' + notes.join('</li><li>') + '</li></ul>';
+    }
+
+    function loadExample() {
+      document.getElementById('hypothesis').value = 'ร้านอาหารที่รับออเดอร์ผ่าน LINE จะยอมจ่าย 1,500 บาทสำหรับ lost-order report ภายใน 24 ชั่วโมง';
+      document.getElementById('segment').value = 'ร้านอาหาร 1-3 สาขาในกรุงเทพที่มี LINE OA และ Facebook page active';
+      document.getElementById('channel').value = 'Cold DM ไป Facebook pages จาก Google Maps lead list';
+      document.getElementById('activity').value = 'contact 50 leads, book 3 calls, run 1 paid pilot';
+      document.getElementById('decision').value = 'ถ้าได้ 5 replies และ 1 paid pilot จะทำ sprint ซ้ำ ถ้า reply 0 จะปรับ message/list ก่อนเปลี่ยน idea';
+      scorePlan();
+    }
+
+    function scoreWeek() {
+      const leads = Number(document.getElementById('leads').value || 0);
+      const replies = Number(document.getElementById('replies').value || 0);
+      const calls = Number(document.getElementById('calls').value || 0);
+      const pilots = Number(document.getElementById('pilots').value || 0);
+      const retention = Number(document.getElementById('retention').value || 0);
+      const buildHours = Number(document.getElementById('buildHours').value || 0);
+      const replyRate = leads > 0 ? Math.round((replies / leads) * 100) : 0;
+      let verdict = '';
+      const notes = [];
+
+      if (leads === 0 && buildHours > 5) {
+        verdict = '<p><strong class="bad">Next move: customer-facing work.</strong> คุณมี build progress แต่ไม่มี market learning.</p>';
+      } else if (pilots >= 1 || retention >= 1) {
+        verdict = '<p><strong class="good">Next move: build small or sell more.</strong> มี serious signal แล้ว ให้ automate friction เล็กๆ หรือเพิ่ม volume กับ segment เดิม.</p>';
+      } else if (calls >= 3 && pilots === 0) {
+        verdict = '<p><strong class="warn">Next move: improve offer/close.</strong> มี interest แต่ยังไม่ convert เป็น pilot.</p>';
+      } else if (replies >= 5 && calls < 2) {
+        verdict = '<p><strong class="warn">Next move: improve call ask.</strong> Message มีชีวิต แต่ ask ยังไม่พาคนไป call.</p>';
+      } else if (leads >= 20 && replies === 0) {
+        verdict = '<p><strong class="bad">Next move: diagnose channel/message.</strong> อย่า build ต่อ ให้ตรวจ list quality และ pain wording.</p>';
+      } else {
+        verdict = '<p><strong class="warn">Next move: more volume.</strong> sample ยังเล็กเกินไป เพิ่ม customer-facing activity ก่อนสรุป.</p>';
+      }
+
+      if (buildHours > 10 && pilots === 0 && retention === 0) {
+        notes.push('<span class="bad">Build hours สูงแต่ไม่มี money/repeat signal:</span> จำกัด build สัปดาห์หน้า.');
+      }
+      if (replyRate > 0) {
+        notes.push('<span class="good">Reply rate:</span> ' + replyRate + '%');
+      }
+      if (pilots > 0) {
+        notes.push('<span class="good">Pilot signal:</span> มี paid/serious pilot ' + pilots + ' ราย');
+      }
+      if (retention > 0) {
+        notes.push('<span class="good">Retention signal:</span> มี repeat event ' + retention + ' ครั้ง');
+      }
+
+      const noteHtml = notes.length ? '<ul><li>' + notes.join('</li><li>') + '</li></ul>' : '<p>ยังไม่มี signal เฉพาะเพิ่ม.</p>';
+      document.getElementById('weekFeedback').innerHTML = verdict + '<p>Leads: <strong>' + leads + '</strong>, Replies: <strong>' + replies + '</strong>, Calls: <strong>' + calls + '</strong>, Pilots: <strong>' + pilots + '</strong>, Retention: <strong>' + retention + '</strong>, Build hours: <strong>' + buildHours + '</strong>.</p>' + noteHtml;
+    }
+
+    function quiz(answer) {
+      const el = document.getElementById('quizFeedback');
+      if (answer === 'b') {
+        el.innerHTML = '<span class="good">ถูก.</span> Feature progress ไม่ใช่ market progress. Early SaaS ต้องมี customer-facing work ทุกสัปดาห์.';
+      } else if (answer === 'a') {
+        el.innerHTML = '<span class="bad">ไม่พอ.</span> Product อาจคืบใน code แต่ธุรกิจยังไม่คืบถ้าไม่มี evidence จากตลาด.';
+      } else {
+        el.innerHTML = '<span class="bad">นี่คือ build-first loop.</span> ยิ่งรอนานก่อนขาย ยิ่งเสี่ยงรู้ช้า.';
+      }
+    }
+  </script>
+</body>
+</html>

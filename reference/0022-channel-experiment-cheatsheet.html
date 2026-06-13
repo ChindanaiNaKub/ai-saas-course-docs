@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Channel Experiment Cheat Sheet</title>
+  <style>
+    :root {
+      --ink: #17211d;
+      --muted: #5d6d65;
+      --paper: #fffdf8;
+      --line: #ded9c8;
+      --band: #eef5ec;
+      --green: #246b4a;
+      --red: #9b3b2f;
+      --gold: #9b6317;
+      --blue: #285f8f;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--ink); background: var(--paper); line-height: 1.62; }
+    main { max-width: 980px; margin: 0 auto; padding: 42px 24px 64px; }
+    h1, h2, h3 { line-height: 1.16; margin: 0; letter-spacing: 0; }
+    h1 { font-size: clamp(2rem, 4vw, 3.4rem); max-width: 820px; }
+    h2 { font-size: 1.35rem; margin-top: 34px; padding-top: 22px; border-top: 1px solid var(--line); }
+    p { margin: 10px 0; }
+    a { color: var(--blue); }
+    .lede { font-size: 1.14rem; color: var(--muted); max-width: 800px; margin-top: 14px; }
+    .rule { margin: 18px 0; padding: 16px; border-left: 5px solid var(--green); background: var(--band); border-radius: 8px; font-weight: 750; }
+    table { width: 100%; border-collapse: collapse; margin-top: 14px; background: white; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+    th, td { text-align: left; vertical-align: top; padding: 12px; border-bottom: 1px solid var(--line); }
+    th { background: var(--band); }
+    tr:last-child td { border-bottom: 0; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 7px 0; }
+    .bad { color: var(--red); font-weight: 750; }
+    .good { color: var(--green); font-weight: 750; }
+    code { background: var(--band); padding: 2px 5px; border-radius: 5px; }
+    @media (max-width: 720px) { main { padding: 28px 16px 48px; } table { font-size: .94rem; } }
+    @media print { body { background: white; } main { max-width: none; padding: 18mm; } a::after { content: " (" attr(href) ")"; font-size: .82em; color: #555; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Channel Experiment Cheat Sheet</h1>
+    <p class="lede">ใช้ก่อนเริ่มทดสอบ channel ใหม่. เป้าหมายคือทดสอบอย่างมี sample, metric, และ decision rule ไม่ใช่ลองมั่วแล้วเดาจากความรู้สึก.</p>
+
+    <section>
+      <h2>แก่นคิด</h2>
+      <div class="rule">Channel ต้อง match buyer behavior: เขาอยู่ไหน, เห็น pain เมื่อไหร่, เชื่อใคร, และซื้อผ่านอะไร.</div>
+    </section>
+
+    <section>
+      <h2>Test card</h2>
+      <table>
+        <thead>
+          <tr><th>Field</th><th>ต้องเขียน</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Channel</td><td>ช่องทางเดียวที่จะ test รอบนี้</td></tr>
+          <tr><td>ICP source</td><td>จะหา buyer/audience จากไหน</td></tr>
+          <tr><td>Hypothesis</td><td>ทำไมช่องนี้น่าจะเข้าถึง buyer ได้</td></tr>
+          <tr><td>Message angle</td><td>pain + proof + offer</td></tr>
+          <tr><td>Proof asset</td><td>mini case, ROI proof, trust note, pilot plan</td></tr>
+          <tr><td>Activity target</td><td>จำนวน outreach/posts/asks/conversations</td></tr>
+          <tr><td>Pass metric</td><td>reply, qualified calls, paid pilots, conversion</td></tr>
+          <tr><td>Decision date</td><td>วันตัดสิน keep / iterate / kill</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Decision rule</h2>
+      <ul>
+        <li><span class="good">Keep:</span> pass metric ถึง และ conversations ตรง ICP</li>
+        <li><span class="good">Iterate:</span> มี qualified conversations แต่ conversion อ่อน</li>
+        <li><span class="bad">Kill:</span> ทำ activity target ครบแล้วยังไม่มี qualified signal</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Minimum samples</h2>
+      <ul>
+        <li>Cold outbound: 100-200 targeted messages</li>
+        <li>Community: 8-12 high-quality contributions</li>
+        <li>Referral: 20-30 specific asks</li>
+        <li>Partner: 10-20 partner conversations</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>แหล่งอ้างอิง</h2>
+      <ul>
+        <li><a href="https://brianbalfour.com/essays/product-channel-fit-for-growth">Brian Balfour: Product Channel Fit</a></li>
+        <li><a href="https://brianbalfour.com/four-fits-growth-framework">Brian Balfour: Four Fits for Growth</a></li>
+        <li><a href="https://www.ycombinator.com/library/Ip-how-to-get-your-first-customers">YC: How to Get Your First Customers</a></li>
+        <li><a href="https://review.firstround.com/founder-led-growth-playbook/">First Round Review: Founder-Led Growth Playbook</a></li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

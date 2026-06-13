@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Trust and Data Handling Cheat Sheet</title>
+  <style>
+    :root {
+      --ink: #17211d;
+      --muted: #5d6d65;
+      --paper: #fffdf8;
+      --line: #ded9c8;
+      --band: #eef5ec;
+      --green: #246b4a;
+      --red: #9b3b2f;
+      --gold: #9b6317;
+      --blue: #285f8f;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--ink); background: var(--paper); line-height: 1.62; }
+    main { max-width: 980px; margin: 0 auto; padding: 42px 24px 64px; }
+    h1, h2, h3 { line-height: 1.16; margin: 0; letter-spacing: 0; }
+    h1 { font-size: clamp(2rem, 4vw, 3.4rem); max-width: 820px; }
+    h2 { font-size: 1.35rem; margin-top: 34px; padding-top: 22px; border-top: 1px solid var(--line); }
+    h3 { font-size: 1rem; margin-top: 18px; color: var(--green); }
+    p { margin: 10px 0; }
+    a { color: var(--blue); }
+    .lede { font-size: 1.14rem; color: var(--muted); max-width: 800px; margin-top: 14px; }
+    .rule { margin: 18px 0; padding: 16px; border-left: 5px solid var(--green); background: var(--band); border-radius: 8px; font-weight: 750; }
+    table { width: 100%; border-collapse: collapse; margin-top: 14px; background: white; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+    th, td { text-align: left; vertical-align: top; padding: 12px; border-bottom: 1px solid var(--line); }
+    th { background: var(--band); }
+    tr:last-child td { border-bottom: 0; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 7px 0; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 16px; }
+    .box { background: white; border: 1px solid var(--line); border-radius: 8px; padding: 15px; }
+    .bad { color: var(--red); font-weight: 750; }
+    .good { color: var(--green); font-weight: 750; }
+    .warn { color: var(--gold); font-weight: 750; }
+    code { background: var(--band); padding: 2px 5px; border-radius: 5px; }
+    @media (max-width: 720px) { main { padding: 28px 16px 48px; } .grid { grid-template-columns: 1fr; } table { font-size: .94rem; } }
+    @media print { body { background: white; } main { max-width: none; padding: 18mm; } a::after { content: " (" attr(href) ")"; font-size: .82em; color: #555; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>AI Trust and Data Handling Cheat Sheet</h1>
+    <p class="lede">ใช้ก่อนขอข้อมูลจริงจากลูกค้า โดยเฉพาะแชท, ไฟล์, ข้อมูลลูกค้าปลายทาง, หรือข้อมูลธุรกิจลับ.</p>
+
+    <section>
+      <h2>แก่นคิด</h2>
+      <div class="rule">Trust ไม่ใช่หน้า privacy policy ยาวๆ. Trust คือขอข้อมูลให้น้อยที่สุด อธิบายให้ชัด ใช้ตามที่สัญญา ลบตามเวลา และป้องกัน output/LLM risk.</div>
+      <p>หลัก data minimization คือเก็บเฉพาะข้อมูลที่จำเป็นกับ purpose นั้น และเก็บเท่าที่จำเป็น. นี่เป็นหลักสำคัญทั้งใน GDPR-style privacy และการออกแบบ AI pilot ที่ลูกค้ากล้าให้ข้อมูล.</p>
+    </section>
+
+    <section>
+      <h2>Data trust checklist</h2>
+      <ol>
+        <li><strong>Purpose:</strong> ขอข้อมูลไปทำอะไร</li>
+        <li><strong>Minimum data:</strong> ต้องใช้ข้อมูลน้อยสุดแค่ไหน</li>
+        <li><strong>Redaction:</strong> ตัดชื่อ, เบอร์, email, address, payment, medical หรือ sensitive fields ได้ไหม</li>
+        <li><strong>Storage:</strong> เก็บที่ไหน ใครเข้าถึงได้</li>
+        <li><strong>Retention:</strong> ลบเมื่อไหร่</li>
+        <li><strong>Model provider:</strong> ส่งข้อมูลไป provider ไหน และ provider ใช้ข้อมูลยังไง</li>
+        <li><strong>Output risk:</strong> มี human review หรือ validation ก่อนลูกค้าใช้ตัดสินใจไหม</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>AI-specific risks</h2>
+      <table>
+        <thead>
+          <tr><th>Risk</th><th>เกิดยังไง</th><th>Guardrail</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Prompt injection</td>
+            <td>ข้อมูลลูกค้ามีคำสั่งแฝงหลอก model</td>
+            <td class="good">แยก system instructions, จำกัด tool access, validate output</td>
+          </tr>
+          <tr>
+            <td>Sensitive disclosure</td>
+            <td>model เผยข้อมูลที่ไม่ควรถูกส่งต่อ</td>
+            <td class="good">redaction, access control, output filtering</td>
+          </tr>
+          <tr>
+            <td>Overreliance</td>
+            <td>ลูกค้าเชื่อ output ที่ผิดโดยไม่มี review</td>
+            <td class="good">confidence labels, human review, disclaimers for decisions</td>
+          </tr>
+          <tr>
+            <td>Data retention creep</td>
+            <td>เก็บทุกอย่างไว้เผื่อใช้ทีหลัง</td>
+            <td class="good">retention window, deletion workflow, purpose limitation</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>คำพูดที่ใช้กับลูกค้า</h2>
+      <div class="box">
+        <p>สำหรับ pilot นี้ ผมขอเฉพาะข้อมูลที่จำเป็นกับการทำ [outcome] เท่านั้น คุณสามารถลบชื่อ เบอร์ และข้อมูลส่วนตัวออกก่อนได้ ผมจะใช้ข้อมูลเพื่อทำ pilot นี้เท่านั้น ไม่เอาไปใช้ train model ของผม และจะลบไฟล์ภายใน [X วัน] หลังส่งงาน/จบ review.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>แหล่งอ้างอิง</h2>
+      <ul>
+        <li><a href="https://www.edps.europa.eu/data-protection/data-protection/glossary/d_en">EDPS: Data minimization</a></li>
+        <li><a href="https://gdpr-info.eu/art-5-gdpr/">GDPR Article 5: data protection principles</a></li>
+        <li><a href="https://www.dlapiperdataprotection.com/index.html?c=TH&t=law">DLA Piper: Thailand PDPA overview</a></li>
+        <li><a href="https://help.openai.com/en/articles/5722486-how-your-data-is-used-to-improve-model-performance">OpenAI: Data use for model performance</a></li>
+        <li><a href="https://owasp.org/www-project-top-10-for-large-language-model-applications/">OWASP: Top 10 for LLM Applications</a></li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

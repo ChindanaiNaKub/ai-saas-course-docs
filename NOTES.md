@@ -1,0 +1,35 @@
+# Notes
+
+- User prefers practical teaching and guidance, not abstract startup theory.
+- User has lived through the "good idea, build for months, no users" loop multiple times.
+- User is Thai and worries that Thai customers may be harder to sell to than US/EU customers because of purchasing power and willingness to pay.
+- First teaching priority: distribution-first validation for AI-era SaaS.
+- User liked lesson 0001 and asked for lesson 0002 in the same practical, direct style.
+- Lesson 0003 continues the sequence from interviews into manual pilots and MVP scope control.
+- Lesson 0004 addresses the user's concern about Thai willingness to pay by teaching paid pilot offers and value-based price sanity checks.
+- Lesson 0005 teaches a 7-day distribution sprint: one segment, one channel, 50 leads, manual outreach, and signal review.
+- Lesson 0006 teaches evidence-based decision gates: build small automation, iterate, pivot, or kill based on pain, pilot, money, and distribution signals.
+- Lesson 0007 teaches turning paid pilots into retention loops by defining activation events, repeat triggers, and retention events before pushing subscription.
+- Lesson 0008 teaches sharpening ICP and positioning from evidence so outreach and landing messaging become specific enough to work.
+- Lesson 0009 teaches founder-led sales calls: diagnose pain, qualify budget/authority/timeline, show relevant proof, and close next commitment.
+- Lesson 0010 teaches a weekly founder operating system: hypothesis, segment, channel, activity targets, scoreboard, and Friday decision rules.
+- Lesson 0011 teaches AI SaaS unit economics: variable cost, gross margin, pricing model choice, heavy-user stress tests, and usage guardrails.
+- Lesson 0012 teaches AI SaaS trust and data handling: purpose limitation, data minimization, redaction, retention, provider transparency, and LLM-specific risks.
+- Lesson 0013 teaches first-value onboarding: activation event, input checklist, friction reduction, time-to-value, and repeat hook.
+- Lesson 0014 teaches customer health signals: repeat usage, outcome action, stakeholder engagement, friction, next commitment, and founder decisions to save, expand, or stop.
+- Lesson 0015 teaches turning healthy customers into growth: choosing the right ask between expansion, referral, and case study, then drafting a specific low-friction request.
+- Lesson 0016 teaches feature request triage: separate requested solutions from underlying jobs, score ICP/frequency/retention/manual proof/complexity/model fit, and decide build, manual, later, or no.
+- Lesson 0017 teaches productizing a wedge: turning pilot/manual evidence into a narrow repeatable SaaS workflow with same buyer, trigger, input, output, action, price logic, and explicit v1 boundaries.
+- Lesson 0018 teaches packaging a productized wedge: outcome, scope, usage cap, onboarding promise, expansion path, price metric, and simple paid pilot to recurring plan ladder.
+- Lesson 0019 teaches repeatable sales pipeline: weekly lead list, outreach, reply, discovery call, proposal, close metrics, pipeline math, and bottleneck diagnosis across lead, message, and offer problems.
+- Lesson 0020 teaches learning from lost deals and objections: classify root causes across ICP fit, pain, trust, urgency, package, price/value, timing, and turn each loss into the next experiment.
+- Lesson 0021 teaches proof assets that shorten sales: map repeated objections to result proof, ROI proof, trust proof, pilot proof, and implementation proof, then draft reusable snippets without overclaiming.
+- Lesson 0022 teaches disciplined channel experiments: choose one channel, define buyer-source hypothesis, message/proof, activity target, pass/fail metric, decision date, and keep/iterate/kill rules.
+- Lesson 0023 teaches landing/message stack: ICP, pain, outcome, proof, and CTA for a wedge that can be understood in 60 seconds.
+- Lesson 0024 teaches founder metrics dashboard: acquisition, sales, activation, retention, health, economics, learning, and one Friday decision.
+- Lesson 0025 teaches choosing Thailand-first vs global-first by segment pain, budget, reachability, founder advantage, and global repeatability.
+- Lesson 0026 teaches systemization without losing customer learning: automate repetition, document semi-repeatable work, delegate low-judgment tasks, and keep founder close to high-learning work.
+- Lesson 0027 teaches defensibility in AI SaaS: workflow depth, proprietary context, distribution loops, switching cost, and trust instead of relying on AI feature novelty.
+- Lesson 0028 teaches delegation without breaking founder-led learning: delegate execution with criteria, QA, escalation, and learning reports.
+- Lesson 0029 teaches a 90-day execution plan: one wedge, one ICP, one channel, paid pilot targets, retention targets, and kill criteria.
+- Lesson 0030 is the final capstone: SaaS readiness audit across ICP, pain/budget, channel, payment, retention, economics, and trust to choose build, sell more, iterate, pivot, or kill.

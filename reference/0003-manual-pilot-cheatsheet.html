@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Manual Pilot Cheat Sheet</title>
+  <style>
+    :root {
+      --ink: #17211d;
+      --muted: #5d6d65;
+      --paper: #fffdf8;
+      --line: #ded9c8;
+      --band: #eef5ec;
+      --green: #246b4a;
+      --red: #9b3b2f;
+      --gold: #9b6317;
+      --blue: #285f8f;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.62;
+    }
+    main { max-width: 980px; margin: 0 auto; padding: 42px 24px 64px; }
+    h1, h2, h3 { line-height: 1.16; margin: 0; letter-spacing: 0; }
+    h1 { font-size: clamp(2rem, 4vw, 3.4rem); max-width: 780px; }
+    h2 { font-size: 1.35rem; margin-top: 34px; padding-top: 22px; border-top: 1px solid var(--line); }
+    h3 { font-size: 1rem; margin-top: 18px; color: var(--green); }
+    p { margin: 10px 0; }
+    a { color: var(--blue); }
+    .lede { font-size: 1.14rem; color: var(--muted); max-width: 780px; margin-top: 14px; }
+    .rule {
+      margin: 18px 0;
+      padding: 16px;
+      border-left: 5px solid var(--green);
+      background: var(--band);
+      border-radius: 8px;
+      font-weight: 750;
+    }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 16px; }
+    .box { background: white; border: 1px solid var(--line); border-radius: 8px; padding: 15px; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td { text-align: left; vertical-align: top; padding: 12px; border-bottom: 1px solid var(--line); }
+    th { background: var(--band); }
+    tr:last-child td { border-bottom: 0; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 7px 0; }
+    .bad { color: var(--red); font-weight: 750; }
+    .good { color: var(--green); font-weight: 750; }
+    .warn { color: var(--gold); font-weight: 750; }
+    @media (max-width: 720px) {
+      main { padding: 28px 16px 48px; }
+      .grid { grid-template-columns: 1fr; }
+      table { font-size: .94rem; }
+    }
+    @media print {
+      body { background: white; }
+      main { max-width: none; padding: 18mm; }
+      a::after { content: " (" attr(href) ")"; font-size: .82em; color: #555; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Manual Pilot Cheat Sheet</h1>
+    <p class="lede">ใช้หลังมี customer interview signal แล้ว แต่ยังไม่ควรสร้าง SaaS เต็มตัว. เป้าหมายคือขาย/ส่งมอบผลลัพธ์แบบ manual เพื่อเรียนรู้ก่อน automate.</p>
+
+    <section>
+      <h2>แก่นคิด</h2>
+      <div class="rule">อย่าเริ่มจาก "เราจะ build feature อะไร" ให้เริ่มจาก "เราจะส่งมอบผลลัพธ์อะไรให้ลูกค้า 1 ราย ภายใน 7 วัน".</div>
+      <p>MVP ตามแนว <a href="https://leanstartup.co/resources/articles/what-is-an-mvp/">Lean Startup</a> คือวิธีเก็บ validated learning ด้วย effort ต่ำที่สุด ไม่ใช่ product เต็มที่ตัด feature ออกนิดหน่อย.</p>
+    </section>
+
+    <section>
+      <h2>Manual pilot 7 ช่อง</h2>
+      <ol>
+        <li><strong>Customer:</strong> ลูกค้าคนแรกเป็นใคร ชื่อ/ธุรกิจ/role ชัดไหม</li>
+        <li><strong>Promise:</strong> ผลลัพธ์ที่รับปากใน 7 วันคืออะไร</li>
+        <li><strong>Input:</strong> ต้องขอข้อมูลอะไรจากลูกค้า</li>
+        <li><strong>Manual workflow:</strong> เราจะทำเองด้วย spreadsheet, AI chat, script, หรือ service ยังไง</li>
+        <li><strong>Delivery:</strong> ส่งงานเป็น report, dashboard mock, file, LINE message, หรือ call แบบไหน</li>
+        <li><strong>Commitment:</strong> ลูกค้าจ่าย/มัดจำ/ส่งข้อมูล/นัด follow-up/แนะนำคนอื่นไหม</li>
+        <li><strong>Learning goal:</strong> ต้องเรียนรู้อะไรถึงจะตัดสินใจ build หรือ kill</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>ตัวอย่าง</h2>
+      <table>
+        <thead>
+          <tr><th>Idea</th><th>Manual pilot</th><th>ห้าม build ก่อน</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>AI สรุปแชท LINE ร้านค้า</td>
+            <td>ให้ร้าน export/forward แชท 100 รายการ แล้วคุณทำ summary + lost sales report ด้วย AI/manual ภายใน 24 ชม.</td>
+            <td class="bad">LINE integration, auth, dashboard, billing</td>
+          </tr>
+          <tr>
+            <td>CRM สำหรับคลินิก</td>
+            <td>รับ spreadsheet นัดหมาย 1 สัปดาห์ แล้วส่ง reminder list + no-show analysis ให้เจ้าของคลินิก</td>
+            <td class="bad">ระบบ booking เต็ม, staff roles, patient portal</td>
+          </tr>
+          <tr>
+            <td>AI ช่วย agency ทำ report</td>
+            <td>รับ campaign data 1 ลูกค้า แล้วทำ report draft + insight 5 ข้อให้ account manager</td>
+            <td class="bad">multi-client dashboard, template builder, API sync</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Build / continue / kill</h2>
+      <div class="grid">
+        <div class="box">
+          <h3 class="good">Build small automation เมื่อ...</h3>
+          <ul>
+            <li>ลูกค้าใช้ผลลัพธ์จริง</li>
+            <li>เขายอมจ่ายหรือมี budget path</li>
+            <li>งาน manual ซ้ำชัดและ automate ได้</li>
+            <li>มีลูกค้าคล้ายกันอย่างน้อย 3 รายสนใจ</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h3 class="bad">Kill หรือเปลี่ยน segment เมื่อ...</h3>
+          <ul>
+            <li>ลูกค้าชมแต่ไม่ส่งข้อมูล/ไม่นัดต่อ</li>
+            <li>ผลลัพธ์ไม่ถูกใช้ใน workflow จริง</li>
+            <li>ต้นทุนส่งมอบสูงกว่า value มาก</li>
+            <li>ทุกคนต้อง custom ต่างกันจนเป็น agency work</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>แหล่งอ้างอิง</h2>
+      <ul>
+        <li><a href="https://www.ycombinator.com/library/6f-how-to-plan-an-mvp">YC: How to Plan an MVP</a></li>
+        <li><a href="https://www.ycombinator.com/library/Io-how-to-build-an-mvp">YC: How to Build an MVP</a></li>
+        <li><a href="https://leanstartup.co/resources/articles/what-is-an-mvp/">Lean Startup Co.: What Is an MVP?</a></li>
+        <li><a href="https://steveblank.com/2021/04/20/the-secret-to-the-minimum-viable-product/">Steve Blank: A Path to the MVP</a></li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

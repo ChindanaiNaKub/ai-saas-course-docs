@@ -1,0 +1,935 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>AI SaaS Course Index</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;520;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="tokens.css">
+  <style>
+    /* Hallmark · local CSS consumes tokens only · Index-First documentation root */
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      overflow-x: clip;
+      background: var(--color-paper);
+      color: var(--color-ink);
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      line-height: var(--line-body);
+      text-rendering: optimizeLegibility;
+    }
+
+    body {
+      padding-block-end: max(var(--space-xl), env(safe-area-inset-bottom));
+    }
+
+    :focus { outline: none; }
+
+    :focus-visible {
+      outline: 2px solid var(--color-focus);
+      outline-offset: 3px;
+      border-radius: var(--radius-sm);
+    }
+
+    a {
+      color: inherit;
+      text-decoration-color: var(--color-rule-2);
+      text-underline-offset: var(--space-2xs);
+      transition: color var(--dur-short) var(--ease-out), text-decoration-color var(--dur-short) var(--ease-out);
+    }
+
+    a:hover {
+      color: var(--color-accent);
+      text-decoration-color: var(--color-accent);
+    }
+
+    a:active {
+      color: var(--color-ink-2);
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      min-height: 2.75rem;
+      cursor: pointer;
+    }
+
+    button:disabled,
+    input:disabled,
+    .action[aria-disabled="true"],
+    .lesson-link[aria-disabled="true"] {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .skip-link {
+      position: fixed;
+      inset-block-start: var(--space-sm);
+      inset-inline-start: var(--space-sm);
+      z-index: var(--z-sticky);
+      padding: var(--space-xs) var(--space-sm);
+      border: 1px solid var(--color-rule);
+      border-radius: var(--radius-sm);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      transform: translateY(calc(-100% - var(--space-lg)));
+      transition: transform var(--dur-short) var(--ease-out);
+    }
+
+    .skip-link:focus {
+      transform: none;
+    }
+
+    .site {
+      width: min(100%, var(--content-width));
+      margin-inline: auto;
+      padding: var(--space-md);
+    }
+
+    .mast {
+      display: grid;
+      gap: var(--space-lg);
+      padding-block: var(--space-xl);
+      border-block-end: 1px solid var(--color-rule);
+    }
+
+    .wordmark {
+      width: max-content;
+      font-family: var(--font-display);
+      font-size: var(--text-sm);
+      font-weight: 700;
+      letter-spacing: 0;
+      color: var(--color-ink);
+      text-decoration: none;
+    }
+
+    .mast__body {
+      display: grid;
+      gap: var(--space-md);
+      max-width: var(--measure);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      max-width: 15ch;
+      min-width: 0;
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      line-height: var(--line-tight);
+      font-weight: 700;
+      letter-spacing: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .lede {
+      max-width: var(--measure);
+      color: var(--color-neutral);
+      font-size: var(--text-md);
+      line-height: 1.5;
+    }
+
+    .quick-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      align-items: center;
+    }
+
+    .action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 2.75rem;
+      padding: var(--space-xs) var(--space-md);
+      border: 1px solid var(--color-rule-2);
+      border-radius: var(--radius-sm);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: transform var(--dur-micro) var(--ease-out), background-color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out);
+    }
+
+    .action[data-tone="primary"] {
+      background: var(--color-ink);
+      color: var(--color-paper);
+      border-color: var(--color-ink);
+    }
+
+    .action:active,
+    .lesson-link:active,
+    .filter:active,
+    .complete-toggle:active {
+      transform: translateY(1px);
+    }
+
+    .shell {
+      display: grid;
+      gap: var(--space-xl);
+      padding-block-start: var(--space-xl);
+    }
+
+    .rail {
+      display: grid;
+      gap: var(--space-lg);
+      align-self: start;
+    }
+
+    .search-panel,
+    .progress-panel,
+    .phase-panel,
+    .toc-panel {
+      display: grid;
+      gap: var(--space-sm);
+    }
+
+    .label {
+      color: var(--color-muted);
+      font-family: var(--font-display);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .search-row {
+      position: relative;
+    }
+
+    .search {
+      width: 100%;
+      min-height: 2.75rem;
+      padding: var(--space-sm) var(--space-md);
+      border: 1px solid var(--color-rule-2);
+      border-radius: var(--radius-sm);
+      outline: 2px solid transparent;
+      outline-offset: 1px;
+      background: var(--color-paper);
+      color: var(--color-ink);
+      transition: background-color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out);
+    }
+
+    .search::placeholder {
+      color: var(--color-muted);
+    }
+
+    .search:hover {
+      background: var(--color-paper-2);
+    }
+
+    .search:focus-visible {
+      outline-color: var(--color-focus);
+      border-color: var(--color-ink-2);
+    }
+
+    .progress-meter {
+      display: grid;
+      gap: var(--space-xs);
+    }
+
+    .progress-line {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--space-md);
+      color: var(--color-neutral);
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .bar {
+      height: var(--space-xs);
+      overflow: clip;
+      border-radius: var(--radius-round);
+      background: var(--color-paper-3);
+    }
+
+    .bar__fill {
+      width: calc(var(--progress, 0) * 1%);
+      height: 100%;
+      border-radius: inherit;
+      background: var(--color-accent);
+      transition: width var(--dur-long) var(--ease-out);
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+    }
+
+    .filter {
+      min-height: 2.5rem;
+      padding: var(--space-xs) var(--space-sm);
+      border: 1px solid var(--color-rule);
+      border-radius: var(--radius-round);
+      background: var(--color-paper);
+      color: var(--color-neutral);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      white-space: nowrap;
+      transition: background-color var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out);
+    }
+
+    .filter[aria-pressed="true"] {
+      border-color: var(--color-accent);
+      background: var(--color-paper-2);
+      color: var(--color-accent);
+    }
+
+    .toc {
+      display: grid;
+      gap: var(--space-2xs);
+      max-height: 22rem;
+      overflow: auto;
+      padding-inline-end: var(--space-xs);
+    }
+
+    .toc a {
+      display: grid;
+      grid-template-columns: 3.2rem minmax(0, 1fr);
+      gap: var(--space-xs);
+      align-items: baseline;
+      padding-block: var(--space-xs);
+      border-block-end: 1px solid var(--color-rule);
+      color: var(--color-neutral);
+      text-decoration: none;
+    }
+
+    .toc a[data-complete="true"] {
+      color: var(--color-muted);
+    }
+
+    .toc a[aria-current="true"] {
+      color: var(--color-accent);
+    }
+
+    .toc__num {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .toc__title {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .content {
+      display: grid;
+      gap: var(--space-2xl);
+      min-width: 0;
+    }
+
+    .phase-section {
+      display: grid;
+      gap: var(--space-md);
+      scroll-margin-block-start: var(--space-lg);
+    }
+
+    .phase-head {
+      display: grid;
+      gap: var(--space-xs);
+      padding-block-end: var(--space-sm);
+      border-block-end: 1px solid var(--color-rule);
+    }
+
+    h2 {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      line-height: var(--line-tight);
+      letter-spacing: 0;
+    }
+
+    .phase-summary {
+      max-width: var(--measure);
+      color: var(--color-neutral);
+    }
+
+    .lesson-list {
+      display: grid;
+      gap: var(--space-xs);
+    }
+
+    .lesson {
+      display: grid;
+      gap: var(--space-md);
+      padding: var(--space-md);
+      border: 1px solid var(--color-rule);
+      border-radius: var(--radius-md);
+      background: var(--color-paper);
+      box-shadow: 0 1px 2px var(--color-shadow);
+      transition: border-color var(--dur-short) var(--ease-out), box-shadow var(--dur-short) var(--ease-out), transform var(--dur-short) var(--ease-out);
+    }
+
+    .lesson[hidden] {
+      display: none;
+    }
+
+    .lesson[data-complete="true"] {
+      background: var(--color-paper-2);
+    }
+
+    .lesson__top {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-sm);
+    }
+
+    .lesson__meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+      align-items: center;
+      color: var(--color-muted);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 1.75rem;
+      padding-inline: var(--space-sm);
+      border: 1px solid var(--color-rule);
+      border-radius: var(--radius-round);
+      color: var(--color-neutral);
+      white-space: nowrap;
+    }
+
+    .lesson h3 {
+      max-width: 48rem;
+      font-size: var(--text-lg);
+      line-height: 1.25;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    .lesson__summary {
+      max-width: var(--measure);
+      color: var(--color-neutral);
+    }
+
+    .lesson__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+      align-items: center;
+    }
+
+    .lesson-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 2.5rem;
+      padding: var(--space-xs) var(--space-sm);
+      border: 1px solid var(--color-rule-2);
+      border-radius: var(--radius-sm);
+      color: var(--color-ink);
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background-color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+
+    .lesson-link[data-kind="reference"] {
+      color: var(--color-neutral);
+    }
+
+    .complete-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      min-height: 2.5rem;
+      padding: var(--space-xs) var(--space-sm);
+      border: 1px solid var(--color-rule);
+      border-radius: var(--radius-sm);
+      background: var(--color-paper);
+      color: var(--color-neutral);
+      font-weight: 700;
+      white-space: nowrap;
+      transition: background-color var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+
+    .complete-toggle[aria-pressed="true"] {
+      border-color: var(--color-success);
+      color: var(--color-success);
+      background: var(--color-paper-2);
+    }
+
+    .no-results {
+      display: none;
+      padding: var(--space-lg);
+      border: 1px solid var(--color-rule);
+      border-radius: var(--radius-md);
+      background: var(--color-paper-2);
+      color: var(--color-neutral);
+    }
+
+    .no-results[data-visible="true"] {
+      display: block;
+    }
+
+    mark {
+      padding-inline: var(--space-3xs);
+      border-radius: var(--radius-xs);
+      background: var(--color-mark);
+      color: var(--color-ink);
+    }
+
+    .foot-index {
+      display: grid;
+      gap: var(--space-lg);
+      margin-block-start: var(--space-2xl);
+      padding-block-start: var(--space-xl);
+      border-block-start: 1px solid var(--color-rule);
+      color: var(--color-neutral);
+    }
+
+    .foot-index__grid {
+      display: grid;
+      gap: var(--space-lg);
+    }
+
+    .foot-index ul {
+      display: grid;
+      gap: var(--space-xs);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .foot-index a {
+      white-space: nowrap;
+    }
+
+    .muted-line {
+      color: var(--color-muted);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .action:hover,
+      .lesson-link:hover,
+      .complete-toggle:hover,
+      .filter:hover {
+        transform: translateY(-1px);
+      }
+
+      .lesson:hover {
+        border-color: var(--color-rule-2);
+        box-shadow: 0 8px 24px var(--color-shadow-strong);
+      }
+    }
+
+    @media (min-width: 42rem) {
+      .site {
+        padding: var(--space-lg);
+      }
+
+      .mast {
+        grid-template-columns: 10rem minmax(0, 1fr);
+        align-items: start;
+        padding-block: var(--space-2xl);
+      }
+
+      .lesson__top {
+        grid-template-columns: 7.5rem minmax(0, 1fr);
+      }
+
+      .foot-index__grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (min-width: 64rem) {
+      .shell {
+        grid-template-columns: var(--rail-width) minmax(0, 1fr);
+        align-items: start;
+      }
+
+      .rail {
+        position: sticky;
+        inset-block-start: var(--space-lg);
+        max-height: calc(100svh - var(--space-xl));
+      }
+    }
+
+    @media (min-width: 88rem) {
+      .site {
+        padding-inline: var(--space-xl);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 150ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 150ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#course">Skip to course</a>
+  <div class="site">
+    <header class="mast">
+      <a class="wordmark" href="index.html" aria-label="AI SaaS Course Index">AI-SaaS.docs</a>
+      <div class="mast__body">
+        <h1>อ่านคอร์ส SaaS แบบ docs</h1>
+        <p class="lede">30 บทจาก distribution-first ไปจนถึง readiness audit รวมบทเรียนและ cheat sheet ไว้หน้าเดียว เพื่อกลับมาอ่านซ้ำ ค้นหา และเช็คความคืบหน้าได้เร็ว.</p>
+        <nav class="quick-actions" aria-label="Quick links">
+          <a class="action" data-tone="primary" href="lessons/0001-stop-building-before-distribution.html">Start lesson 0001</a>
+          <a class="action" id="continueLink" href="lessons/0001-stop-building-before-distribution.html">Continue</a>
+          <a class="action" href="lessons/0030-final-capstone-saas-readiness-audit.html">Final audit</a>
+        </nav>
+      </div>
+    </header>
+
+    <div class="shell">
+      <aside class="rail" aria-label="Course navigation">
+        <section class="search-panel" aria-labelledby="searchLabel">
+          <label class="label" id="searchLabel" for="searchInput">Search lessons</label>
+          <div class="search-row">
+            <input class="search" id="searchInput" type="search" autocomplete="off" placeholder="pain, pricing, Thailand, retention">
+          </div>
+          <p class="muted-line" id="resultCount" aria-live="polite">30 lessons</p>
+        </section>
+
+        <section class="progress-panel" aria-labelledby="progressLabel">
+          <h2 class="label" id="progressLabel">Progress</h2>
+          <div class="progress-meter">
+            <div class="progress-line">
+              <span id="doneCount">0 read</span>
+              <span id="progressPercent">0%</span>
+            </div>
+            <div class="bar" aria-hidden="true"><div class="bar__fill" id="progressFill"></div></div>
+          </div>
+        </section>
+
+        <section class="phase-panel" aria-labelledby="phaseLabel">
+          <h2 class="label" id="phaseLabel">Phases</h2>
+          <div class="filters" id="phaseFilters"></div>
+        </section>
+
+        <section class="toc-panel" aria-labelledby="tocLabel">
+          <h2 class="label" id="tocLabel">Lessons</h2>
+          <nav class="toc" id="tocList" aria-label="Lesson list"></nav>
+        </section>
+      </aside>
+
+      <main class="content" id="course">
+        <div class="no-results" id="noResults">No matching lessons. Try another buyer, metric, channel, or decision keyword.</div>
+      </main>
+    </div>
+
+    <footer class="foot-index">
+      <div class="foot-index__grid">
+        <div>
+          <p class="label">Core loops</p>
+          <ul>
+            <li><a href="#phase-validation">Validation</a></li>
+            <li><a href="#phase-distribution">Distribution</a></li>
+            <li><a href="#phase-retention">Retention</a></li>
+            <li><a href="#phase-decision">Decision</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="label">Key sheets</p>
+          <ul>
+            <li><a href="reference/0004-willingness-to-pay-cheatsheet.html">Willingness to pay</a></li>
+            <li><a href="reference/0019-repeatable-sales-pipeline-cheatsheet.html">Sales pipeline</a></li>
+            <li><a href="reference/0025-market-entry-cheatsheet.html">Market entry</a></li>
+            <li><a href="reference/0030-saas-readiness-audit-cheatsheet.html">Readiness audit</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="label">Course files</p>
+          <ul>
+            <li><a href="MISSION.md">Mission</a></li>
+            <li><a href="NOTES.md">Notes</a></li>
+            <li><a href="RESOURCES.md">Resources</a></li>
+            <li><a href="lessons/0030-final-capstone-saas-readiness-audit.html">Last lesson</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="muted-line">Static docs index · progress stays in this browser.</p>
+    </footer>
+  </div>
+
+  <script>
+    const phases = [
+      { id: "all", label: "All", summary: "" },
+      { id: "validation", label: "Validation", summary: "หยุด build-first, คุยให้เจอ pain จริง, ขาย outcome และพิสูจน์ willingness-to-pay." },
+      { id: "distribution", label: "Distribution", summary: "หา channel, ปิด commitment, วัด pipeline และเรียนจากดีลที่แพ้." },
+      { id: "retention", label: "Retention", summary: "เปลี่ยน pilot เป็น repeat use, onboarding, customer health, growth asks และ proof assets." },
+      { id: "economics", label: "Economics", summary: "คุม AI cost, trust, packaging, dashboard และ market-entry decision." },
+      { id: "scale", label: "Scale", summary: "systemize, defensibility, delegation และแผน 90 วันที่ไม่กลับไปทำของก่อนขาย." },
+      { id: "decision", label: "Decision", summary: "รวม evidence เพื่อเลือก build, sell more, iterate, pivot, หรือ kill." }
+    ];
+
+    const lessons = [
+      { n: "0001", phase: "validation", title: "หยุดสร้างก่อนมี distribution", summary: "เริ่มจาก demand และช่องทางหาลูกค้า ไม่ใช่เริ่มจาก product ที่ยังไม่มีคนรอซื้อ.", tags: "distribution build-first demand validation founder", lesson: "lessons/0001-stop-building-before-distribution.html", ref: "reference/0001-distribution-first-saas-cheatsheet.html" },
+      { n: "0002", phase: "validation", title: "คุยกับลูกค้าให้ได้ความจริง ไม่ใช่คำชม", summary: "ถามจากอดีตจริง ความเจ็บจริง และ workflow จริง เพื่อลด false positive จากคำว่าไอเดียดี.", tags: "customer interview mom test pain workflow", lesson: "lessons/0002-customer-interviews-that-do-not-lie.html", ref: "reference/0002-customer-interview-cheatsheet.html" },
+      { n: "0003", phase: "validation", title: "ขายผลลัพธ์ก่อนสร้างซอฟต์แวร์", summary: "ใช้ manual pilot เพื่อขาย outcome ก่อนลงทุนสร้างระบบเต็ม.", tags: "manual pilot concierge mvp outcome", lesson: "lessons/0003-sell-the-outcome-before-the-software.html", ref: "reference/0003-manual-pilot-cheatsheet.html" },
+      { n: "0004", phase: "validation", title: "ทดสอบว่าเขายอมจ่าย ก่อนทำ pricing page", summary: "แยกคำชมออกจาก budget ด้วย paid pilot, price anchor, และ value math.", tags: "pricing willingness to pay thai budget paid pilot", lesson: "lessons/0004-test-willingness-to-pay-before-pricing-page.html", ref: "reference/0004-willingness-to-pay-cheatsheet.html" },
+      { n: "0005", phase: "distribution", title: "ทำ sprint หา lead 7 วัน ก่อนสร้างต่อ", summary: "ทดสอบ segment และ channel ด้วย activity target ที่วัด reply และ call ได้.", tags: "outreach lead list channel sprint reply", lesson: "lessons/0005-run-a-7-day-distribution-sprint.html", ref: "reference/0005-distribution-sprint-cheatsheet.html" },
+      { n: "0006", phase: "decision", title: "ตัดสินใจจาก evidence: build, iterate, pivot, หรือ kill", summary: "ใช้ evidence board เพื่อเลือก next move แทนการ build ต่อเพราะเสียดายเวลา.", tags: "evidence board build iterate pivot kill", lesson: "lessons/0006-decide-build-iterate-pivot-or-kill.html", ref: "reference/0006-evidence-board-cheatsheet.html" },
+      { n: "0007", phase: "retention", title: "เปลี่ยน paid pilot ให้เป็น retention loop", summary: "นิยาม activation, repeat trigger, และ retention event ก่อนเปลี่ยนเป็น subscription.", tags: "retention activation repeat subscription pilot", lesson: "lessons/0007-turn-pilots-into-retention-loops.html", ref: "reference/0007-retention-loop-cheatsheet.html" },
+      { n: "0008", phase: "validation", title: "ทำให้คนเข้าใจทันทีว่า product นี้สำหรับใคร", summary: " sharpen ICP และ positioning จาก evidence ให้ outreach และ landing page คมขึ้น.", tags: "icp positioning segment wedge buyer", lesson: "lessons/0008-sharpen-your-icp-and-positioning.html", ref: "reference/0008-icp-positioning-cheatsheet.html" },
+      { n: "0009", phase: "distribution", title: "คุย sales call ให้ได้ commitment ไม่ใช่แค่คำชม", summary: "วาง sales call ให้ qualify pain, budget, authority, timeline และปิด next commitment.", tags: "sales call founder-led commitment budget authority", lesson: "lessons/0009-run-founder-led-sales-calls.html", ref: "reference/0009-founder-led-sales-call-cheatsheet.html" },
+      { n: "0010", phase: "decision", title: "ทำให้ SaaS progress เป็นรอบรายสัปดาห์", summary: "ตั้ง weekly founder OS: hypothesis, target, scoreboard, และ Friday decision.", tags: "weekly cadence founder os scoreboard hypothesis", lesson: "lessons/0010-run-your-weekly-founder-os.html", ref: "reference/0010-weekly-founder-os-cheatsheet.html" },
+      { n: "0011", phase: "economics", title: "อย่าให้ AI SaaS ยิ่งโตยิ่งขาดทุน", summary: "คุม variable cost, gross margin, usage guardrails และ pricing model ให้โตแล้วไม่เจ็บ.", tags: "ai cost unit economics gross margin pricing usage", lesson: "lessons/0011-keep-ai-saas-unit-economics-alive.html", ref: "reference/0011-ai-unit-economics-cheatsheet.html" },
+      { n: "0012", phase: "economics", title: "สร้าง trust ก่อนขอข้อมูลลูกค้า", summary: "จัดการ data, privacy, provider transparency และ LLM risk ให้ลูกค้ากล้าลอง.", tags: "trust privacy data handling security ai", lesson: "lessons/0012-build-trust-before-asking-for-data.html", ref: "reference/0012-ai-trust-data-handling-cheatsheet.html" },
+      { n: "0013", phase: "retention", title: "พาลูกค้าไปถึง value แรกให้เร็วที่สุด", summary: "ออกแบบ onboarding จาก first value event, required input, friction และ repeat hook.", tags: "onboarding activation first value friction", lesson: "lessons/0013-design-first-value-onboarding.html", ref: "reference/0013-first-value-onboarding-cheatsheet.html" },
+      { n: "0014", phase: "retention", title: "กัน churn ก่อนลูกค้าหายเงียบ", summary: "อ่าน health signals จาก usage, outcome action, stakeholder engagement และ friction.", tags: "churn customer health save expand stop", lesson: "lessons/0014-prevent-churn-with-customer-health-signals.html", ref: "reference/0014-customer-health-cheatsheet.html" },
+      { n: "0015", phase: "retention", title: "เปลี่ยนลูกค้าที่ happy ให้เป็น growth engine", summary: "เลือก ask ที่ถูกระหว่าง expansion, referral, และ case study จากสัญญาณสุขภาพลูกค้า.", tags: "referral expansion case study growth ask", lesson: "lessons/0015-turn-happy-customers-into-growth.html", ref: "reference/0015-growth-asks-cheatsheet.html" },
+      { n: "0016", phase: "retention", title: "รับฟังลูกค้าโดยไม่กลายเป็นทีม custom dev", summary: "triage feature requests ด้วย job, frequency, retention value, complexity และ model fit.", tags: "feature request triage custom dev focus", lesson: "lessons/0016-triage-feature-requests-without-losing-focus.html", ref: "reference/0016-feature-request-triage-cheatsheet.html" },
+      { n: "0017", phase: "validation", title: "เปลี่ยน pilot/manual work ให้เป็น SaaS ที่ขายซ้ำได้", summary: "productize wedge จาก buyer, trigger, input, output, action, price logic และ v1 boundary.", tags: "productized wedge pilot workflow repeatable", lesson: "lessons/0017-productize-your-wedge.html", ref: "reference/0017-productized-wedge-cheatsheet.html" },
+      { n: "0018", phase: "economics", title: "ทำให้ลูกค้าซื้อ wedge ได้ง่าย", summary: "package outcome, scope, usage cap, onboarding promise, expansion path และ price metric.", tags: "packaging scope usage cap recurring plan", lesson: "lessons/0018-package-your-wedge-so-customers-can-buy.html", ref: "reference/0018-saas-packaging-cheatsheet.html" },
+      { n: "0019", phase: "distribution", title: "สร้าง pipeline ที่พาลูกค้าใหม่เข้ามาเรื่อยๆ", summary: "คุม weekly lead list, outreach, replies, calls, proposals และ bottleneck diagnosis.", tags: "sales pipeline lead outreach proposal close", lesson: "lessons/0019-build-a-repeatable-sales-pipeline.html", ref: "reference/0019-repeatable-sales-pipeline-cheatsheet.html" },
+      { n: "0020", phase: "distribution", title: "เปลี่ยนดีลที่แพ้ให้เป็นข้อมูลที่ทำให้ขายดีขึ้น", summary: "classify lost reasons และเปลี่ยน objection เป็น experiment ถัดไป.", tags: "lost deal objection experiment price trust urgency", lesson: "lessons/0020-learn-from-lost-deals-and-objections.html", ref: "reference/0020-lost-deal-learning-cheatsheet.html" },
+      { n: "0021", phase: "retention", title: "สร้างหลักฐานที่ทำให้ขายง่ายขึ้น", summary: "map objection ไปเป็น proof asset: result, ROI, trust, pilot และ implementation proof.", tags: "proof assets roi case study trust sales", lesson: "lessons/0021-build-proof-assets-that-shorten-sales.html", ref: "reference/0021-proof-assets-cheatsheet.html" },
+      { n: "0022", phase: "distribution", title: "ทดสอบ channel แบบรู้จริงว่าอะไรเวิร์ก", summary: "run channel experiments ด้วย hypothesis, source, message, proof, target และ decision date.", tags: "channel experiment acquisition message proof", lesson: "lessons/0022-run-channel-experiments-with-discipline.html", ref: "reference/0022-channel-experiment-cheatsheet.html" },
+      { n: "0023", phase: "distribution", title: "เขียน landing message ที่ขาย wedge ได้ใน 60 วินาที", summary: "สร้าง message stack จาก ICP, pain, outcome, proof และ CTA ที่เฉพาะพอ.", tags: "landing page message stack copy cta", lesson: "lessons/0023-write-a-landing-message-that-sells-the-wedge.html", ref: "reference/0023-message-stack-cheatsheet.html" },
+      { n: "0024", phase: "economics", title: "สร้าง dashboard ที่บอกว่าควรแก้อะไรก่อน", summary: "เลือก metrics ที่เปลี่ยน Friday decision: acquisition, sales, activation, retention, margin และ learning.", tags: "metrics dashboard mrr retention activation economics", lesson: "lessons/0024-build-a-founder-metrics-dashboard.html", ref: "reference/0024-founder-metrics-dashboard-cheatsheet.html" },
+      { n: "0025", phase: "economics", title: "เลือก Thailand-first หรือ global-first อย่างมีเหตุผล", summary: "ตัดสิน market entry จาก pain, budget, reachability, founder advantage และ repeatability.", tags: "thailand global market entry budget channel", lesson: "lessons/0025-choose-thailand-first-or-global-first.html", ref: "reference/0025-market-entry-cheatsheet.html" },
+      { n: "0026", phase: "scale", title: "ทำระบบโดยไม่หยุดเรียนรู้จากลูกค้า", summary: "แยกงาน automate, document, delegate และ founder-stays-close เพื่อ scale โดยไม่ตาบอด.", tags: "systemize automate document delegate customer learning", lesson: "lessons/0026-systemize-without-losing-customer-learning.html", ref: "reference/0026-systemization-cheatsheet.html" },
+      { n: "0027", phase: "scale", title: "สร้าง moat โดยไม่หลอกตัวเองว่า AI feature คือ moat", summary: "หา defensibility จาก workflow depth, proprietary context, distribution loops, switching cost และ trust.", tags: "defensibility moat workflow data distribution ai", lesson: "lessons/0027-build-defensibility-from-workflow-data-and-distribution.html", ref: "reference/0027-defensibility-cheatsheet.html" },
+      { n: "0028", phase: "scale", title: "จ้างหรือใช้ AI ช่วยโดยไม่ทำให้ startup ตาบอด", summary: "delegate งาน low-judgment โดยยังเก็บ criteria, QA, escalation และ learning report.", tags: "delegation ai contractor founder-led learning", lesson: "lessons/0028-delegate-without-breaking-founder-led-learning.html", ref: "reference/0028-delegation-cheatsheet.html" },
+      { n: "0029", phase: "scale", title: "วางแผน 90 วันที่ไม่พากลับไป build-first", summary: "แปลงคอร์สเป็น 90-day plan: one wedge, one ICP, one channel, paid pilots, retention และ kill criteria.", tags: "90 day plan execution wedge kill criteria", lesson: "lessons/0029-plan-your-next-90-days.html", ref: "reference/0029-90-day-plan-cheatsheet.html" },
+      { n: "0030", phase: "decision", title: "Final audit: พร้อมสร้าง SaaS จริงหรือยัง", summary: "audit idea จาก ICP, pain, channel, payment, retention, economics และ trust แล้วเลือก next move.", tags: "readiness audit capstone build sell iterate pivot kill", lesson: "lessons/0030-final-capstone-saas-readiness-audit.html", ref: "reference/0030-saas-readiness-audit-cheatsheet.html" }
+    ];
+
+    const state = {
+      query: "",
+      phase: "all",
+      complete: new Set(JSON.parse(localStorage.getItem("aiSaasCourseComplete") || "[]")),
+      lastOpened: localStorage.getItem("aiSaasCourseLastOpened") || lessons[0].lesson
+    };
+
+    const course = document.querySelector("#course");
+    const searchInput = document.querySelector("#searchInput");
+    const phaseFilters = document.querySelector("#phaseFilters");
+    const tocList = document.querySelector("#tocList");
+    const noResults = document.querySelector("#noResults");
+    const resultCount = document.querySelector("#resultCount");
+    const doneCount = document.querySelector("#doneCount");
+    const progressPercent = document.querySelector("#progressPercent");
+    const progressFill = document.querySelector("#progressFill");
+    const continueLink = document.querySelector("#continueLink");
+
+    function phaseById(id) {
+      return phases.find((phase) => phase.id === id);
+    }
+
+    function escapeHtml(value) {
+      return value.replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "\"": "&quot;",
+        "'": "&#039;"
+      })[char]);
+    }
+
+    function highlight(text) {
+      const query = state.query.trim();
+      if (!query) return escapeHtml(text);
+      const safe = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      return escapeHtml(text).replace(new RegExp(safe, "ig"), (match) => `<mark>${match}</mark>`);
+    }
+
+    function matchesLesson(lesson) {
+      const phaseMatch = state.phase === "all" || lesson.phase === state.phase;
+      const haystack = `${lesson.n} ${lesson.title} ${lesson.summary} ${lesson.tags} ${phaseById(lesson.phase).label}`.toLowerCase();
+      return phaseMatch && haystack.includes(state.query.toLowerCase().trim());
+    }
+
+    function saveComplete() {
+      localStorage.setItem("aiSaasCourseComplete", JSON.stringify([...state.complete]));
+    }
+
+    function saveLastOpened(path) {
+      state.lastOpened = path;
+      localStorage.setItem("aiSaasCourseLastOpened", path);
+      continueLink.href = path;
+    }
+
+    function updateProgress() {
+      const count = state.complete.size;
+      const percent = Math.round((count / lessons.length) * 100);
+      doneCount.textContent = `${count} read`;
+      progressPercent.textContent = `${percent}%`;
+      progressFill.style.setProperty("--progress", String(percent));
+    }
+
+    function renderFilters() {
+      phaseFilters.innerHTML = phases.map((phase) => `
+        <button class="filter" type="button" data-phase="${phase.id}" aria-pressed="${state.phase === phase.id}">
+          ${phase.label}
+        </button>
+      `).join("");
+    }
+
+    function renderToc(visibleLessons) {
+      const visibleSet = new Set(visibleLessons.map((lesson) => lesson.n));
+      tocList.innerHTML = lessons.map((lesson) => {
+        const hidden = visibleSet.has(lesson.n) ? "" : "hidden";
+        const complete = state.complete.has(lesson.n);
+        return `
+          <a ${hidden} href="#lesson-${lesson.n}" data-complete="${complete}" aria-current="false">
+            <span class="toc__num">${lesson.n}</span>
+            <span class="toc__title">${escapeHtml(lesson.title)}</span>
+          </a>
+        `;
+      }).join("");
+    }
+
+    function renderCourse() {
+      const visibleLessons = lessons.filter(matchesLesson);
+      const groups = phases
+        .filter((phase) => phase.id !== "all")
+        .map((phase) => ({
+          ...phase,
+          lessons: visibleLessons.filter((lesson) => lesson.phase === phase.id)
+        }))
+        .filter((phase) => phase.lessons.length);
+
+      course.querySelectorAll(".phase-section").forEach((section) => section.remove());
+      groups.forEach((phase) => {
+        const section = document.createElement("section");
+        section.className = "phase-section";
+        section.id = `phase-${phase.id}`;
+        section.innerHTML = `
+          <div class="phase-head">
+            <h2>${phase.label}</h2>
+            <p class="phase-summary">${phase.summary}</p>
+          </div>
+          <div class="lesson-list">
+            ${phase.lessons.map(renderLesson).join("")}
+          </div>
+        `;
+        course.append(section);
+      });
+
+      noResults.dataset.visible = visibleLessons.length ? "false" : "true";
+      resultCount.textContent = `${visibleLessons.length} lesson${visibleLessons.length === 1 ? "" : "s"}`;
+      renderToc(visibleLessons);
+      bindLessonActions();
+      updateProgress();
+    }
+
+    function renderLesson(lesson) {
+      const phase = phaseById(lesson.phase);
+      const complete = state.complete.has(lesson.n);
+      return `
+        <article class="lesson" id="lesson-${lesson.n}" data-complete="${complete}" data-phase="${lesson.phase}">
+          <div class="lesson__top">
+            <div class="lesson__meta">
+              <span>${lesson.n}</span>
+              <span class="pill">${phase.label}</span>
+            </div>
+            <div>
+              <h3>${highlight(lesson.title)}</h3>
+              <p class="lesson__summary">${highlight(lesson.summary)}</p>
+            </div>
+          </div>
+          <div class="lesson__actions">
+            <a class="lesson-link" href="${lesson.lesson}" data-open="${lesson.lesson}">Open lesson</a>
+            <a class="lesson-link" data-kind="reference" href="${lesson.ref}" data-open="${lesson.ref}">Cheat sheet</a>
+            <button class="complete-toggle" type="button" data-complete-toggle="${lesson.n}" aria-pressed="${complete}">
+              ${complete ? "Read" : "Mark read"}
+            </button>
+          </div>
+        </article>
+      `;
+    }
+
+    function bindLessonActions() {
+      document.querySelectorAll("[data-complete-toggle]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const id = button.dataset.completeToggle;
+          if (state.complete.has(id)) {
+            state.complete.delete(id);
+          } else {
+            state.complete.add(id);
+          }
+          saveComplete();
+          renderFilters();
+          renderCourse();
+        });
+      });
+
+      document.querySelectorAll("[data-open]").forEach((link) => {
+        link.addEventListener("click", () => saveLastOpened(link.dataset.open));
+      });
+    }
+
+    phaseFilters.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-phase]");
+      if (!button) return;
+      state.phase = button.dataset.phase;
+      renderFilters();
+      renderCourse();
+    });
+
+    searchInput.addEventListener("input", () => {
+      state.query = searchInput.value;
+      renderCourse();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "/" && document.activeElement !== searchInput) {
+        event.preventDefault();
+        searchInput.focus();
+      }
+      if (event.key === "Escape" && document.activeElement === searchInput) {
+        searchInput.value = "";
+        state.query = "";
+        renderCourse();
+      }
+    });
+
+    continueLink.href = state.lastOpened;
+    renderFilters();
+    renderCourse();
+  </script>
+</body>
+</html>

@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lesson 0002: Customer Interviews That Do Not Lie</title>
+  <style>
+    :root {
+      --ink: #17211d;
+      --muted: #5f6f66;
+      --paper: #fffdf8;
+      --soft: #f4f1e7;
+      --line: #ded9c8;
+      --green: #246b4a;
+      --green-soft: #e8f3ec;
+      --red: #9b3b2f;
+      --gold: #a86518;
+      --blue: #285f8f;
+      --shadow: 0 18px 50px rgba(35, 45, 38, .10);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+      color: var(--ink);
+      background: linear-gradient(180deg, #eef5ec 0, var(--paper) 350px);
+    }
+    header, main, footer {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+    header { padding-top: 56px; padding-bottom: 26px; }
+    .eyebrow {
+      color: var(--green);
+      font-weight: 750;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: .78rem;
+    }
+    h1, h2, h3 { line-height: 1.15; margin: 0; letter-spacing: 0; }
+    h1 { max-width: 860px; font-size: clamp(2.1rem, 5vw, 4.6rem); margin-top: 8px; }
+    h2 { font-size: clamp(1.45rem, 2.4vw, 2rem); margin-top: 46px; padding-top: 26px; border-top: 1px solid var(--line); }
+    h3 { font-size: 1.08rem; margin-top: 20px; }
+    p { margin: 12px 0; }
+    a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    .lede { max-width: 800px; font-size: 1.18rem; color: var(--muted); margin-top: 18px; }
+    .hero-grid, .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 22px; }
+    .panel, .exercise, .quiz {
+      background: rgba(255,255,255,.88);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--muted);
+      font-weight: 650;
+      font-size: .88rem;
+    }
+    .rule {
+      margin: 28px 0;
+      padding: 24px;
+      background: var(--green-soft);
+      border-left: 5px solid var(--green);
+      border-radius: 8px;
+      font-size: 1.16rem;
+      font-weight: 760;
+    }
+    ul, ol { padding-left: 22px; }
+    li { margin: 8px 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: white;
+    }
+    th, td { text-align: left; vertical-align: top; padding: 13px; border-bottom: 1px solid var(--line); }
+    th { background: var(--soft); }
+    tr:last-child td { border-bottom: 0; }
+    textarea, input {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      font: inherit;
+      color: var(--ink);
+      background: white;
+      margin-top: 6px;
+      margin-bottom: 12px;
+    }
+    textarea { min-height: 88px; resize: vertical; }
+    button {
+      appearance: none;
+      border: 0;
+      border-radius: 8px;
+      padding: 11px 14px;
+      background: var(--green);
+      color: white;
+      font: inherit;
+      font-weight: 750;
+      cursor: pointer;
+      margin-top: 8px;
+      margin-right: 8px;
+    }
+    button.secondary { background: #f0ede2; color: var(--ink); border: 1px solid var(--line); }
+    .feedback {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      background: var(--soft);
+      border: 1px solid var(--line);
+      color: var(--muted);
+    }
+    .good { color: var(--green); font-weight: 750; }
+    .warn { color: var(--gold); font-weight: 750; }
+    .bad { color: var(--red); font-weight: 750; }
+    .refs { font-size: .96rem; color: var(--muted); }
+    footer { padding-top: 34px; padding-bottom: 56px; color: var(--muted); }
+    @media (max-width: 760px) {
+      header, main, footer { padding-left: 16px; padding-right: 16px; }
+      header { padding-top: 36px; }
+      .hero-grid, .grid { grid-template-columns: 1fr; }
+      table { font-size: .94rem; }
+    }
+    @media print {
+      body { background: white; }
+      header, main, footer { max-width: none; padding: 16mm; }
+      .panel, .exercise, .quiz { box-shadow: none; }
+      button, textarea, input { display: none; }
+      a::after { content: " (" attr(href) ")"; font-size: .82em; color: #555; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">Lesson 0002 · Customer Discovery</div>
+    <h1>คุยกับลูกค้าให้ได้ความจริง ไม่ใช่คำชม</h1>
+    <p class="lede">บทเรียนนี้สอนทักษะเดียว: เปลี่ยนคำถามที่ทำให้เราหลงดีใจ เป็นคำถามที่ดึงพฤติกรรมจริง, cost จริง, และ commitment จริงออกมา.</p>
+    <div class="hero-grid">
+      <div class="panel">
+        <span class="tag">คำชมที่อันตราย</span>
+        <p>"น่าสนใจนะ", "ทำเสร็จแล้วส่งมาดู", "ถ้ามีแบบนี้ก็ดี" ฟังดี แต่ยังไม่แปลว่ามี demand.</p>
+      </div>
+      <div class="panel">
+        <span class="tag">หลักฐานที่แข็งกว่า</span>
+        <p>เหตุการณ์ล่าสุด, workaround ปัจจุบัน, เงิน/เวลาที่เสีย, budget owner, ข้อมูลจริง, นัดต่อ, pilot, หรือ intro.</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <h2>1. ทำไม customer interview ถึงหลอก founder เก่ง?</h2>
+      <p>เพราะคนส่วนใหญ่สุภาพ. โดยเฉพาะบริบทไทย หลายคนไม่อยากหักหน้า ไม่อยากพูดว่าไอเดียเราไม่สำคัญ หรือไม่อยากเสียบรรยากาศ. ถ้าเราถามว่า "คุณชอบไหม?" เรากำลังเชิญให้เขาตอบแบบรักษาน้ำใจ.</p>
+      <p>ดังนั้นเป้าหมายไม่ใช่การ pitch. เป้าหมายคือการสืบสวนชีวิตจริงของเขา: เขาทำงานยังไง, ปัญหาเกิดเมื่อไหร่, เขาแก้ยังไง, เขาเสียอะไร, และเรื่องนี้สำคัญพอไหมเมื่อเทียบกับปัญหาอื่น.</p>
+      <div class="rule">อย่าถามว่าเขาจะใช้ product ของเราไหม. ให้ถามว่าเขาเพิ่งเจอปัญหานี้จริงไหม และตอนนี้เขาทำอะไรกับมันอยู่.</div>
+      <p class="refs">แหล่งอ้างอิงหลักของบทเรียนนี้คือ <a href="https://www.momtestbook.com/">The Mom Test</a> และ summary โดย <a href="https://www.sachinrekhi.com/p/the-mom-test-rob-fitzpatrick">Sachin Rekhi</a>: ถามเรื่องชีวิตของลูกค้า ไม่ถามความเห็นเกี่ยวกับไอเดียของเรา.</p>
+    </section>
+
+    <section>
+      <h2>2. คำถาม 3 แบบ: อันตราย, พอใช้, ดี</h2>
+      <table>
+        <thead>
+          <tr><th>แบบ</th><th>ตัวอย่าง</th><th>ผลลัพธ์ที่มักได้</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="bad">อันตราย</td>
+            <td>"ถ้าผมทำ SaaS ช่วยสรุปแชท LINE คุณจะจ่ายไหม?"</td>
+            <td>ได้คำตอบสมมติที่ไม่มีต้นทุน: "อาจจะ", "น่าสนใจ"</td>
+          </tr>
+          <tr>
+            <td class="warn">พอใช้</td>
+            <td>"คุณมีปัญหาตอบแชทลูกค้าช้าไหม?"</td>
+            <td>เริ่มแตะ pain แต่ยังนำคำตอบและกว้างเกินไป</td>
+          </tr>
+          <tr>
+            <td class="good">ดี</td>
+            <td>"สัปดาห์ที่แล้วมีเคสไหนที่แชทลูกค้าหลุดหรือปิดการขายไม่ทันไหม เล่าให้ฟังหน่อยว่าเกิดอะไรขึ้น"</td>
+            <td>ได้เหตุการณ์จริง, context, cost, และ workflow</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>3. Interview script 20 นาที</h2>
+      <p>ใช้ script นี้เมื่อคุณยังไม่มี product หรือมีแค่ idea/manual demo. อย่าเปิดด้วย deck ยาว เปิดด้วยความอยากเข้าใจงานของเขา.</p>
+      <ol>
+        <li><strong>Set frame:</strong> "ผมยังไม่ได้ขายอะไร วันนี้อยากเข้าใจ workflow จริง ถ้าไม่ใช่ปัญหาก็บอกตรงๆ ได้เลย"</li>
+        <li><strong>Workflow:</strong> "ตอนนี้งานนี้เริ่มจากตรงไหน จบตรงไหน ใครเกี่ยวข้องบ้าง"</li>
+        <li><strong>Recent event:</strong> "ครั้งล่าสุดที่มันพัง/ช้า/แพง/หลุด เกิดเมื่อไหร่"</li>
+        <li><strong>Cost:</strong> "ตอนนั้นเสียเวลา เงิน ลูกค้า หรือความเสี่ยงประมาณเท่าไหร่"</li>
+        <li><strong>Workaround:</strong> "ตอนนี้ใช้วิธีอะไรแก้ ใช้ Excel, LINE, คน, agency, หรือ tool อะไร"</li>
+        <li><strong>Priority:</strong> "เดือนนี้เรื่องนี้ติด top 3 ที่อยากแก้ไหม ถ้าไม่ใช่ อะไรสำคัญกว่า"</li>
+        <li><strong>Commitment:</strong> "ถ้าผมลองทำ manual version ให้ดู 1 รอบ คุณยอมส่งตัวอย่างข้อมูล/นัด follow-up/แนะนำอีก 2 คนไหม"</li>
+      </ol>
+      <p>ข้อสุดท้ายสำคัญมาก เพราะ YC เน้นว่า early founders ต้อง recruit users เองและเรียนจากของจริง (<a href="https://www.ycombinator.com/library/96-do-things-that-don-t-scale">Do Things That Don't Scale</a>). Commitment แยกคนที่แค่สุภาพออกจากคนที่มี pain จริง.</p>
+    </section>
+
+    <section>
+      <h2>4. อ่าน signal หลังคุย</h2>
+      <div class="grid">
+        <div class="panel">
+          <h3 class="good">Build signal</h3>
+          <ul>
+            <li>มีเหตุการณ์ล่าสุดภายใน 30 วัน</li>
+            <li>เขาเสียเงิน/เวลา/โอกาสชัดเจน</li>
+            <li>เขามี workaround ที่น่ารำคาญหรือแพง</li>
+            <li>เขายอมส่งข้อมูลจริงหรือนัดต่อ</li>
+            <li>เขาแนะนำคนอื่นที่เจอปัญหาเดียวกัน</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3 class="bad">Do not build yet</h3>
+          <ul>
+            <li>เขาพูดแต่ "น่าสนใจ" แต่ไม่มีเรื่องจริง</li>
+            <li>ปัญหาเกิดนานๆ ทีและไม่มี cost</li>
+            <li>เขาไม่เคยพยายามแก้ด้วยวิธีไหนเลย</li>
+            <li>เขาไม่ยอมเสียเวลา 15 นาทีต่อ</li>
+            <li>เขาอยากได้ feature เยอะ แต่ไม่เห็น urgency</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="exercise">
+      <h2>5. แบบฝึกหัด: แปลงคำถามให้ดีขึ้น</h2>
+      <p>พิมพ์คำถามที่คุณอยากถามลูกค้า แล้วกดประเมิน. เป้าหมายคือให้คำถามพูดถึงอดีต, เหตุการณ์จริง, workflow, cost, หรือ workaround.</p>
+
+      <label for="question"><strong>คำถามเดิมของคุณ</strong></label>
+      <textarea id="question" placeholder="เช่น ถ้าผมทำระบบ AI ช่วยตอบลูกค้าใน LINE คุณจะใช้ไหม?"></textarea>
+      <button onclick="scoreQuestion()">ประเมินคำถาม</button>
+      <button class="secondary" onclick="useExample()">ใส่ตัวอย่าง</button>
+      <div id="questionFeedback" class="feedback">รอคำถามของคุณอยู่.</div>
+    </section>
+
+    <section class="exercise">
+      <h2>6. แบบฝึกหัด: สรุป interview note เป็น signal</h2>
+      <p>หลังคุยจริง ให้เอา note มาวางตรงนี้ หน้าเว็บจะช่วยเตือนว่า note มี signal แข็งพอไหม.</p>
+      <label for="notes"><strong>Interview note</strong></label>
+      <textarea id="notes" placeholder="เช่น เจ้าของร้านบอกว่าสัปดาห์ที่แล้วตอบ LINE ไม่ทันช่วงโปร ทำให้ลูกค้าหลุด 12 คน ตอนนี้ใช้แอดมิน 2 คนและ Google Sheet เขายอมส่งตัวอย่างแชท 100 รายการให้ดู"></textarea>
+      <button onclick="scoreNotes()">อ่าน signal</button>
+      <div id="notesFeedback" class="feedback">รอ note ของคุณอยู่.</div>
+    </section>
+
+    <section class="quiz">
+      <h2>7. Mini Quiz</h2>
+      <p><strong>ลูกค้าพูดว่า:</strong> "ไอเดียดีนะ ถ้าทำเสร็จแล้วส่งมาให้ดูได้เลย"</p>
+      <p>คุณควรตอบยังไง?</p>
+      <button onclick="quiz('a')">A. ขอบคุณ แล้วกลับไป build ให้เสร็จ</button>
+      <button onclick="quiz('b')">B. ถามต่อว่า ครั้งล่าสุดที่เจอปัญหานี้เกิดเมื่อไหร่ และตอนนี้แก้ยังไง</button>
+      <button onclick="quiz('c')">C. ลดราคา early bird ทันที</button>
+      <div id="quizFeedback" class="feedback">เลือกคำตอบหนึ่งข้อ.</div>
+    </section>
+
+    <section>
+      <h2>8. Homework ก่อนบทเรียน 3</h2>
+      <p>เลือก niche เดียวจากบทเรียน 1 แล้วทำ interview 3 คน โดยไม่ pitch product ก่อน. หลังคุย ให้จดเป็น 5 บรรทัดต่อคน:</p>
+      <ol>
+        <li>ลูกค้าคือใคร</li>
+        <li>เหตุการณ์ล่าสุดที่เจอปัญหา</li>
+        <li>cost ที่เสีย</li>
+        <li>workaround ปัจจุบัน</li>
+        <li>commitment ที่เขายอมให้</li>
+      </ol>
+      <p>เอา raw notes กลับมาส่งผมได้เลย. ผมจะช่วย classify ว่าอันไหนเป็น signal จริง, อันไหนเป็นคำชม, และควร build/manual test อะไรต่อ.</p>
+    </section>
+
+    <section>
+      <h2>References</h2>
+      <ul class="refs">
+        <li><a href="https://www.momtestbook.com/">Rob Fitzpatrick: The Mom Test</a></li>
+        <li><a href="https://www.sachinrekhi.com/p/the-mom-test-rob-fitzpatrick">Sachin Rekhi: A Primer on The Mom Test</a></li>
+        <li><a href="https://www.ycombinator.com/library/4D-yc-s-essential-startup-advice">Y Combinator: YC's Essential Startup Advice</a></li>
+        <li><a href="https://www.ycombinator.com/library/96-do-things-that-don-t-scale">Y Combinator: Do Things That Don't Scale</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>Reference sheet: <a href="../reference/0002-customer-interview-cheatsheet.html">Customer Interview Cheat Sheet</a></p>
+  </footer>
+
+  <script>
+    function hasAny(text, terms) {
+      return terms.some(function(term) { return term.test(text); });
+    }
+
+    function scoreQuestion() {
+      const text = document.getElementById('question').value.trim();
+      const lower = text.toLowerCase();
+      let score = 0;
+      const notes = [];
+
+      if (!text) {
+        document.getElementById('questionFeedback').textContent = 'พิมพ์คำถามก่อนนะครับ.';
+        return;
+      }
+
+      if (hasAny(lower, [/ครั้งล่าสุด/, /เมื่อไหร่/, /สัปดาห์/, /เดือน/, /last time/, /recent/])) {
+        score++;
+        notes.push('<span class="good">มีเวลา/เหตุการณ์:</span> ดี เพราะดึงเขาไปที่อดีตจริง.');
+      } else {
+        notes.push('<span class="warn">เพิ่มเวลา:</span> ลองถาม "ครั้งล่าสุดที่..." หรือ "สัปดาห์ที่แล้วมีเคสไหม".');
+      }
+
+      if (hasAny(lower, [/ตอนนี้/, /แก้/, /ใช้.*อะไร/, /workflow/, /process/, /workaround/, /ทำยังไง/])) {
+        score++;
+        notes.push('<span class="good">มี workflow/workaround:</span> ดี เพราะเห็นพฤติกรรมปัจจุบัน.');
+      } else {
+        notes.push('<span class="warn">เพิ่ม workaround:</span> ถามว่าเขาแก้ปัญหานี้ยังไงอยู่ตอนนี้.');
+      }
+
+      if (hasAny(lower, [/เสีย/, /เงิน/, /เวลา/, /ลูกค้า/, /รายได้/, /บาท/, /ชั่วโมง/, /cost/, /revenue/])) {
+        score++;
+        notes.push('<span class="good">มี cost:</span> ดี เพราะเริ่มเชื่อมกับ willingness to pay.');
+      } else {
+        notes.push('<span class="warn">เพิ่ม cost:</span> ถามว่าเสียเวลา เงิน ลูกค้า หรือความเสี่ยงเท่าไหร่.');
+      }
+
+      if (hasAny(lower, [/คุณจะใช้ไหม/, /จะจ่ายไหม/, /คิดว่า.*ดีไหม/, /สนใจไหม/, /would you use/, /would you pay/, /do you like/])) {
+        score--;
+        notes.push('<span class="bad">มีคำถามสมมติ:</span> ระวังคำตอบเอาใจหรือ opinion.');
+      }
+
+      let verdict = '';
+      if (score >= 3) verdict = '<p><strong class="good">คำถามดี:</strong> มีโอกาสได้ evidence จริง ไม่ใช่คำชม.</p>';
+      else if (score >= 1) verdict = '<p><strong class="warn">พอเริ่มได้:</strong> ปรับอีกนิดให้ถามอดีต + workaround + cost.</p>';
+      else verdict = '<p><strong class="bad">ยังเสี่ยงโดนคำชมหลอก:</strong> เปลี่ยนจากถาม opinion เป็นถามเหตุการณ์จริง.</p>';
+
+      document.getElementById('questionFeedback').innerHTML = verdict + '<ul><li>' + notes.join('</li><li>') + '</li></ul>';
+    }
+
+    function useExample() {
+      document.getElementById('question').value = 'สัปดาห์ที่แล้วมีเคสไหนที่ตอบแชท LINE ลูกค้าไม่ทันไหม ตอนนั้นเกิดอะไรขึ้น ตอนนี้แก้ยังไง และเสียลูกค้าหรือเวลาไปประมาณเท่าไหร่';
+      scoreQuestion();
+    }
+
+    function scoreNotes() {
+      const text = document.getElementById('notes').value.toLowerCase();
+      let score = 0;
+      const notes = [];
+
+      if (hasAny(text, [/สัปดาห์/, /เมื่อวาน/, /เดือน/, /ครั้งล่าสุด/, /last/])) {
+        score++;
+        notes.push('<span class="good">Recent event:</span> มีเหตุการณ์จริงให้สืบต่อ.');
+      } else {
+        notes.push('<span class="warn">ยังขาด recent event:</span> note ควรบอกว่าเรื่องนี้เกิดเมื่อไหร่.');
+      }
+
+      if (hasAny(text, [/บาท/, /ชั่วโมง/, /วันละ/, /ลูกค้า/, /รายได้/, /เสีย/, /cost/, /revenue/])) {
+        score++;
+        notes.push('<span class="good">Cost:</span> มีตัวชี้วัด pain.');
+      } else {
+        notes.push('<span class="warn">ยังขาด cost:</span> เพิ่มตัวเลขเงิน เวลา ลูกค้า หรือความเสี่ยง.');
+      }
+
+      if (hasAny(text, [/excel/, /sheet/, /line/, /แอดมิน/, /จ้าง/, /manual/, /agency/, /tool/, /ใช้/])) {
+        score++;
+        notes.push('<span class="good">Workaround:</span> เห็นพฤติกรรมปัจจุบันแล้ว.');
+      } else {
+        notes.push('<span class="warn">ยังขาด workaround:</span> ต้องรู้ว่าเขาแก้เองยังไงก่อนมีเรา.');
+      }
+
+      if (hasAny(text, [/นัด/, /ส่ง/, /ข้อมูล/, /intro/, /แนะนำ/, /pilot/, /จ่าย/, /มัดจำ/, /demo/])) {
+        score++;
+        notes.push('<span class="good">Commitment:</span> มี action ที่หนักกว่าคำชม.');
+      } else {
+        notes.push('<span class="bad">ยังขาด commitment:</span> ถ้าเขาไม่ยอมเสียเวลา/ข้อมูล/เงินเลย อย่าเพิ่ง build.');
+      }
+
+      let verdict = '';
+      if (score === 4) verdict = '<p><strong class="good">มี signal ดี:</strong> ควรคุยเพิ่มกับ segment เดียวกัน และลอง manual pilot.</p>';
+      else if (score >= 2) verdict = '<p><strong class="warn">มีบาง signal:</strong> คุยต่อเพื่อเติม recent event, cost, workaround, commitment.</p>';
+      else verdict = '<p><strong class="bad">ยังอ่อน:</strong> ตอนนี้ note ยังเป็น opinion มากกว่า evidence.</p>';
+
+      document.getElementById('notesFeedback').innerHTML = verdict + '<ul><li>' + notes.join('</li><li>') + '</li></ul>';
+    }
+
+    function quiz(answer) {
+      const el = document.getElementById('quizFeedback');
+      if (answer === 'b') {
+        el.innerHTML = '<span class="good">ถูก.</span> คุณไม่รับคำชมเป็นหลักฐาน แต่ขุดต่อไปที่เหตุการณ์จริงและ workaround.';
+      } else if (answer === 'a') {
+        el.innerHTML = '<span class="bad">นี่คือกับดัก build-first.</span> คำว่า "ส่งมาดู" ยังไม่มีต้นทุนสำหรับเขาเลย.';
+      } else {
+        el.innerHTML = '<span class="warn">เร็วไป.</span> ลดราคาไม่ช่วยถ้าคุณยังไม่รู้ว่า pain เจ็บจริงหรือเปล่า.';
+      }
+    }
+  </script>
+</body>
+</html>

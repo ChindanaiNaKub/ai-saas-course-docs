@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SaaS Packaging Cheat Sheet</title>
+  <style>
+    :root {
+      --ink: #17211d;
+      --muted: #5d6d65;
+      --paper: #fffdf8;
+      --line: #ded9c8;
+      --band: #eef5ec;
+      --green: #246b4a;
+      --red: #9b3b2f;
+      --gold: #9b6317;
+      --blue: #285f8f;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--ink); background: var(--paper); line-height: 1.62; }
+    main { max-width: 980px; margin: 0 auto; padding: 42px 24px 64px; }
+    h1, h2, h3 { line-height: 1.16; margin: 0; letter-spacing: 0; }
+    h1 { font-size: clamp(2rem, 4vw, 3.4rem); max-width: 820px; }
+    h2 { font-size: 1.35rem; margin-top: 34px; padding-top: 22px; border-top: 1px solid var(--line); }
+    h3 { font-size: 1rem; margin-top: 18px; color: var(--green); }
+    p { margin: 10px 0; }
+    a { color: var(--blue); }
+    .lede { font-size: 1.14rem; color: var(--muted); max-width: 800px; margin-top: 14px; }
+    .rule { margin: 18px 0; padding: 16px; border-left: 5px solid var(--green); background: var(--band); border-radius: 8px; font-weight: 750; }
+    table { width: 100%; border-collapse: collapse; margin-top: 14px; background: white; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+    th, td { text-align: left; vertical-align: top; padding: 12px; border-bottom: 1px solid var(--line); }
+    th { background: var(--band); }
+    tr:last-child td { border-bottom: 0; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 7px 0; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 16px; }
+    .box { background: white; border: 1px solid var(--line); border-radius: 8px; padding: 15px; }
+    .bad { color: var(--red); font-weight: 750; }
+    .good { color: var(--green); font-weight: 750; }
+    .warn { color: var(--gold); font-weight: 750; }
+    code { background: var(--band); padding: 2px 5px; border-radius: 5px; }
+    @media (max-width: 720px) { main { padding: 28px 16px 48px; } .grid { grid-template-columns: 1fr; } table { font-size: .94rem; } }
+    @media print { body { background: white; } main { max-width: none; padding: 18mm; } a::after { content: " (" attr(href) ")"; font-size: .82em; color: #555; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>SaaS Packaging Cheat Sheet</h1>
+    <p class="lede">ใช้หลัง wedge ชัดแล้ว. เป้าหมายคือทำให้ลูกค้าซื้อได้ง่ายและทำให้คุณส่งมอบได้ซ้ำโดยไม่ต้อง quote/scope ใหม่ทุกเคส.</p>
+
+    <section>
+      <h2>แก่นคิด</h2>
+      <div class="rule">Package ที่ดีขาย outcome ซ้ำได้ มีขอบเขตชัด และป้องกัน cost/support ไม่ให้บาน.</div>
+    </section>
+
+    <section>
+      <h2>5 pieces of a package</h2>
+      <table>
+        <thead>
+          <tr><th>Piece</th><th>ถามตัวเอง</th><th>ตัวอย่าง</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Outcome</td>
+            <td>ลูกค้าซื้อ progress อะไร</td>
+            <td class="good">weekly lost-order action list</td>
+          </tr>
+          <tr>
+            <td>Scope</td>
+            <td>รวม/ไม่รวมอะไร</td>
+            <td class="good">รวม 2 channels, ไม่รวม custom CRM</td>
+          </tr>
+          <tr>
+            <td>Usage cap</td>
+            <td>จำกัดอะไรเพื่อกัน heavy-user risk</td>
+            <td class="good">5,000 messages/month, 4 reports/month</td>
+          </tr>
+          <tr>
+            <td>Onboarding</td>
+            <td>เริ่มอย่างไรและถึง first value เมื่อไหร่</td>
+            <td class="good">setup 45 นาที, first report ใน 48 ชม.</td>
+          </tr>
+          <tr>
+            <td>Expansion</td>
+            <td>จ่ายเพิ่มเพราะ value driver อะไร</td>
+            <td class="good">more volume, channels, users, review</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Simple ladder</h2>
+      <ol>
+        <li><strong>Paid setup/pilot:</strong> prove first value และเก็บ implementation friction</li>
+        <li><strong>Monthly core:</strong> repeat workflow พร้อม usage cap</li>
+        <li><strong>Expansion:</strong> เพิ่ม volume/team/channel/advanced workflow เมื่อ value ชัด</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Price metric options</h2>
+      <div class="grid">
+        <div class="box">
+          <h3>Good when value is periodic</h3>
+          <p><code>per report / per workflow / per audit</code></p>
+        </div>
+        <div class="box">
+          <h3>Good when cost grows with volume</h3>
+          <p><code>usage tier / base + cap / overage</code></p>
+        </div>
+      </div>
+      <p>AI SaaS จำนวนมากควรหลีกเลี่ยง unlimited ถ้าต้นทุนโตตาม usage.</p>
+    </section>
+
+    <section>
+      <h2>Package template</h2>
+      <p><code>[Package name] for [buyer]. Includes [deliverables]. Limits [usage caps]. Starts at [price]. Expands by [volume/team/channel/outcome].</code></p>
+    </section>
+
+    <section>
+      <h2>Red flags</h2>
+      <ul>
+        <li><span class="bad">custom quote ทุกเคส</span></li>
+        <li><span class="bad">unlimited AI usage</span> โดยไม่มี margin model</li>
+        <li><span class="bad">scope ไม่บอกสิ่งที่ไม่รวม</span></li>
+        <li><span class="bad">free plan ดึง non-buyers</span> ก่อนคุณรู้ buyer ชัด</li>
+        <li><span class="bad">ราคาไม่ผูกกับ value driver</span></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>แหล่งอ้างอิง</h2>
+      <ul>
+        <li><a href="https://stripe.com/resources/more/essential-saas-metrics">Stripe: Essential SaaS metrics</a></li>
+        <li><a href="https://www.bain.com/insights/per-seat-software-pricing-isnt-dead-but-new-models-are-gaining-steam/">Bain: Per-seat software pricing isn't dead</a></li>
+        <li><a href="https://a16z.com/newsletter/december-2024-enterprise-newsletter-ai-is-driving-a-shift-towards-outcome-based-pricing/">a16z: Outcome-based pricing</a></li>
+        <li><a href="https://www.ycombinator.com/library/Mo-the-sales-playbook-for-founders">YC: Sales Playbook for Founders</a></li>
+        <li><a href="https://brianbalfour.com/four-fits-growth-framework">Brian Balfour: Four Fits for Growth</a></li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

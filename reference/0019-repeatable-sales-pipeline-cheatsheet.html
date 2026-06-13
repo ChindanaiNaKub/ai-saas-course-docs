@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Repeatable Sales Pipeline Cheat Sheet</title>
+  <style>
+    :root {
+      --ink: #17211d;
+      --muted: #5d6d65;
+      --paper: #fffdf8;
+      --line: #ded9c8;
+      --band: #eef5ec;
+      --green: #246b4a;
+      --red: #9b3b2f;
+      --gold: #9b6317;
+      --blue: #285f8f;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--ink); background: var(--paper); line-height: 1.62; }
+    main { max-width: 980px; margin: 0 auto; padding: 42px 24px 64px; }
+    h1, h2, h3 { line-height: 1.16; margin: 0; letter-spacing: 0; }
+    h1 { font-size: clamp(2rem, 4vw, 3.4rem); max-width: 820px; }
+    h2 { font-size: 1.35rem; margin-top: 34px; padding-top: 22px; border-top: 1px solid var(--line); }
+    h3 { font-size: 1rem; margin-top: 18px; color: var(--green); }
+    p { margin: 10px 0; }
+    a { color: var(--blue); }
+    .lede { font-size: 1.14rem; color: var(--muted); max-width: 800px; margin-top: 14px; }
+    .rule { margin: 18px 0; padding: 16px; border-left: 5px solid var(--green); background: var(--band); border-radius: 8px; font-weight: 750; }
+    table { width: 100%; border-collapse: collapse; margin-top: 14px; background: white; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+    th, td { text-align: left; vertical-align: top; padding: 12px; border-bottom: 1px solid var(--line); }
+    th { background: var(--band); }
+    tr:last-child td { border-bottom: 0; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 7px 0; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 16px; }
+    .box { background: white; border: 1px solid var(--line); border-radius: 8px; padding: 15px; }
+    .bad { color: var(--red); font-weight: 750; }
+    .good { color: var(--green); font-weight: 750; }
+    .warn { color: var(--gold); font-weight: 750; }
+    code { background: var(--band); padding: 2px 5px; border-radius: 5px; }
+    @media (max-width: 720px) { main { padding: 28px 16px 48px; } .grid { grid-template-columns: 1fr; } table { font-size: .94rem; } }
+    @media print { body { background: white; } main { max-width: none; padding: 18mm; } a::after { content: " (" attr(href) ")"; font-size: .82em; color: #555; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Repeatable Sales Pipeline Cheat Sheet</h1>
+    <p class="lede">ใช้หลังคุณมี package ที่พอขายได้. เป้าหมายคือสร้างระบบหาลูกค้าใหม่รายสัปดาห์ และรู้ว่า bottleneck อยู่ที่ lead, message, call, offer, หรือ close.</p>
+
+    <section>
+      <h2>แก่นคิด</h2>
+      <div class="rule">Pipeline ไม่ใช่ความหวัง. Pipeline คือจำนวน qualified leads, outreach, replies, calls, proposals, และ closes ที่วัดได้ทุกสัปดาห์.</div>
+    </section>
+
+    <section>
+      <h2>5-stage pipeline</h2>
+      <table>
+        <thead>
+          <tr><th>Stage</th><th>Metric</th><th>Bottleneck เมื่อ</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Lead list</td>
+            <td>qualified leads added/week</td>
+            <td class="bad">หา buyer ที่ตรง ICP ไม่พอ</td>
+          </tr>
+          <tr>
+            <td>Outreach</td>
+            <td>messages sent/week</td>
+            <td class="bad">activity ไม่สม่ำเสมอ</td>
+          </tr>
+          <tr>
+            <td>Reply</td>
+            <td>reply rate</td>
+            <td class="bad">ICP/message/pain ไม่คม</td>
+          </tr>
+          <tr>
+            <td>Discovery call</td>
+            <td>qualified calls/week</td>
+            <td class="bad">คนตอบไม่ใช่ buyer หรือ ask ไม่ชัด</td>
+          </tr>
+          <tr>
+            <td>Close</td>
+            <td>paid pilots/subscriptions/month</td>
+            <td class="bad">offer, price, trust, urgency ยังไม่พอ</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Pipeline math</h2>
+      <p><code>customers target -> proposals -> qualified calls -> replies -> outreach</code></p>
+      <p>คำนวณย้อนกลับเสมอ. ถ้าอยากได้ 2 ลูกค้า/เดือน และ close rate 35%, คุณต้องมีประมาณ 6 proposals. ถ้า call-to-proposal 50%, ต้องมี 12 qualified calls. ถ้า reply-to-call 35% และ reply rate 12%, ต้องส่ง outreach ประมาณ 286 ข้อความ/เดือน หรือ 72 ข้อความ/สัปดาห์.</p>
+    </section>
+
+    <section>
+      <h2>Weekly rhythm</h2>
+      <ol>
+        <li><strong>Monday:</strong> build lead list และเลือก message angle</li>
+        <li><strong>Tuesday-Wednesday:</strong> send outreach และ follow up</li>
+        <li><strong>Thursday:</strong> run discovery calls และส่ง proposal เฉพาะ qualified buyers</li>
+        <li><strong>Friday:</strong> review funnel metrics, objections, lost reasons, next experiment</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Bottleneck map</h2>
+      <div class="grid">
+        <div class="box">
+          <h3>Lead problem</h3>
+          <p>หา leads ไม่พอหรือไม่ตรง ICP. แก้ list source และ qualification.</p>
+        </div>
+        <div class="box">
+          <h3>Message problem</h3>
+          <p>reply ต่ำ. แก้ pain specificity, proof, short ask, personalization.</p>
+        </div>
+        <div class="box">
+          <h3>Offer problem</h3>
+          <p>call เยอะแต่ไม่ close. แก้ package, pricing, urgency, risk reversal.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>แหล่งอ้างอิง</h2>
+      <ul>
+        <li><a href="https://www.ycombinator.com/library/Ip-how-to-get-your-first-customers">YC: How to Get Your First Customers</a></li>
+        <li><a href="https://www.ycombinator.com/library/Mo-the-sales-playbook-for-founders">YC: Sales Playbook for Founders</a></li>
+        <li><a href="https://review.firstround.com/founder-led-growth-playbook/">First Round Review: Founder-Led Growth Playbook</a></li>
+        <li><a href="https://brianbalfour.com/essays/product-channel-fit-for-growth">Brian Balfour: Product Channel Fit</a></li>
+        <li><a href="https://stripe.com/resources/more/essential-saas-metrics">Stripe: Essential SaaS metrics</a></li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

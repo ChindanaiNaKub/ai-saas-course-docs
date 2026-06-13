@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Growth Asks Cheat Sheet</title>
+  <style>
+    :root {
+      --ink: #17211d;
+      --muted: #5d6d65;
+      --paper: #fffdf8;
+      --line: #ded9c8;
+      --band: #eef5ec;
+      --green: #246b4a;
+      --red: #9b3b2f;
+      --gold: #9b6317;
+      --blue: #285f8f;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--ink); background: var(--paper); line-height: 1.62; }
+    main { max-width: 980px; margin: 0 auto; padding: 42px 24px 64px; }
+    h1, h2, h3 { line-height: 1.16; margin: 0; letter-spacing: 0; }
+    h1 { font-size: clamp(2rem, 4vw, 3.4rem); max-width: 820px; }
+    h2 { font-size: 1.35rem; margin-top: 34px; padding-top: 22px; border-top: 1px solid var(--line); }
+    h3 { font-size: 1rem; margin-top: 18px; color: var(--green); }
+    p { margin: 10px 0; }
+    a { color: var(--blue); }
+    .lede { font-size: 1.14rem; color: var(--muted); max-width: 800px; margin-top: 14px; }
+    .rule { margin: 18px 0; padding: 16px; border-left: 5px solid var(--green); background: var(--band); border-radius: 8px; font-weight: 750; }
+    table { width: 100%; border-collapse: collapse; margin-top: 14px; background: white; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+    th, td { text-align: left; vertical-align: top; padding: 12px; border-bottom: 1px solid var(--line); }
+    th { background: var(--band); }
+    tr:last-child td { border-bottom: 0; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 7px 0; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 16px; }
+    .box { background: white; border: 1px solid var(--line); border-radius: 8px; padding: 15px; }
+    .bad { color: var(--red); font-weight: 750; }
+    .good { color: var(--green); font-weight: 750; }
+    .warn { color: var(--gold); font-weight: 750; }
+    code { background: var(--band); padding: 2px 5px; border-radius: 5px; }
+    @media (max-width: 720px) { main { padding: 28px 16px 48px; } .grid { grid-template-columns: 1fr; } table { font-size: .94rem; } }
+    @media print { body { background: white; } main { max-width: none; padding: 18mm; } a::after { content: " (" attr(href) ")"; font-size: .82em; color: #555; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Growth Asks Cheat Sheet</h1>
+    <p class="lede">ใช้เมื่อลูกค้า healthy แล้ว. เป้าหมายคือเลือก ask ที่เหมาะกับ trust และ evidence ที่มี ไม่ใช่ขอทุกอย่างพร้อมกัน.</p>
+
+    <section>
+      <h2>แก่นคิด</h2>
+      <div class="rule">Happy customer คือ proof + channel + product insight. แต่ต้องขอให้ถูกจังหวะและทำให้เขาช่วยง่าย.</div>
+      <p>คำชมไม่พอสำหรับ growth ask. รอให้มีสัญญาณพฤติกรรม เช่น ใช้ซ้ำ, action จาก output, stakeholder engaged, next commitment.</p>
+    </section>
+
+    <section>
+      <h2>เลือก ask</h2>
+      <table>
+        <thead>
+          <tr><th>Ask</th><th>ใช้เมื่อ</th><th>ตัวอย่าง</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="good">Expansion</td>
+            <td>ใช้ซ้ำใน account เดิม และมีทีม/use case อื่นที่เจ็บปัญหาเดียวกัน</td>
+            <td>ชวนทีม sales ops ใช้ workflow เดียวกับทีม support</td>
+          </tr>
+          <tr>
+            <td class="good">Referral</td>
+            <td>ลูกค้าได้ value แต่ไม่อยาก public หรือ account เล็ก</td>
+            <td>ขอ intro ให้ founder agency 1-2 คนที่มี pain เดียวกัน</td>
+          </tr>
+          <tr>
+            <td class="good">Case study</td>
+            <td>มี outcome วัดได้ และลูกค้าสบายใจกับ quote/ชื่อ/เรื่องเล่าบางส่วน</td>
+            <td>ก่อน/หลัง: ลดเวลาทำ report จาก 3 ชม. เหลือ 20 นาที</td>
+          </tr>
+          <tr>
+            <td class="warn">Recovery</td>
+            <td>ยังไม่ใช้ซ้ำ, outcome ไม่ชัด, owner ไม่ engaged</td>
+            <td>นัดหา blocker ก่อนขอ referral หรือ logo</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Referral ask formula</h2>
+      <ol>
+        <li>ขอบคุณและย้ำผลลัพธ์ที่เขาได้</li>
+        <li>ระบุ persona ที่คล้ายเขา</li>
+        <li>ระบุ pain ที่คนคนนั้นน่าจะมี</li>
+        <li>ขอ action เล็กและชัด เช่น forward 1 ข้อความ</li>
+        <li>ร่างข้อความให้เขาใช้ทันที</li>
+        <li>ให้ทางออกแบบไม่กดดัน</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Script templates</h2>
+      <div class="grid">
+        <div class="box">
+          <h3>Expansion</h3>
+          <p>จากที่ทีมคุณได้ [ผลลัพธ์] ผมสงสัยว่า [ทีม/use case] อาจเจอ pain เดียวกัน. พอจะแนะนำคนที่ดูเรื่องนี้ให้คุย 15 นาทีได้ไหมครับ?</p>
+        </div>
+        <div class="box">
+          <h3>Referral</h3>
+          <p>มี [persona] ที่เจอ [pain] เหมือนคุณไหมครับ? ถ้ามี ผมร่างข้อความให้ forward ได้เลย หรือคุณแค่บอกชื่อมาก็ได้ครับ.</p>
+        </div>
+        <div class="box">
+          <h3>Case study</h3>
+          <p>จาก [ผลลัพธ์] ผมอยากขอ quote/mini case study สั้นๆ โดยคุณ approve ทุกคำก่อนใช้จริง และเปิดเผยเท่าที่คุณสะดวก.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>อย่าทำ</h2>
+      <ul>
+        <li><span class="bad">อย่าขอ referral กว้างๆ</span> เช่น "รู้จักใครสนใจไหม"</li>
+        <li><span class="bad">อย่าขอ public proof</span> ถ้าลูกค้ายังไม่สบายใจเรื่องชื่อบริษัท</li>
+        <li><span class="bad">อย่าขอ growth</span> จากลูกค้าที่ health ยัง at risk</li>
+        <li><span class="bad">อย่าปล่อยให้ลูกค้าต้องเขียนข้อความเอง</span> ให้ draft สั้นๆ เสมอ</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>แหล่งอ้างอิง</h2>
+      <ul>
+        <li><a href="https://www.ycombinator.com/library/96-do-things-that-don-t-scale">YC: Do Things That Don't Scale</a></li>
+        <li><a href="https://www.ycombinator.com/library/Ip-how-to-get-your-first-customers">YC: How to Get Your First Customers</a></li>
+        <li><a href="https://review.firstround.com/founder-led-growth-playbook/">First Round Review: Founder-Led Growth Playbook</a></li>
+        <li><a href="https://stripe.com/resources/more/essential-saas-metrics">Stripe: Essential SaaS metrics</a></li>
+        <li><a href="https://wynter.com/post/b2b-message-layers-framework-wynter">Wynter: B2B message layers</a></li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

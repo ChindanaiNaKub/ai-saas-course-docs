@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Proof Assets Cheat Sheet</title>
+  <style>
+    :root {
+      --ink: #17211d;
+      --muted: #5d6d65;
+      --paper: #fffdf8;
+      --line: #ded9c8;
+      --band: #eef5ec;
+      --green: #246b4a;
+      --red: #9b3b2f;
+      --gold: #9b6317;
+      --blue: #285f8f;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--ink); background: var(--paper); line-height: 1.62; }
+    main { max-width: 980px; margin: 0 auto; padding: 42px 24px 64px; }
+    h1, h2, h3 { line-height: 1.16; margin: 0; letter-spacing: 0; }
+    h1 { font-size: clamp(2rem, 4vw, 3.4rem); max-width: 820px; }
+    h2 { font-size: 1.35rem; margin-top: 34px; padding-top: 22px; border-top: 1px solid var(--line); }
+    h3 { font-size: 1rem; margin-top: 18px; color: var(--green); }
+    p { margin: 10px 0; }
+    a { color: var(--blue); }
+    .lede { font-size: 1.14rem; color: var(--muted); max-width: 800px; margin-top: 14px; }
+    .rule { margin: 18px 0; padding: 16px; border-left: 5px solid var(--green); background: var(--band); border-radius: 8px; font-weight: 750; }
+    table { width: 100%; border-collapse: collapse; margin-top: 14px; background: white; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+    th, td { text-align: left; vertical-align: top; padding: 12px; border-bottom: 1px solid var(--line); }
+    th { background: var(--band); }
+    tr:last-child td { border-bottom: 0; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 7px 0; }
+    .bad { color: var(--red); font-weight: 750; }
+    .good { color: var(--green); font-weight: 750; }
+    .warn { color: var(--gold); font-weight: 750; }
+    code { background: var(--band); padding: 2px 5px; border-radius: 5px; }
+    @media (max-width: 720px) { main { padding: 28px 16px 48px; } table { font-size: .94rem; } }
+    @media print { body { background: white; } main { max-width: none; padding: 18mm; } a::after { content: " (" attr(href) ")"; font-size: .82em; color: #555; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Proof Assets Cheat Sheet</h1>
+    <p class="lede">ใช้เมื่อ sales calls เจอ objection ซ้ำ. เป้าหมายคือสร้างหลักฐานที่ตอบความเสี่ยงซ้ำๆ แทนการอธิบายสดทุกครั้ง.</p>
+
+    <section>
+      <h2>แก่นคิด</h2>
+      <div class="rule">ถ้าคำถามเดิมเกิดซ้ำ 3 ครั้ง ให้สร้าง proof asset สั้นๆ ที่ใช้ซ้ำใน pipeline.</div>
+    </section>
+
+    <section>
+      <h2>Asset map</h2>
+      <table>
+        <thead>
+          <tr><th>Objection</th><th>Proof asset</th><th>ควรมีอะไร</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>ช่วยได้จริงไหม</td>
+            <td class="good">Result proof</td>
+            <td>before/after, quote, case, customer action</td>
+          </tr>
+          <tr>
+            <td>คุ้มราคาไหม</td>
+            <td class="good">ROI proof</td>
+            <td>saved hours, recovered revenue, avoided mistakes</td>
+          </tr>
+          <tr>
+            <td>ข้อมูล/AI เชื่อได้ไหม</td>
+            <td class="good">Trust proof</td>
+            <td>data minimization, redaction, retention, provider, limits</td>
+          </tr>
+          <tr>
+            <td>เริ่มแล้วเสี่ยงไหม</td>
+            <td class="good">Pilot proof</td>
+            <td>timeline, inputs, success criteria, decision gate</td>
+          </tr>
+          <tr>
+            <td>setup ยุ่งไหม</td>
+            <td class="good">Implementation proof</td>
+            <td>checklist, roles, timeline, sample output</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Proof snippet template</h2>
+      <p><code>For [customer type], before [pain]. We did [workflow]. Result: [evidence]. Risk control: [trust note].</code></p>
+    </section>
+
+    <section>
+      <h2>First proof kit</h2>
+      <ol>
+        <li><strong>Mini case:</strong> ใคร, pain, workflow, result, next action</li>
+        <li><strong>Pilot plan:</strong> 7-14 วัน, inputs, deliverables, success criteria</li>
+        <li><strong>Trust note:</strong> data received, redaction, retention, AI provider, limitations</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Do not overclaim</h2>
+      <ul>
+        <li><span class="bad">อย่าใช้ตัวเลขที่ยังไม่ได้วัด</span></li>
+        <li><span class="bad">อย่าบอกว่า secure/private โดยไม่มีรายละเอียด</span></li>
+        <li><span class="bad">อย่าใช้ case จากคนละ ICP เพื่อหลอกว่า fit</span></li>
+        <li><span class="bad">อย่า promise outcome ที่คุณควบคุมไม่ได้</span></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>แหล่งอ้างอิง</h2>
+      <ul>
+        <li><a href="https://wynter.com/post/b2b-message-layers-framework-wynter">Wynter: B2B Message Layers Framework</a></li>
+        <li><a href="https://www.ycombinator.com/library/Mo-the-sales-playbook-for-founders">YC: Sales Playbook for Founders</a></li>
+        <li><a href="https://review.firstround.com/founder-led-growth-playbook/">First Round Review: Founder-Led Growth Playbook</a></li>
+        <li><a href="https://openai.com/enterprise-privacy/">OpenAI: Enterprise Privacy</a></li>
+        <li><a href="https://owasp.org/www-project-top-10-for-large-language-model-applications/">OWASP: LLM Top 10</a></li>
+        <li><a href="https://stripe.com/resources/more/essential-saas-metrics">Stripe: Essential SaaS metrics</a></li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
